@@ -22,3 +22,4 @@ Official implementation of the paper "Diffusion-Based Voice Conversion with Fast
 
 **Authors**: Vadim Popov, Ivan Vovk, Vladimir Gogoryan, Tasnima Sadekova, Mikhail Kudinov, Jiansheng Wei.
 # NewThesis
+# NewThesis
