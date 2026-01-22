@@ -1,11 +1,25 @@
 import re
 import pandas as pd
 from pathlib import Path
+import argparse
 
-xlsx_path = "/home/arcdeus/Documents/Thesis/HungarianDysartriaDatabaseNew/dsyarthria-hun_transcripts.xlsx"
-output_txt = "/home/arcdeus/Documents/NewThesis/manifest.txt"
+# Argumentum parser
+parser = argparse.ArgumentParser(description='Manifest létrehozása GRAD-TTS-hez')
+parser.add_argument('--xlsx', type=str, 
+                    default="/home/arcdeus/Documents/Thesis/HungarianDysartriaDatabaseNew/dsyarthria-hun_transcripts.xlsx",
+                    help='Az xlsx transcript fájl elérési útja')
+parser.add_argument('--output', type=str,
+                    default="/home/arcdeus/Documents/NewThesis/manifest.txt",
+                    help='A manifest output fájl elérési útja')
+parser.add_argument('--wav-dir', type=str,
+                    default="/home/arcdeus/Documents/NewThesis/wavs_16khz",
+                    help='A WAV fájlokat tartalmazó könyvtár')
 
-wav_base_dir = "/home/arcdeus/Documents/NewThesis/wavs_16khz"
+args = parser.parse_args()
+
+xlsx_path = args.xlsx
+output_txt = args.output
+wav_base_dir = args.wav_dir
 
 df = pd.read_excel(xlsx_path)
 

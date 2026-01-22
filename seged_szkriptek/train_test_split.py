@@ -42,9 +42,9 @@ def save_grad_format(df, output_path):
         for _, row in df.iterrows():
             f.write(f"{row['wav']}|{row['text']}|{row['speaker']}\n")
 
-save_grad_format(train_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/train.txt")
-save_grad_format(val_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/valid.txt")
-save_grad_format(test_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/test.txt")
+save_grad_format(train_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/libri-tts/train.txt")
+save_grad_format(val_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/libri-tts/valid.txt")
+save_grad_format(test_df, "/home/arcdeus/Documents/NewThesis/Grad-TTS/resources/filelists/libri-tts/test.txt")
 
 print(f"Train: {len(train_df)} utterances")
 print(f"Val:   {len(val_df)} utterances")

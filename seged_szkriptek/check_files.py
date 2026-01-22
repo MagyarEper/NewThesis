@@ -1,54 +1,61 @@
-import pandas as pd
-from pathlib import Path
 import sys
+from pathlib import Path
 
-# Manifest beolvasása
-manifest_path = "/home/arcdeus/Documents/NewThesis/manifest.csv"
-df = pd.read_csv(manifest_path)
+# Manifest beolvasása (pipe-separated: wav|text|speaker_id)
+manifest_path = "/home/arcdeus/Documents/NewThesis/manifest.txt"
 
-print(f"Összesen {len(df)} fájl a manifestben\n")
+data = []
+with open(manifest_path, 'r', encoding='utf-8') as f:
+    for line in f:
+        parts = line.strip().split('|')
+        if len(parts) == 3:
+            data.append({'wav': parts[0], 'text': parts[1], 'speaker': parts[2]})
+
+print(f"Összesen {len(data)} fájl a manifestben\n")
 
 # Ellenőrzés
-missing_indices = []
-existing_indices = []
+missing = []
+existing = []
 
-for idx, row in df.iterrows():
-    wav_path = Path(row['wav'])
+for item in data:
+    wav_path = Path(item['wav'])
     if wav_path.exists():
-        existing_indices.append(idx)
+        existing.append(item)
     else:
-        missing_indices.append(idx)
+        missing.append(item)
 
 # Eredmények
-print(f"✓ Megtalált fájlok: {len(existing_indices)}")
-print(f"✗ Hiányzó fájlok: {len(missing_indices)}\n")
+print(f"✓ Megtalált fájlok: {len(existing)}")
+print(f"✗ Hiányzó fájlok: {len(missing)}\n")
 
 # Hibaellenőrzés: ha 50-nél több fájl hiányzik
-if len(missing_indices) > 50:
+if len(missing) > 50:
     print("❌ HIBA: Több mint 50 fájl hiányzik!")
-    print(f"   Hiányzó fájlok száma: {len(missing_indices)}")
+    print(f"   Hiányzó fájlok száma: {len(missing)}")
     print("\nHiányzó fájlok listája (első 50):")
-    for i, idx in enumerate(missing_indices[:50], 1):
-        print(f"  {i}. {df.loc[idx, 'wav']}")
-    if len(missing_indices) > 50:
-        print(f"  ... és még {len(missing_indices) - 50} további")
+    for i, item in enumerate(missing[:50], 1):
+        print(f"  {i}. {item['wav']}")
+    if len(missing) > 50:
+        print(f"  ... és még {len(missing) - 50} további")
     sys.exit(1)
 
-if missing_indices:
+if missing:
     print("Hiányzó fájlok listája:")
-    for i, idx in enumerate(missing_indices, 1):
-        print(f"  {i}. {df.loc[idx, 'wav']}")
+    for i, item in enumerate(missing, 1):
+        print(f"  {i}. {item['wav']}")
     
     # Hiányzó fájlok eltávolítása
     print(f"\n🔧 Hiányzó fájlok eltávolítása a manifestből...")
-    df_cleaned = df.loc[existing_indices].reset_index(drop=True)
     
     # Mentés
-    df_cleaned.to_csv(manifest_path, index=False, encoding='utf-8')
+    with open(manifest_path, 'w', encoding='utf-8') as f:
+        for item in existing:
+            f.write(f"{item['wav']}|{item['text']}|{item['speaker']}\n")
+    
     print(f"✓ Manifest frissítve!")
-    print(f"  Eredeti: {len(df)} fájl")
-    print(f"  Tisztított: {len(df_cleaned)} fájl")
-    print(f"  Eltávolítva: {len(missing_indices)} fájl")
+    print(f"  Eredeti: {len(data)} fájl")
+    print(f"  Tisztított: {len(existing)} fájl")
+    print(f"  Eltávolítva: {len(missing)} fájl")
 else:
     print("🎉 Minden fájl megvan! Nincs mit eltávolítani.")
 
@@ -56,7 +63,17 @@ else:
 print("\n" + "="*50)
 print("Statisztikák beszélőnként:")
 print("="*50)
-df_final = pd.read_csv(manifest_path)
-speaker_stats = df_final.groupby('speaker').size()
-for speaker, count in speaker_stats.items():
-    print(f"{speaker}: {count} fájl")
+
+# Újraolvasás
+final_data = []
+with open(manifest_path, 'r', encoding='utf-8') as f:
+    for line in f:
+        parts = line.strip().split('|')
+        if len(parts) == 3:
+            final_data.append({'speaker': parts[2]})
+
+# Beszélők számlálása
+from collections import Counter
+speaker_counts = Counter([item['speaker'] for item in final_data])
+for speaker, count in sorted(speaker_counts.items()):
+    print(f"C_{speaker.zfill(3)}: {count} fájl")

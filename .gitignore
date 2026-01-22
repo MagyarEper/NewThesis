@@ -1,0 +1,59 @@
+# WAV fájlok és audio könyvtárak
+wavs_16khz/
+reconstructed_wavs/
+dataset_mel_reconstructed_wavs/
+
+# Spectrogram fájlok
+spectrograms/
+mel_spec
+
+# Training logs és checkpoints
+Grad-TTS/logs/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyTorch model checkpoints
+*.pt
+*.pth
+*.ckpt
+!Grad-TTS/checkpts/hifigan-config.json
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Large data files
+*.wav
+*.mp3
+*.flac
+
+# Manifest CSV backups (csak a .txt kell)
+manifest.csv
+test_manifest.csv
+train_manifest.csv
+val_manifest.csv

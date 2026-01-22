@@ -6210,7 +6210,6 @@
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_fan_livingroom_LAO.wav|A nagyszobában kapcsold ki a ventillátort.|26
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_fan_smallroom_AOL.wav|Kapcsold ki a ventillátort a kisszobában.|26
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_fan_smallroom_LAO.wav|Kisszobámban kapcsold ki a ventillátort.|26
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_electricity_kitchen_AOL.wav|Kapcsold ki fel a villanyt a konyhán.|26
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_electricity_kitchen_LAO.wav|Konyhában kapcsold fel a villanyt.|26
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdőszobában.|26
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_electricity_bathroom_LAO.wav|Fürdőszobába kapcsold fel a villanyt.|26
@@ -6997,16 +6996,12 @@
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_dishwasher_kitchen_AOL.wav|Kapcsold be a mosogatógépet a konyhában.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_dishwasher_kitchen_LAO.wav|A konyhában kapcsold be a mosogatógépet.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_kitchen_AOL.wav|Állícsd harminc fokra a mosógépet a konyhában.|28
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_kitchen_AOL.wav|Kapcsold be a mosógépet a konyhában.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_kitchen_LAO.wav|A konyhában kapcsold be a mosó gépet.|28
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_kitchen_LAO.wav|A konyhában kapcsold be a mosógépet harminc fok.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_kitchen_AOL.wav|Kapcsold be harminc fokon a mosógépet a konyhában.|28
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_kitchen_LAO.wav|A konyhában kapcsold be a mosógépet harminc fokon.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_bathroom_AOL.wav|Kapcsold be a mosógépet harminc fokon a fürdőszobában.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_washing machine_bathroom_LAO.wav|A fürdőszobában kapcsold be a mosógépet harminc fokon.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_bathroom_AOL.wav|Kapcsold be a mosógépet hatvan fokon a fürdőszobában.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_bathroom_LAO.wav|A fürdőszobában kapcsold be a mosógépet hatvan fokon.|28
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_kitchen_AOL.wav|Kapcsold be a mosógépet hatvan fokon a konyhában.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_washing machine_kitchen_LAO.wav|A konyhában kapcsold be a mosógépet hatvan fokra.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_phone_NULL_AO.wav|Hívd föl a lányom telefonon.|28
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_phone_NULL_AO.wav|Hívd föl a fiam telefonon.|28
@@ -7602,14 +7597,9 @@
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_dishwasher_kitchen_AOL.wav|Kapcsold ki a mosogatógépet a konyhába.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_dishwasher_kitchen_LAO.wav|Konyhába kapcsold ki a mosogatógépet.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_washing machine_kitchen_AOL.wav|Kapcsold be a mosógépet harminc fokon a konyhába.|30
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_dishwasher_kitchen_LAOX.wav|Konyhába kapcsold be a mosogatógépet harminc fokon.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_washing machine_bathroom_AOL.wav|Kapcsold be a mosógépet harminc fokon a fürdőszobába.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_washing machine_bathroom_LAO.wav|Fürdőszobába kapcsold be a mosógépet harminc fokon.|30
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_dishwasher_kitchen_AOXL.wav|Kapcsold be a mosogatógépet hatvan fokon a konyhába.|30
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_washing machine_kitchen_AOL.wav|Kapcsold be a mosógépet hatvan fokon a konyhába.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_washing machine_kitchen_LAO.wav|Konyhába kapcsold be a mosógépet hatvan fokon.|30
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_washing machine_bathroom_AOL.wav|Kapcsojd be a mosógépet a hatvan fokon a fürdőszobába.|30
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_washing machine_bathroom_LAO.wav|Fürdőszobába kapcsoj be a mosógépet hatvan fokon.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_computer_kitchen_AOL.wav|Kapcsold ki a számítógépet a konyhába.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_computer_kitchen_LAO.wav|Konyhában kapcsold ki a számítógépet.|30
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_computer_room_AOL.wav|Kapcsold ki a számítógépet a szobába.|30
@@ -7976,8 +7966,6 @@
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_shutter_corridor_lAO.wav|A folyosón húzd le a redőnyt.|31
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_kettle_kitchen_AOL.wav|Kapcsold be a vízforralót a konyhábn.|31
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_kettle_kitchen_LAO.wav|A konyhában kapcsold be a vízforralót.|31
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_034_0010_computer_kitchen_AOL.wav|Kapcsold be a számítógépet a konyhában.|32
-/home/arcdeus/Documents/NewThesis/wavs_16khz/C_034_0010_computer_kitchen_LXAO.wav|A konyhában hogy kapcsold be a számítógépet.|32
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_computer_smallroom_ALO.wav|Kapcsold be a kisszobában a számítógépet.|33
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_computer_smallroom_AOL.wav|Kapcsold be a számítógépet a kisszobában.|33
 /home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_computer_smallroom_LAO.wav|A kisszobában kapcsold be a számítógépet.|33
