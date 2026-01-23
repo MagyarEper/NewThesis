@@ -57,3 +57,18 @@ manifest.csv
 test_manifest.csv
 train_manifest.csv
 val_manifest.csv
+
+# Generated files (szkriptekkel generált fájlok - ne írjuk felül)
+# Manifest fájl (remote gépen generálva)
+manifest.txt
+
+# Dataset splits (train_test_split.py által generálva)
+Grad-TTS/resources/filelists/libri-tts/train.txt
+Grad-TTS/resources/filelists/libri-tts/valid.txt
+Grad-TTS/resources/filelists/libri-tts/test.txt
+
+# Cython compiled files (monotonic_align build)
+Grad-TTS/model/monotonic_align/*.so
+Grad-TTS/model/monotonic_align/*.c
+Grad-TTS/model/monotonic_align/build/
+
