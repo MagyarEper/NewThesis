@@ -8,3 +8,4 @@ Unidecode==1.1.2
 librosa==0.8.0
 scipy==1.5.4
 tqdm
+speechbrain
