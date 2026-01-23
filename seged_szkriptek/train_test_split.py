@@ -27,10 +27,10 @@ def main():
     output_dir = Path(args.output_dir)
     
     if not manifest_path.exists():
-        print(f"❌ HIBA: A manifest fájl nem található: {manifest_path}", file=sys.stderr)
+        print(f"ERROR: A manifest fájl nem található: {manifest_path}", file=sys.stderr)
         sys.exit(1)
     
-    print(f"📖 Manifest beolvasása: {manifest_path}")
+    print(f"Manifest beolvasása: {manifest_path}")
     
     # Beolvasás
     data = []
@@ -83,11 +83,11 @@ def main():
     save_grad_format(val_df, val_path)
     save_grad_format(test_df, test_path)
 
-    print("✅ Splitek létrehozva:")
+    print("Splitek létrehozva:")
     print(f"   Train: {train_path} ({len(train_df)} utterances)")
     print(f"   Valid: {val_path} ({len(val_df)} utterances)")
     print(f"   Test:  {test_path} ({len(test_df)} utterances)")
-    print(f"\n📊 Beszélők száma:")
+    print(f"\nBeszélők száma:")
     print(f"   Train: {train_df['speaker'].nunique()}")
     print(f"   Valid: {val_df['speaker'].nunique()}")
     print(f"   Test:  {test_df['speaker'].nunique()}")

@@ -20,7 +20,7 @@ def main():
     manifest_path = Path(args.manifest)
     
     if not manifest_path.exists():
-        print(f"❌ HIBA: A manifest fájl nem található: {manifest_path}", file=sys.stderr)
+        print(f"ERROR: A manifest fájl nem található: {manifest_path}", file=sys.stderr)
         sys.exit(1)
     
     # Manifest beolvasása
@@ -31,7 +31,7 @@ def main():
             if len(parts) == 3:
                 data.append({'wav': parts[0], 'text': parts[1], 'speaker': parts[2]})
 
-    print(f"📊 Összesen {len(data)} fájl a manifestben\n")
+    print(f"Összesen {len(data)} fájl a manifestben\n")
 
     # Ellenőrzés
     missing = []
@@ -44,11 +44,11 @@ def main():
         else:
             missing.append(item)
 
-    print(f"✓ Megtalált fájlok: {len(existing)}")
-    print(f"✗ Hiányzó fájlok: {len(missing)}\n")
+    print(f"Megtalált fájlok: {len(existing)}")
+    print(f"Hiányzó fájlok: {len(missing)}\n")
 
     if len(missing) > 50:
-        print("❌ HIBA: Több mint 50 fájl hiányzik!")
+        print("ERROR: Több mint 50 fájl hiányzik!")
         print(f"   Hiányzó fájlok száma: {len(missing)}")
         print("\nHiányzó fájlok (első 50):")
         for i, item in enumerate(missing[:50], 1):
@@ -62,18 +62,18 @@ def main():
         for i, item in enumerate(missing, 1):
             print(f"  {i}. {item['wav']}")
         
-        print(f"\n🔧 Hiányzó fájlok eltávolítása a manifestből...")
+        print(f"\nHiányzó fájlok eltávolítása a manifestből...")
         
         with open(manifest_path, 'w', encoding='utf-8') as f:
             for item in existing:
                 f.write(f"{item['wav']}|{item['text']}|{item['speaker']}\n")
         
-        print(f"✅ Manifest frissítve!")
+        print(f"Manifest frissítve!")
         print(f"   Eredeti: {len(data)} fájl")
         print(f"   Tisztított: {len(existing)} fájl")
         print(f"   Eltávolítva: {len(missing)} fájl")
     else:
-        print("🎉 Minden fájl megvan!")
+        print("Minden fájl megvan!")
 
     # Statisztikák
     print("\n" + "="*50)
