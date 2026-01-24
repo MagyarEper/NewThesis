@@ -37,6 +37,25 @@ def load_model(checkpoint_path, n_spks=39):
     """Load trained GradTTS model."""
     print(f'Loading checkpoint: {checkpoint_path}')
     
+    # Load checkpoint first to check vocab size
+    checkpoint = torch.load(checkpoint_path, map_location='cpu')
+    
+    # Handle different checkpoint formats
+    if 'model' in checkpoint:
+        state_dict = checkpoint['model']
+        epoch = checkpoint.get('epoch', 'unknown')
+    else:
+        state_dict = checkpoint
+        epoch = 'unknown'
+    
+    # Get actual vocab size from checkpoint
+    if 'encoder.emb.weight' in state_dict:
+        actual_n_vocab = state_dict['encoder.emb.weight'].shape[0]
+        print(f'Detected vocab size from checkpoint: {actual_n_vocab}')
+    else:
+        actual_n_vocab = len(symbols)
+        print(f'Using default vocab size: {actual_n_vocab}')
+    
     # Model parameters (MUST MATCH training params.py)
     spk_emb_dim = 64
     n_enc_channels = 128  # From params.py (optimized for 16GB VRAM)
@@ -54,9 +73,9 @@ def load_model(checkpoint_path, n_spks=39):
     beta_max = 20.0
     pe_scale = 1000
     
-    # Initialize model
+    # Initialize model with actual vocab size from checkpoint
     model = GradTTS(
-        len(symbols), 
+        actual_n_vocab,  # Use vocab size from checkpoint
         n_spks,
         spk_emb_dim,
         n_enc_channels,
@@ -74,18 +93,8 @@ def load_model(checkpoint_path, n_spks=39):
         pe_scale
     )
     
-    # Load checkpoint
-    checkpoint = torch.load(checkpoint_path, map_location='cpu')
-    
-    # Handle different checkpoint formats
-    if 'model' in checkpoint:
-        model.load_state_dict(checkpoint['model'])
-        epoch = checkpoint.get('epoch', 'unknown')
-    else:
-        # Checkpoint is the state dict itself
-        model.load_state_dict(checkpoint)
-        epoch = 'unknown'
-    
+    # Load state dict
+    model.load_state_dict(state_dict)
     model.eval()
     
     print(f'✓ Model loaded from epoch {epoch}')
