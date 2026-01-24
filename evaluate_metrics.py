@@ -97,87 +97,97 @@ def align_audio_length(audio1, audio2):
     return audio1[:min_len], audio2[:min_len]
 
 
-def extract_mel_cepstrum(audio, sr, n_mels=80, n_fft=1024, hop_length=256, win_length=1024, f_min=0, f_max=8000):
+def extract_mel_cepstrum(audio, sr, n_mfcc=24, n_fft=1024, hop_length=256, win_length=1024, f_min=0, f_max=8000):
     """
-    Extract Mel-Spectrogram for MCD computation (matching Grad-TTS training pipeline).
+    Extract Mel-Cepstral Coefficients (MCEP) for MCD computation.
     
-    CRITICAL: MCD should use mel-spectrogram (NOT MFCC) to match training features.
-    Standard TTS papers report MCD on mel-spectrogram bins, not MFCC coefficients.
+    CRITICAL: MCD (Mel-Cepstral Distortion) is DEFINED on mel-cepstral coefficients,
+    NOT log mel-spectrogram bins. Using MFCC as standard approximation to MCEP.
+    
+    Standard TTS papers use 24-25 MFCCs (excluding C0 = energy) for MCD computation.
+    
+    Reference: Kubichek (1993), "Mel-Cepstral Distance Measure for Objective 
+    Speech Quality Assessment"
     
     Args:
         audio: Audio signal
         sr: Sample rate
-        n_mels: Number of mel bins (default 80 - matching training)
+        n_mfcc: Number of MFCC coefficients (default 24, C0 will be excluded)
         n_fft: FFT size
         hop_length: Hop length
         win_length: Window length
         f_min: Minimum frequency
-        f_max: Maximum frequency (matching training: 8000 Hz for 16kHz sr)
+        f_max: Maximum frequency
         
     Returns:
-        mel_spec: Log mel-spectrogram [n_frames, n_mels]
+        mfcc: MFCC coefficients [n_frames, n_mfcc] (C0 excluded)
     """
-    # Compute mel-spectrogram using librosa (similar to SpeechBrain pipeline)
-    mel_spec = librosa.feature.melspectrogram(
+    # Extract MFCCs (mel-cepstral coefficients)
+    mfcc = librosa.feature.mfcc(
         y=audio,
         sr=sr,
+        n_mfcc=n_mfcc + 1,  # +1 because we'll exclude C0 (energy)
         n_fft=n_fft,
         hop_length=hop_length,
         win_length=win_length,
-        n_mels=n_mels,
         fmin=f_min,
         fmax=f_max,
-        power=1.0,  # Amplitude spectrogram (matching training power=1)
-        norm='slaney',  # Matching training
-        htk=False  # Slaney-style mel (matching training mel_scale="slaney")
+        norm='ortho',  # Standard DCT-II orthonormal normalization
+        htk=False
     )
     
-    # Convert to log scale (matching training compression=True)
-    mel_spec_db = librosa.power_to_db(mel_spec, ref=1.0, amin=1e-10, top_db=None)
+    # Exclude C0 (energy coefficient) - standard practice for MCD
+    mfcc = mfcc[1:, :]  # Now shape: (n_mfcc, n_frames)
     
-    # Transpose to [n_frames, n_mels]
-    mel_spec_db = mel_spec_db.T
+    # Transpose to [n_frames, n_mfcc]
+    mfcc = mfcc.T
     
-    return mel_spec_db
+    return mfcc
 
 
-def compute_mcd_dtw(real_mel, synth_mel):
+def compute_mcd_dtw(real_mfcc, synth_mfcc, use_cmvn=True):
     """
     Compute Mel-Cepstral Distortion (MCD) with DTW alignment.
     
-    Standard formula for mel-spectrogram distance:
-    MCD = (10/ln(10)) * sqrt(sum_{k=1}^{K} (mel_k^real - mel_k^synth)^2 / K)
+    Standard MCD formula (Kubichek 1993):
+    MCD = (10 * sqrt(2) / ln(10)) * sqrt(sum_{k=1}^{K} (c_k^real - c_k^synth)^2 / K)
+        ≈ 6.141 * sqrt(mean((c_real - c_synth)^2))
     
-    where mel_k are log mel-spectrogram bins (NOT MFCC coefficients).
+    where c_k are mel-cepstral coefficients (MFCC, excluding C0).
     
     Args:
-        real_mel: Real audio log mel-spectrogram [T1, n_mels] (dB scale)
-        synth_mel: Synthetic audio log mel-spectrogram [T2, n_mels] (dB scale)
+        real_mfcc: Real audio MFCC [T1, n_mfcc]
+        synth_mfcc: Synthetic audio MFCC [T2, n_mfcc]
+        use_cmvn: Whether to apply Cepstral Mean-Variance Normalization before DTW
         
     Returns:
         mcd: Mel-Cepstral Distortion (dB)
     """
+    # Apply CMVN (per-utterance normalization) to reduce speaker/channel variance
+    if use_cmvn:
+        # Zero-mean, unit-variance normalization
+        real_mfcc = (real_mfcc - np.mean(real_mfcc, axis=0)) / (np.std(real_mfcc, axis=0) + 1e-8)
+        synth_mfcc = (synth_mfcc - np.mean(synth_mfcc, axis=0)) / (np.std(synth_mfcc, axis=0) + 1e-8)
+    
     # DTW alignment
-    distance, path = fastdtw(real_mel, synth_mel, dist=euclidean)
+    distance, path = fastdtw(real_mfcc, synth_mfcc, dist=euclidean)
     
     # Compute MCD on aligned frames
-    # Formula: sqrt(sum((mel_real - mel_synth)^2) / n_mels)
+    # Formula: 6.141 * sqrt(mean((c_real - c_synth)^2))
     mcd_values = []
     for i, j in path:
-        diff = real_mel[i] - synth_mel[j]
-        # Mean squared difference across mel bins
-        mcd_frame = np.sqrt(np.sum(diff ** 2) / len(diff))
-        mcd_values.append(mcd_frame)
+        diff = real_mfcc[i] - synth_mfcc[j]
+        # RMSE across cepstral coefficients
+        frame_mcd = np.sqrt(np.mean(diff ** 2))
+        mcd_values.append(frame_mcd)
     
-    # Convert to dB scale: (10/ln(10)) * mean
-    # Note: Some papers omit the (10/ln(10)) factor and report raw RMSE
-    # Standard MCD uses this factor for dB interpretation
-    mcd = (10.0 / np.log(10.0)) * np.mean(mcd_values)
+    # Average MCD over all aligned frames, apply MCD constant
+    mcd = np.mean(mcd_values) * 10 * np.sqrt(2) / np.log(10)  # ≈ 6.141 * RMSE
     
     return mcd
 
 
-def extract_f0_vuv(audio, sr, f0_min=75, f0_max=600):
+def extract_f0_vuv(audio, sr, f0_min=80, f0_max=600, hop_length=256):
     """
     Extract F0 (pitch) and VUV (voiced/unvoiced) flags using Praat.
     
@@ -272,7 +282,7 @@ def compute_f0_metrics(real_f0, real_vuv, synth_f0, synth_vuv):
 
 def compute_stoi_metrics(real_audio, synth_audio, sr):
     """
-    Compute P-STOI and ESTOI intelligibility metrics.
+    Compute P-STOI and ESTOI intelligibility metrics with cross-correlation alignment.
     
     CRITICAL: Both signals must be:
     - Same sample rate (10kHz or 16kHz)
@@ -280,6 +290,11 @@ def compute_stoi_metrics(real_audio, synth_audio, sr):
     - Time-aligned (trimmed to speech region)
     - Same length
     - Normalized amplitude (float32, -1 to 1 range)
+    
+    Cross-correlation alignment:
+    - Estimates time delay between real and synth using normalized cross-correlation
+    - Applies delay shift to synth before STOI computation
+    - Compensates for TTS "lead-in" noise or tempo differences
     
     Args:
         real_audio: Real audio signal (already trimmed and aligned)
@@ -296,6 +311,25 @@ def compute_stoi_metrics(real_audio, synth_audio, sr):
     if sr not in [10000, 16000]:
         print(f"Warning: STOI requires 10kHz or 16kHz, got {sr}Hz")
         return np.nan, np.nan
+    
+    # Cross-correlation-based delay estimation
+    # Compute normalized cross-correlation to find optimal delay
+    correlation = np.correlate(real_audio, synth_audio, mode='full')
+    correlation = correlation / (np.linalg.norm(real_audio) * np.linalg.norm(synth_audio) + 1e-8)
+    
+    # Find peak (optimal delay)
+    max_corr_idx = np.argmax(correlation)
+    delay = max_corr_idx - (len(synth_audio) - 1)  # Convert to actual delay
+    
+    # Apply delay correction to synth
+    if delay > 0:
+        # Synth is delayed, shift left (trim start)
+        synth_audio = synth_audio[delay:]
+        real_audio = real_audio[:len(synth_audio)]
+    elif delay < 0:
+        # Synth is ahead, shift right (trim start of real)
+        real_audio = real_audio[-delay:]
+        synth_audio = synth_audio[:len(real_audio)]
     
     # Ensure both signals have same length (already aligned in evaluate_pair)
     if len(real_audio) != len(synth_audio):
@@ -722,11 +756,13 @@ def main():
             print(f"\n⚠️  WARNING: MCD = {mcd_mean:.1f} dB is unusually high!")
             print("   Expected range for good TTS: 4-8 dB")
             print("   Possible issues:")
-            print("   - MFCC extraction mismatch (check n_mels, n_fft, hop_length)")
-            print("   - Feature normalization missing (consider CMVN)")
+            print("   - MFCC extraction mismatch (check n_mfcc, n_fft, hop_length)")
+            print("   - Feature normalization (CMVN is enabled by default)")
             print("   - Vocoder quality problems")
-            print("   - Training/inference mel-spectrogram pipeline mismatch")
+            print("   - Model training quality issues")
             print("   Check DIAGNOSTIC STATISTICS below for MFCC value ranges\n")
+        elif mcd_mean < 3.0:
+            print(f"\n✓ MCD = {mcd_mean:.1f} dB is excellent! (< 3 dB suggests near-perfect match)\n")
     
     # Diagnostic statistics
     print('\n' + '='*80)
@@ -742,6 +778,14 @@ def main():
         print(f"Voiced frames: real={df['voiced_frames_real'].mean():.0f}, " + \
               f"synth={df['voiced_frames_synth'].mean():.0f}, " + \
               f"joint={df['voiced_frames_joint'].mean():.0f}")
+        
+        # Check if VUV alignment is problematic
+        joint_ratio = df['voiced_frames_joint'].mean() / max(df['voiced_frames_real'].mean(), 1)
+        if joint_ratio < 0.6:
+            print(f"\n⚠️  WARNING: Joint voiced frames ({joint_ratio:.1%}) is low!")
+            print("   This suggests temporal misalignment between real and synthetic audio.")
+            print("   F0 RMSE and VUV error metrics may not be reliable.")
+            print("   Consider implementing onset alignment (cross-correlation) before F0 extraction.\n")
     
     # Mel-spectrogram statistics (check if values are reasonable)
     if 'mel_real_mean' in df.columns:
