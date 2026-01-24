@@ -29,8 +29,9 @@ from text import text_to_sequence, cmudict
 from text.symbols import symbols
 from utils import intersperse
 
-# Import vocoder
-from speechbrain.pretrained import HIFIGAN
+# Import vocoder (will be loaded dynamically to handle API changes)
+# from speechbrain.pretrained import HIFIGAN  # Old API
+# from speechbrain.inference.vocoders import HIFIGAN  # New API
 
 
 def load_model(checkpoint_path, n_spks=39):
@@ -109,10 +110,38 @@ def load_model(checkpoint_path, n_spks=39):
 def load_vocoder():
     """Load HiFi-GAN vocoder."""
     print('Loading HiFi-GAN vocoder...')
-    vocoder = HIFIGAN.from_hparams(
-        source="speechbrain/tts-hifigan-libritts-16kHz",
-        savedir="pretrained_models/tts-hifigan-libritts-16kHz"
-    )
+    
+    # Try to use local pretrained model first
+    local_vocoder_path = "pretrained_models/tts-hifigan-libritts-16kHz"
+    
+    try:
+        if os.path.exists(local_vocoder_path):
+            print(f'Using local vocoder: {local_vocoder_path}')
+            from speechbrain.inference.vocoders import HIFIGAN
+            vocoder = HIFIGAN.from_hparams(
+                source=local_vocoder_path,
+                savedir=local_vocoder_path
+            )
+        else:
+            print('Downloading vocoder from HuggingFace...')
+            from speechbrain.inference.vocoders import HIFIGAN
+            vocoder = HIFIGAN.from_hparams(
+                source="speechbrain/tts-hifigan-libritts-16kHz",
+                savedir="pretrained_models/tts-hifigan-libritts-16kHz"
+            )
+    except Exception as e:
+        print(f'Failed with new API, trying old import: {e}')
+        # Fallback to old import
+        try:
+            from speechbrain.pretrained import HIFIGAN
+            vocoder = HIFIGAN.from_hparams(
+                source="speechbrain/tts-hifigan-libritts-16kHz",
+                savedir="pretrained_models/tts-hifigan-libritts-16kHz"
+            )
+        except Exception as e2:
+            print(f'Old API also failed: {e2}')
+            raise
+    
     print('✓ Vocoder loaded')
     return vocoder
 
