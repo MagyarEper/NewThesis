@@ -93,3 +93,12 @@ evaluation_results*.csv
 sanity_check_output*/
 Grad-TTS/sanity_check_output*/
 
+# AI-generated documentation (local use only)
+EVALUATION_ANALYSIS.md
+EVALUATION_GUIDE.md
+EVALUATION_README.md
+SANITY_CHECK.md
+*_ANALYSIS.md
+*_GUIDE.md
+*_README.md
+
