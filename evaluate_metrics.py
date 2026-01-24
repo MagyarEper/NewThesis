@@ -634,19 +634,6 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
         metrics['voiced_frames_synth'] = 0
         metrics['voiced_frames_joint'] = 0
     
-    # STOI metrics with VAD trimming AND global delay correction
-    try:
-        if use_vad:
-            # CRITICAL: Trim based on REAL audio only, then apply same region to SYNTH
-            # This ensures both signals cover the exact same temporal region
-            real_trimmed, trim_indices = librosa.effects.trim(
-                real_audio,
-                top_db=30,
-                frame_length=2048,
-                hop_length=512
-            )
-            
-            # Apply same trim indices to synthetic audio
     # STOI metrics
     try:
         if paper_mode:
