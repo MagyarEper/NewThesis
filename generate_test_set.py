@@ -76,10 +76,19 @@ def load_model(checkpoint_path, n_spks=39):
     
     # Load checkpoint
     checkpoint = torch.load(checkpoint_path, map_location='cpu')
-    model.load_state_dict(checkpoint['model'])
+    
+    # Handle different checkpoint formats
+    if 'model' in checkpoint:
+        model.load_state_dict(checkpoint['model'])
+        epoch = checkpoint.get('epoch', 'unknown')
+    else:
+        # Checkpoint is the state dict itself
+        model.load_state_dict(checkpoint)
+        epoch = 'unknown'
+    
     model.eval()
     
-    print(f'✓ Model loaded from epoch {checkpoint.get("epoch", "unknown")}')
+    print(f'✓ Model loaded from epoch {epoch}')
     
     if torch.cuda.is_available():
         model = model.cuda()
