@@ -89,3 +89,7 @@ Hifi-gan_16khz/pretrained_models/
 generated_test_wavs/
 evaluation_results*.csv
 
+# Sanity check outputs
+sanity_check_output*/
+Grad-TTS/sanity_check_output*/
+
