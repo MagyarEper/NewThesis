@@ -31,6 +31,15 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 from scipy.stats import pearsonr
 
+# For mel-spectrogram (matching training pipeline)
+try:
+    from speechbrain.lobes.features import Fbank
+    from speechbrain.processing.features import STFT
+    SPEECHBRAIN_AVAILABLE = True
+except ImportError:
+    print("Warning: SpeechBrain not available. Using librosa for mel-spectrogram.")
+    SPEECHBRAIN_AVAILABLE = False
+
 # For F0 extraction
 import parselmouth
 from parselmouth.praat import call
@@ -88,67 +97,81 @@ def align_audio_length(audio1, audio2):
     return audio1[:min_len], audio2[:min_len]
 
 
-def extract_mel_cepstrum(audio, sr, n_mfcc=13, n_fft=1024, hop_length=256):
+def extract_mel_cepstrum(audio, sr, n_mels=80, n_fft=1024, hop_length=256, win_length=1024, f_min=0, f_max=8000):
     """
-    Extract Mel-Cepstral coefficients for MCD.
+    Extract Mel-Spectrogram for MCD computation (matching Grad-TTS training pipeline).
     
-    Standard MCD uses MFCC c1..c12 (excluding c0 = energy term).
+    CRITICAL: MCD should use mel-spectrogram (NOT MFCC) to match training features.
+    Standard TTS papers report MCD on mel-spectrogram bins, not MFCC coefficients.
     
     Args:
         audio: Audio signal
         sr: Sample rate
-        n_mfcc: Number of MFCCs (default 13 to get c0..c12)
+        n_mels: Number of mel bins (default 80 - matching training)
+        n_fft: FFT size
+        hop_length: Hop length
+        win_length: Window length
+        f_min: Minimum frequency
+        f_max: Maximum frequency (matching training: 8000 Hz for 16kHz sr)
         
     Returns:
-        mfcc: Mel-cepstral coefficients [n_frames, n_mfcc-1] (c0 excluded)
+        mel_spec: Log mel-spectrogram [n_frames, n_mels]
     """
-    mfcc = librosa.feature.mfcc(
-        y=audio, 
-        sr=sr, 
-        n_mfcc=n_mfcc,
+    # Compute mel-spectrogram using librosa (similar to SpeechBrain pipeline)
+    mel_spec = librosa.feature.melspectrogram(
+        y=audio,
+        sr=sr,
         n_fft=n_fft,
-        hop_length=hop_length
+        hop_length=hop_length,
+        win_length=win_length,
+        n_mels=n_mels,
+        fmin=f_min,
+        fmax=f_max,
+        power=1.0,  # Amplitude spectrogram (matching training power=1)
+        norm='slaney',  # Matching training
+        htk=False  # Slaney-style mel (matching training mel_scale="slaney")
     )
-    # Transpose to [n_frames, n_mfcc]
-    mfcc = mfcc.T
     
-    # CRITICAL: Exclude c0 (energy term) for MCD computation
-    # Standard MCD uses c1..c12 only
-    mfcc = mfcc[:, 1:]  # Shape: [n_frames, 12]
+    # Convert to log scale (matching training compression=True)
+    mel_spec_db = librosa.power_to_db(mel_spec, ref=1.0, amin=1e-10, top_db=None)
     
-    return mfcc
+    # Transpose to [n_frames, n_mels]
+    mel_spec_db = mel_spec_db.T
+    
+    return mel_spec_db
 
 
-def compute_mcd_dtw(real_mfcc, synth_mfcc):
+def compute_mcd_dtw(real_mel, synth_mel):
     """
-    Compute Mel-Cepstral Distortion with DTW alignment.
+    Compute Mel-Cepstral Distortion (MCD) with DTW alignment.
     
-    Standard formula:
-    MCD = (10/ln(10)) * sqrt(2 * sum_{d=1}^{D} (c_d^real - c_d^synth)^2)
+    Standard formula for mel-spectrogram distance:
+    MCD = (10/ln(10)) * sqrt(sum_{k=1}^{K} (mel_k^real - mel_k^synth)^2 / K)
     
-    where c_d are MFCC coefficients c1..c12 (c0 excluded).
+    where mel_k are log mel-spectrogram bins (NOT MFCC coefficients).
     
     Args:
-        real_mfcc: Real audio MFCCs [T1, D] (c0 already excluded)
-        synth_mfcc: Synthetic audio MFCCs [T2, D] (c0 already excluded)
+        real_mel: Real audio log mel-spectrogram [T1, n_mels] (dB scale)
+        synth_mel: Synthetic audio log mel-spectrogram [T2, n_mels] (dB scale)
         
     Returns:
         mcd: Mel-Cepstral Distortion (dB)
     """
     # DTW alignment
-    distance, path = fastdtw(real_mfcc, synth_mfcc, dist=euclidean)
+    distance, path = fastdtw(real_mel, synth_mel, dist=euclidean)
     
     # Compute MCD on aligned frames
-    # Formula: sqrt(2 * sum((c_real - c_synth)^2))
+    # Formula: sqrt(sum((mel_real - mel_synth)^2) / n_mels)
     mcd_values = []
     for i, j in path:
-        diff = real_mfcc[i] - synth_mfcc[j]
-        # Euclidean distance squared across MFCC dimensions
-        mcd_frame = np.sqrt(2.0 * np.sum(diff ** 2))
+        diff = real_mel[i] - synth_mel[j]
+        # Mean squared difference across mel bins
+        mcd_frame = np.sqrt(np.sum(diff ** 2) / len(diff))
         mcd_values.append(mcd_frame)
     
-    # Convert to dB: (10/ln(10)) * mean
-    # Note: 10/ln(10) ≈ 4.34294
+    # Convert to dB scale: (10/ln(10)) * mean
+    # Note: Some papers omit the (10/ln(10)) factor and report raw RMSE
+    # Standard MCD uses this factor for dB interpretation
     mcd = (10.0 / np.log(10.0)) * np.mean(mcd_values)
     
     return mcd
@@ -343,45 +366,45 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
     
     # MCD with DTW (no trimming needed - DTW handles alignment)
     try:
-        real_mfcc = extract_mel_cepstrum(real_audio, sr)
-        synth_mfcc = extract_mel_cepstrum(synth_audio, sr)
-        metrics['mcd'] = compute_mcd_dtw(real_mfcc, synth_mfcc)
+        real_mel = extract_mel_cepstrum(real_audio, sr)
+        synth_mel = extract_mel_cepstrum(synth_audio, sr)
+        metrics['mcd'] = compute_mcd_dtw(real_mel, synth_mel)
         
-        # Diagnostics: check MFCC value ranges
-        metrics['mfcc_real_mean'] = np.mean(real_mfcc)
-        metrics['mfcc_real_std'] = np.std(real_mfcc)
-        metrics['mfcc_synth_mean'] = np.mean(synth_mfcc)
-        metrics['mfcc_synth_std'] = np.std(synth_mfcc)
+        # Diagnostics: check mel-spectrogram value ranges
+        metrics['mel_real_mean'] = np.mean(real_mel)
+        metrics['mel_real_std'] = np.std(real_mel)
+        metrics['mel_synth_mean'] = np.mean(synth_mel)
+        metrics['mel_synth_std'] = np.std(synth_mel)
         
-        # CRITICAL DEBUG: Check per-coefficient statistics
-        # Standard MFCC c1..c12 should have mean around 0, std around 10-30
-        metrics['mfcc_real_min'] = np.min(real_mfcc)
-        metrics['mfcc_real_max'] = np.max(real_mfcc)
-        metrics['mfcc_synth_min'] = np.min(synth_mfcc)
-        metrics['mfcc_synth_max'] = np.max(synth_mfcc)
+        # CRITICAL DEBUG: Check per-bin statistics
+        # Log mel-spectrogram (dB) should have mean around -20 to -40 dB, std around 10-20 dB
+        metrics['mel_real_min'] = np.min(real_mel)
+        metrics['mel_real_max'] = np.max(real_mel)
+        metrics['mel_synth_min'] = np.min(synth_mel)
+        metrics['mel_synth_max'] = np.max(synth_mel)
         
         # Frame-wise Euclidean distance (before DTW)
-        if real_mfcc.shape[0] == synth_mfcc.shape[0]:
-            frame_dists = np.sqrt(np.sum((real_mfcc - synth_mfcc)**2, axis=1))
-            metrics['mfcc_frame_dist_mean'] = np.mean(frame_dists)
-            metrics['mfcc_frame_dist_std'] = np.std(frame_dists)
+        if real_mel.shape[0] == synth_mel.shape[0]:
+            frame_dists = np.sqrt(np.sum((real_mel - synth_mel)**2, axis=1))
+            metrics['mel_frame_dist_mean'] = np.mean(frame_dists)
+            metrics['mel_frame_dist_std'] = np.std(frame_dists)
         else:
-            metrics['mfcc_frame_dist_mean'] = np.nan
-            metrics['mfcc_frame_dist_std'] = np.nan
+            metrics['mel_frame_dist_mean'] = np.nan
+            metrics['mel_frame_dist_std'] = np.nan
             
     except Exception as e:
         print(f"MCD failed for {real_path}: {e}")
         metrics['mcd'] = np.nan
-        metrics['mfcc_real_mean'] = np.nan
-        metrics['mfcc_real_std'] = np.nan
-        metrics['mfcc_synth_mean'] = np.nan
-        metrics['mfcc_synth_std'] = np.nan
-        metrics['mfcc_real_min'] = np.nan
-        metrics['mfcc_real_max'] = np.nan
-        metrics['mfcc_synth_min'] = np.nan
-        metrics['mfcc_synth_max'] = np.nan
-        metrics['mfcc_frame_dist_mean'] = np.nan
-        metrics['mfcc_frame_dist_std'] = np.nan
+        metrics['mel_real_mean'] = np.nan
+        metrics['mel_real_std'] = np.nan
+        metrics['mel_synth_mean'] = np.nan
+        metrics['mel_synth_std'] = np.nan
+        metrics['mel_real_min'] = np.nan
+        metrics['mel_real_max'] = np.nan
+        metrics['mel_synth_min'] = np.nan
+        metrics['mel_synth_max'] = np.nan
+        metrics['mel_frame_dist_mean'] = np.nan
+        metrics['mel_frame_dist_std'] = np.nan
     
     # F0 and VUV with detailed diagnostics
     try:
@@ -720,16 +743,16 @@ def main():
               f"synth={df['voiced_frames_synth'].mean():.0f}, " + \
               f"joint={df['voiced_frames_joint'].mean():.0f}")
     
-    # MFCC statistics (check if values are reasonable)
-    if 'mfcc_real_mean' in df.columns:
-        print(f"MFCC Real:  mean={df['mfcc_real_mean'].mean():.2f} ± {df['mfcc_real_std'].mean():.2f}, " +
-              f"range=[{df['mfcc_real_min'].mean():.1f}, {df['mfcc_real_max'].mean():.1f}]")
-    if 'mfcc_synth_mean' in df.columns:
-        print(f"MFCC Synth: mean={df['mfcc_synth_mean'].mean():.2f} ± {df['mfcc_synth_std'].mean():.2f}, " +
-              f"range=[{df['mfcc_synth_min'].mean():.1f}, {df['mfcc_synth_max'].mean():.1f}]")
-    if 'mfcc_frame_dist_mean' in df.columns:
-        print(f"MFCC Frame Distance: {df['mfcc_frame_dist_mean'].mean():.2f} ± {df['mfcc_frame_dist_std'].mean():.2f}")
-        print(f"  (Expected: ~5-20 for good TTS, >50 indicates major mismatch)")
+    # Mel-spectrogram statistics (check if values are reasonable)
+    if 'mel_real_mean' in df.columns:
+        print(f"Mel-Spec Real:  mean={df['mel_real_mean'].mean():.2f} ± {df['mel_real_std'].mean():.2f} dB, " +
+              f"range=[{df['mel_real_min'].mean():.1f}, {df['mel_real_max'].mean():.1f}] dB")
+    if 'mel_synth_mean' in df.columns:
+        print(f"Mel-Spec Synth: mean={df['mel_synth_mean'].mean():.2f} ± {df['mel_synth_std'].mean():.2f} dB, " +
+              f"range=[{df['mel_synth_min'].mean():.1f}, {df['mel_synth_max'].mean():.1f}] dB")
+    if 'mel_frame_dist_mean' in df.columns:
+        print(f"Mel-Spec Frame Distance: {df['mel_frame_dist_mean'].mean():.2f} ± {df['mel_frame_dist_std'].mean():.2f} dB")
+        print(f"  (Expected: ~1-5 dB for good TTS, >10 dB indicates major mismatch)")
     
     # Audio length statistics
     if 'audio_real_orig_len' in df.columns:
