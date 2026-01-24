@@ -175,10 +175,13 @@ def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
     else:
         peak_margin = 0.0
     
-    # Reliability criteria:
-    # - Peak z-score > 3.0 (peak is 3 std above mean)
-    # - Peak margin > 1.0 (clear winner, not ambiguous)
-    is_reliable = (peak_z_score > 3.0) and (peak_margin > 1.0)
+    # Reliability criteria (ADJUSTED FOR DYSARTHRIC SPEECH):
+    # - Peak z-score > 1.5 (relaxed from 3.0 for dysarthria/vocoder mismatch)
+    # - Peak margin > 0.5 (relaxed from 1.0, dysarthria has weaker peaks)
+    # 
+    # Note: Clean speech uses z>3.0, but dysarthric speech has inherently
+    # weaker correlation peaks due to irregular tempo/articulation.
+    is_reliable = (peak_z_score > 1.5) and (peak_margin > 0.5)
     
     # Convert frame delay to sample delay
     delay_frames = peak_idx - max_shift_frames
