@@ -233,8 +233,26 @@ def main():
     
     # Load manifest
     print(f'\nLoading manifest: {args.manifest}')
-    with open(args.manifest, 'r', encoding='utf-8') as f:
-        lines = [line.strip().split('|') for line in f.readlines()]
+    
+    if args.manifest.endswith('.csv'):
+        # CSV format with headers: utt_id,wav,speaker,text
+        import csv
+        with open(args.manifest, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            lines = [(row['wav'], row['text'], row['speaker']) for row in reader]
+        
+        # Create speaker ID mapping (C_001 -> 0, C_002 -> 1, etc.)
+        unique_speakers = sorted(set(spk for _, _, spk in lines))
+        speaker_to_id = {spk: idx for idx, spk in enumerate(unique_speakers)}
+        print(f'Found {len(unique_speakers)} unique speakers: {unique_speakers[:5]}...')
+        
+        # Convert speaker names to IDs
+        lines = [(wav, text, speaker_to_id[spk]) for wav, text, spk in lines]
+    else:
+        # Pipe-separated format: path|text|speaker_id (already integers)
+        with open(args.manifest, 'r', encoding='utf-8') as f:
+            lines = [line.strip().split('|') for line in f.readlines()]
+        lines = [(wav, text, int(spk)) for wav, text, spk in lines]
     
     print(f'Found {len(lines)} utterances')
     
@@ -255,7 +273,7 @@ def main():
             
             # Synthesize
             wav, rtf = synthesize_utterance(
-                model, vocoder, text, int(speaker_id),
+                model, vocoder, text, speaker_id,
                 length_scale=args.length_scale,
                 temperature=args.temperature,
                 timesteps=args.timesteps,
