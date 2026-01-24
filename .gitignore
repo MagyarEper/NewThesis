@@ -72,3 +72,20 @@ Grad-TTS/model/monotonic_align/*.so
 Grad-TTS/model/monotonic_align/*.c
 Grad-TTS/model/monotonic_align/build/
 
+# Training artifacts
+Grad-TTS/nohup.out
+nohup.out
+
+# Typo directories
+Grad-TTS/wavs_16lhz/
+wavs_16lhz/
+
+# Pretrained models (large files)
+Grad-TTS/pretrained_models/
+pretrained_models/
+Hifi-gan_16khz/pretrained_models/
+
+# Evaluation outputs
+generated_test_wavs/
+evaluation_results*.csv
+
