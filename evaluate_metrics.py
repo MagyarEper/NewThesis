@@ -82,6 +82,86 @@ def trim_silence(audio, sr, top_db=30, frame_length=2048, hop_length=512):
     return trimmed
 
 
+def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=1.0):
+    """
+    Estimate global time delay between real and synth audio using envelope cross-correlation.
+    
+    CRITICAL: This is the paper-standard approach to handle TTS onset/offset misalignment.
+    Without this, STOI/ESTOI and F0/VUV metrics are unreliable due to temporal misalignment.
+    
+    Method:
+    1. Compute amplitude envelope (RMS) for both signals
+    2. Normalize envelopes
+    3. Cross-correlate to find optimal delay
+    4. Return delay in samples
+    
+    Args:
+        real_audio: Real audio signal (already trimmed to speech)
+        synth_audio: Synthetic audio signal (already trimmed to speech)
+        sr: Sample rate
+        max_shift_sec: Maximum allowed shift in seconds (default 1.0s)
+        
+    Returns:
+        delay_samples: Optimal delay in samples (positive = synth is delayed)
+    """
+    # Compute RMS envelope (frame-based energy)
+    frame_length = 2048
+    hop_length = 512
+    
+    # Real envelope
+    real_rms = librosa.feature.rms(y=real_audio, frame_length=frame_length, hop_length=hop_length)[0]
+    # Synth envelope
+    synth_rms = librosa.feature.rms(y=synth_audio, frame_length=frame_length, hop_length=hop_length)[0]
+    
+    # Normalize envelopes (0-1 range)
+    real_rms = (real_rms - real_rms.min()) / (real_rms.max() - real_rms.min() + 1e-8)
+    synth_rms = (synth_rms - synth_rms.min()) / (synth_rms.max() - synth_rms.min() + 1e-8)
+    
+    # Cross-correlation
+    correlation = np.correlate(real_rms, synth_rms, mode='full')
+    
+    # Find peak within allowed range
+    max_shift_frames = int(max_shift_sec * sr / hop_length)
+    center = len(correlation) // 2
+    search_start = max(0, center - max_shift_frames)
+    search_end = min(len(correlation), center + max_shift_frames)
+    
+    # Find best alignment within search range
+    best_idx = search_start + np.argmax(correlation[search_start:search_end])
+    delay_frames = best_idx - (len(synth_rms) - 1)
+    
+    # Convert frame delay to sample delay
+    delay_samples = delay_frames * hop_length
+    
+    return delay_samples
+
+
+def apply_delay_correction(real_audio, synth_audio, delay_samples):
+    """
+    Apply delay correction to align real and synth audio.
+    
+    Args:
+        real_audio: Real audio signal
+        synth_audio: Synthetic audio signal
+        delay_samples: Delay in samples (from estimate_global_delay)
+        
+    Returns:
+        real_aligned, synth_aligned: Time-aligned audio signals
+    """
+    if delay_samples > 0:
+        # Synth is delayed, shift it left (trim start)
+        synth_audio = synth_audio[delay_samples:]
+        real_audio = real_audio[:len(synth_audio)]
+    elif delay_samples < 0:
+        # Synth is ahead, shift it right (trim start of real)
+        real_audio = real_audio[-delay_samples:]
+        synth_audio = synth_audio[:len(real_audio)]
+    
+    # Final length alignment
+    min_len = min(len(real_audio), len(synth_audio))
+    return real_audio[:min_len], synth_audio[:min_len]
+
+
 def align_audio_length(audio1, audio2):
     """
     Align two audio signals to the same length by truncating to minimum.
@@ -282,19 +362,17 @@ def compute_f0_metrics(real_f0, real_vuv, synth_f0, synth_vuv):
 
 def compute_stoi_metrics(real_audio, synth_audio, sr):
     """
-    Compute P-STOI and ESTOI intelligibility metrics with cross-correlation alignment.
+    Compute P-STOI and ESTOI intelligibility metrics.
     
     CRITICAL: Both signals must be:
     - Same sample rate (10kHz or 16kHz)
     - Mono
-    - Time-aligned (trimmed to speech region)
+    - Time-aligned (already VAD-trimmed and delay-corrected in evaluate_pair)
     - Same length
     - Normalized amplitude (float32, -1 to 1 range)
     
-    Cross-correlation alignment:
-    - Estimates time delay between real and synth using normalized cross-correlation
-    - Applies delay shift to synth before STOI computation
-    - Compensates for TTS "lead-in" noise or tempo differences
+    NOTE: Global delay correction is now done in evaluate_pair() using
+    envelope-based cross-correlation before calling this function.
     
     Args:
         real_audio: Real audio signal (already trimmed and aligned)
@@ -311,25 +389,6 @@ def compute_stoi_metrics(real_audio, synth_audio, sr):
     if sr not in [10000, 16000]:
         print(f"Warning: STOI requires 10kHz or 16kHz, got {sr}Hz")
         return np.nan, np.nan
-    
-    # Cross-correlation-based delay estimation
-    # Compute normalized cross-correlation to find optimal delay
-    correlation = np.correlate(real_audio, synth_audio, mode='full')
-    correlation = correlation / (np.linalg.norm(real_audio) * np.linalg.norm(synth_audio) + 1e-8)
-    
-    # Find peak (optimal delay)
-    max_corr_idx = np.argmax(correlation)
-    delay = max_corr_idx - (len(synth_audio) - 1)  # Convert to actual delay
-    
-    # Apply delay correction to synth
-    if delay > 0:
-        # Synth is delayed, shift left (trim start)
-        synth_audio = synth_audio[delay:]
-        real_audio = real_audio[:len(synth_audio)]
-    elif delay < 0:
-        # Synth is ahead, shift right (trim start of real)
-        real_audio = real_audio[-delay:]
-        synth_audio = synth_audio[:len(real_audio)]
     
     # Ensure both signals have same length (already aligned in evaluate_pair)
     if len(real_audio) != len(synth_audio):
@@ -441,9 +500,31 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
         metrics['mel_frame_dist_std'] = np.nan
     
     # F0 and VUV with detailed diagnostics
+    # CRITICAL: Use the SAME aligned audio as STOI (after delay correction)
     try:
-        real_f0, real_vuv = extract_f0_vuv(real_audio, sr)
-        synth_f0, synth_vuv = extract_f0_vuv(synth_audio, sr)
+        # Get aligned audio (VAD trimmed + delay corrected)
+        if use_vad:
+            # Use the aligned signals from STOI section
+            real_trimmed, trim_indices = librosa.effects.trim(
+                real_audio,
+                top_db=30,
+                frame_length=2048,
+                hop_length=512
+            )
+            start_idx = trim_indices[0]
+            end_idx = trim_indices[1]
+            synth_trimmed = synth_audio[start_idx:end_idx]
+            
+            # Apply global delay correction
+            delay_samples = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=1.0)
+            real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+        else:
+            real_aligned_f0 = real_audio
+            synth_aligned_f0 = synth_audio
+        
+        # Extract F0/VUV on aligned audio
+        real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
+        synth_f0, synth_vuv = extract_f0_vuv(synth_aligned_f0, sr)
         
         f0_rmse_hz, f0_rmse_log, vuv_error, vf_real, vf_synth, vf_joint = \
             compute_f0_metrics(real_f0, real_vuv, synth_f0, synth_vuv)
@@ -478,7 +559,7 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
         metrics['voiced_frames_synth'] = 0
         metrics['voiced_frames_joint'] = 0
     
-    # STOI metrics with VAD trimming
+    # STOI metrics with VAD trimming AND global delay correction
     try:
         if use_vad:
             # CRITICAL: Trim based on REAL audio only, then apply same region to SYNTH
@@ -495,8 +576,13 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             end_idx = trim_indices[1]
             synth_trimmed = synth_audio[start_idx:end_idx]
             
-            # Align to same length (in case synth is slightly shorter/longer)
-            real_aligned, synth_aligned = align_audio_length(real_trimmed, synth_trimmed)
+            # PAPER-STANDARD: Global delay correction using envelope cross-correlation
+            # This handles TTS onset/offset misalignment (critical for STOI/F0/VUV)
+            delay_samples = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=1.0)
+            real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+            
+            # Store delay diagnostic
+            metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
             
             # Store trimmed lengths for diagnostics
             metrics['audio_real_trimmed_len'] = len(real_aligned)
@@ -768,6 +854,15 @@ def main():
     print('\n' + '='*80)
     print('DIAGNOSTIC STATISTICS')
     print('='*80)
+    
+    # Alignment delay statistics
+    if 'alignment_delay_ms' in df.columns:
+        delay_mean = df['alignment_delay_ms'].mean()
+        delay_std = df['alignment_delay_ms'].std()
+        print(f"Global alignment delay: {delay_mean:.1f} ± {delay_std:.1f} ms")
+        if abs(delay_mean) > 100:
+            print(f"⚠️  WARNING: Large average delay ({delay_mean:.0f} ms) detected!")
+            print("   This suggests systematic onset timing differences between real and synth.\n")
     
     # F0 statistics
     if 'f0_real_mean' in df.columns:
