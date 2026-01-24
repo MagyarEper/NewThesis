@@ -295,11 +295,100 @@ def evaluate_pair(real_path, synth_path, sr=16000):
     return metrics
 
 
+def sanity_check_metrics(audio_dir, manifest_path, output_prefix, sr=16000, mode='real_vs_real'):
+    """
+    Sanity check: evaluate audio against itself to verify metric implementation.
+    Expected results: MCD ~ 0, STOI ~ 1, ESTOI ~ 1, F0_RMSE ~ 0, VUV_ERROR ~ 0
+    
+    Args:
+        audio_dir: Directory with audio files
+        manifest_path: Manifest file
+        output_prefix: Prefix for output files
+        sr: Sample rate
+        mode: 'real_vs_real' or 'synth_vs_synth'
+    """
+    print('\n' + '='*80)
+    print(f'SANITY CHECK: {mode.upper()}')
+    print('='*80)
+    print(f'Audio directory: {audio_dir}')
+    print(f'Mode: {mode}')
+    print(f'Expected: MCD~0, F0_RMSE~0, VUV_ERROR~0, STOI~1, ESTOI~1')
+    print('='*80)
+    
+    # Load manifest
+    if manifest_path.endswith('.csv'):
+        import csv
+        with open(manifest_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            lines = [(row['wav'], row['text'], row['speaker']) for row in reader]
+    else:
+        with open(manifest_path, 'r', encoding='utf-8') as f:
+            lines = [line.strip().split('|') for line in f.readlines()]
+    
+    print(f'\nProcessing {len(lines)} utterances...\n')
+    
+    results = []
+    for wav_path, text, speaker_id in tqdm(lines[:50]):  # Limit to 50 samples for quick check
+        basename = os.path.basename(wav_path)
+        audio_path = os.path.join(audio_dir, basename)
+        
+        if not os.path.exists(audio_path):
+            continue
+        
+        # Evaluate file against itself
+        metrics = evaluate_pair(audio_path, audio_path, sr=sr)
+        metrics['utt_id'] = basename
+        metrics['speaker_id'] = speaker_id
+        results.append(metrics)
+    
+    # Convert to DataFrame
+    df = pd.DataFrame(results)
+    
+    # Compute statistics
+    print('\n' + '='*80)
+    print(f'SANITY CHECK RESULTS: {mode.upper()}')
+    print('='*80)
+    
+    metric_names = ['mcd', 'f0_rmse', 'vuv_error', 'stoi', 'estoi']
+    for metric in metric_names:
+        if metric in df.columns:
+            values = df[metric].dropna()
+            if len(values) > 0:
+                mean_val = values.mean()
+                std_val = values.std()
+                min_val = values.min()
+                max_val = values.max()
+                print(f'{metric.upper():12s}: mean={mean_val:7.3f}, std={std_val:6.3f}, min={min_val:7.3f}, max={max_val:7.3f}')
+    
+    # Save results
+    output_path = f'{output_prefix}_sanity_{mode}.csv'
+    df.to_csv(output_path, index=False)
+    print(f'\n✓ Sanity check results saved to: {output_path}')
+    
+    # Interpretation
+    print('\n' + '='*80)
+    print('INTERPRETATION:')
+    print('='*80)
+    mcd_mean = df['mcd'].mean()
+    stoi_mean = df['stoi'].mean() if 'stoi' in df.columns else None
+    
+    if mcd_mean < 1.0 and (stoi_mean is None or stoi_mean > 0.95):
+        print('✓ PASS: Metrics are working correctly!')
+        print('  MCD is near zero and STOI is near 1 (as expected for identical files)')
+    else:
+        print('✗ FAIL: Metric implementation may have issues!')
+        print(f'  MCD = {mcd_mean:.3f} (expected < 1.0)')
+        if stoi_mean is not None:
+            print(f'  STOI = {stoi_mean:.3f} (expected > 0.95)')
+        print('  Check mel-spectrogram extraction and DTW alignment')
+    print('='*80)
+
+
 def main():
-    parser = argparse.ArgumentParser(description='Evaluate TTS quality with intrusive metrics')
-    parser.add_argument('--real-dir', type=str, required=True,
+    parser = argparse.ArgumentParser(description='Evaluate TTS quality metrics')
+    parser.add_argument('--real-dir', type=str,
                         help='Directory with real audio files')
-    parser.add_argument('--synth-dir', type=str, required=True,
+    parser.add_argument('--synth-dir', type=str,
                         help='Directory with synthetic audio files')
     parser.add_argument('--manifest', type=str, required=True,
                         help='Manifest file with utterance list (pipe-separated: path|text|speaker)')
@@ -307,7 +396,37 @@ def main():
                         help='Output CSV file for results')
     parser.add_argument('--sr', type=int, default=16000,
                         help='Sample rate (default: 16000)')
+    parser.add_argument('--sanity-check', action='store_true',
+                        help='Run sanity check: evaluate audio against itself')
+    parser.add_argument('--sanity-mode', type=str, choices=['real', 'synth', 'both'], default='both',
+                        help='Sanity check mode: real_vs_real, synth_vs_synth, or both')
     args = parser.parse_args()
+    
+    # Sanity check mode
+    if args.sanity_check:
+        output_prefix = args.output.replace('.csv', '')
+        
+        if args.sanity_mode in ['real', 'both']:
+            if not args.real_dir:
+                print("Error: --real-dir required for real_vs_real sanity check")
+                return
+            sanity_check_metrics(args.real_dir, args.manifest, output_prefix, 
+                               sr=args.sr, mode='real_vs_real')
+        
+        if args.sanity_mode in ['synth', 'both']:
+            if not args.synth_dir:
+                print("Error: --synth-dir required for synth_vs_synth sanity check")
+                return
+            sanity_check_metrics(args.synth_dir, args.manifest, output_prefix, 
+                               sr=args.sr, mode='synth_vs_synth')
+        
+        return
+    
+    # Normal evaluation mode
+    if not args.real_dir or not args.synth_dir:
+        print("Error: --real-dir and --synth-dir required for normal evaluation")
+        parser.print_help()
+        return
     
     print('='*80)
     print('TTS INTRUSIVE QUALITY EVALUATION')
