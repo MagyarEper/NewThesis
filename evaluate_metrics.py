@@ -84,16 +84,16 @@ def trim_silence(audio, sr, top_db=30, frame_length=2048, hop_length=512):
 
 def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
     """
-    Estimate global time delay using ROBUST amplitude envelope cross-correlation.
+    Estimate global time delay using ROBUST RMS envelope with normalized cross-correlation.
     
     CRITICAL: This is the paper-standard approach to handle TTS onset/offset misalignment.
     
     Robust method:
-    1. Compute amplitude envelope (absolute value with smoothing)
-    2. Downsample for efficiency
-    3. Normalize using median (robust to outliers)
-    4. Cross-correlate with restricted search range
-    5. Return delay in samples
+    1. Compute RMS energy envelope (NOT abs - more stable for dysarthria)
+    2. Log-scale transform (stabilizes dynamic range)
+    3. Z-score normalization (mean=0, std=1)
+    4. Normalized cross-correlation
+    5. Peak quality check (reject weak/ambiguous alignments)
     
     Args:
         real_audio: Real audio signal (already trimmed to speech)
@@ -103,59 +103,88 @@ def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
         
     Returns:
         delay_samples: Optimal delay in samples (positive = synth is delayed)
+        correlation_strength: Peak quality metric (z-score of peak)
+        is_reliable: Boolean flag (True if alignment is reliable)
     """
-    # Compute amplitude envelope (absolute value)
-    real_env = np.abs(real_audio)
-    synth_env = np.abs(synth_audio)
+    # Compute RMS energy envelope (25ms frame, 10ms hop)
+    frame_length = int(0.025 * sr)  # 25ms = 400 samples @ 16kHz
+    hop_length = int(0.01 * sr)     # 10ms = 160 samples @ 16kHz
     
-    # Smooth envelope (moving average, ~20ms window)
-    window_size = int(0.02 * sr)  # 20ms
-    if window_size < 1:
-        window_size = 1
+    # RMS energy for real signal
+    real_rms = librosa.feature.rms(y=real_audio, frame_length=frame_length, hop_length=hop_length)[0]
+    # RMS energy for synth signal
+    synth_rms = librosa.feature.rms(y=synth_audio, frame_length=frame_length, hop_length=hop_length)[0]
     
-    # Use scipy.ndimage for fast convolution
-    from scipy.ndimage import uniform_filter1d
-    real_env = uniform_filter1d(real_env, size=window_size, mode='nearest')
-    synth_env = uniform_filter1d(synth_env, size=window_size, mode='nearest')
+    # Log-scale transform (stabilizes dynamic range, critical for dysarthria)
+    eps = 1e-8
+    real_log_energy = np.log(real_rms + eps)
+    synth_log_energy = np.log(synth_rms + eps)
     
-    # Downsample for efficiency (10ms resolution = 160 samples @ 16kHz)
-    downsample_factor = max(1, int(0.01 * sr))
-    real_env = real_env[::downsample_factor]
-    synth_env = synth_env[::downsample_factor]
+    # Z-score normalization (mean=0, std=1) with guards
+    real_mean = np.mean(real_log_energy)
+    real_std = np.std(real_log_energy)
+    synth_mean = np.mean(synth_log_energy)
+    synth_std = np.std(synth_log_energy)
     
-    # Robust normalization (median-based, resistant to outliers)
-    real_median = np.median(real_env)
-    synth_median = np.median(synth_env)
-    real_mad = np.median(np.abs(real_env - real_median))  # Median Absolute Deviation
-    synth_mad = np.median(np.abs(synth_env - synth_median))
+    # Guard against flat signals (std too small)
+    if real_std < 0.1 or synth_std < 0.1:
+        # Signal is too flat, alignment unreliable
+        return 0, 0.0, False
     
-    real_env = (real_env - real_median) / (real_mad + 1e-8)
-    synth_env = (synth_env - synth_median) / (synth_mad + 1e-8)
+    real_env = (real_log_energy - real_mean) / real_std
+    synth_env = (synth_log_energy - synth_mean) / synth_std
     
-    # Cross-correlation with RESTRICTED search range
-    correlation = np.correlate(real_env, synth_env, mode='full')
+    # Normalized cross-correlation (NCC)
+    # Normalize by signal energy to make correlation scale-invariant
+    real_norm = np.linalg.norm(real_env)
+    synth_norm = np.linalg.norm(synth_env)
+    
+    if real_norm < eps or synth_norm < eps:
+        return 0, 0.0, False
+    
+    correlation = np.correlate(real_env, synth_env, mode='full') / (real_norm * synth_norm + eps)
     
     # Find peak within allowed range (±max_shift_sec)
-    max_shift_samples = int(max_shift_sec * sr / downsample_factor)
+    max_shift_frames = int(max_shift_sec * sr / hop_length)
     center = len(synth_env) - 1  # Zero-lag position
-    search_start = max(0, center - max_shift_samples)
-    search_end = min(len(correlation), center + max_shift_samples + 1)
+    search_start = max(0, center - max_shift_frames)
+    search_end = min(len(correlation), center + max_shift_frames + 1)
     
-    # Find best alignment within search range
+    # Extract search region
     search_region = correlation[search_start:search_end]
-    best_idx = search_start + np.argmax(search_region)
-    delay_downsampled = best_idx - center
     
-    # Compute correlation strength (normalized peak height)
-    peak_value = np.max(search_region)
-    mean_value = np.mean(search_region)
-    std_value = np.std(search_region)
-    correlation_strength = (peak_value - mean_value) / (std_value + 1e-8)
+    # Find best peak
+    peak_idx = np.argmax(search_region)
+    peak_value = search_region[peak_idx]
     
-    # Convert back to original sample rate
-    delay_samples = delay_downsampled * downsample_factor
+    # Compute peak quality (z-score of peak within search region)
+    search_mean = np.mean(search_region)
+    search_std = np.std(search_region)
     
-    return delay_samples, correlation_strength
+    if search_std < eps:
+        # Flat correlation, no clear peak
+        return 0, 0.0, False
+    
+    peak_z_score = (peak_value - search_mean) / search_std
+    
+    # Additional check: peak margin (distance to second-best peak)
+    search_region_sorted = np.sort(search_region)
+    if len(search_region_sorted) > 1:
+        second_peak = search_region_sorted[-2]
+        peak_margin = (peak_value - second_peak) / (search_std + eps)
+    else:
+        peak_margin = 0.0
+    
+    # Reliability criteria:
+    # - Peak z-score > 3.0 (peak is 3 std above mean)
+    # - Peak margin > 1.0 (clear winner, not ambiguous)
+    is_reliable = (peak_z_score > 3.0) and (peak_margin > 1.0)
+    
+    # Convert frame delay to sample delay
+    delay_frames = peak_idx - max_shift_frames
+    delay_samples = delay_frames * hop_length
+    
+    return delay_samples, peak_z_score, is_reliable
 
 
 def apply_delay_correction(real_audio, synth_audio, delay_samples):
@@ -537,16 +566,24 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             end_idx = trim_indices[1]
             synth_trimmed = synth_audio[start_idx:end_idx]
             
-            # Apply global delay correction with robustness check
-            delay_samples, corr_strength = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
-            real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+            # Apply global delay correction with peak quality check
+            delay_samples, peak_z_score, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             
-            # Store correlation strength for diagnostics
-            metrics['alignment_corr_strength'] = corr_strength
+            # Only apply delay if alignment is reliable
+            if is_reliable:
+                real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+            else:
+                # Unreliable alignment, don't shift (use delay=0)
+                real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, 0)
+            
+            # Store correlation strength and reliability for diagnostics
+            metrics['alignment_peak_z'] = peak_z_score
+            metrics['alignment_reliable'] = is_reliable
         else:
             real_aligned_f0 = real_audio
             synth_aligned_f0 = synth_audio
-            metrics['alignment_corr_strength'] = np.nan
+            metrics['alignment_peak_z'] = np.nan
+            metrics['alignment_reliable'] = False
         
         # Extract F0/VUV on aligned audio
         real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
@@ -602,14 +639,22 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             end_idx = trim_indices[1]
             synth_trimmed = synth_audio[start_idx:end_idx]
             
-            # PAPER-STANDARD: Global delay correction using envelope cross-correlation
+            # PAPER-STANDARD: Global delay correction using RMS envelope + normalized cross-correlation
             # This handles TTS onset/offset misalignment (critical for STOI/F0/VUV)
-            delay_samples, corr_strength = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
-            real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+            delay_samples, peak_z_score, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             
-            # Store delay diagnostic
-            metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
-            metrics['alignment_corr_strength'] = corr_strength
+            # Only apply delay if alignment is reliable (peak_z > 3.0 AND margin > 1.0)
+            if is_reliable:
+                real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+                metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
+            else:
+                # Unreliable alignment, don't shift (delay=0)
+                real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, 0)
+                metrics['alignment_delay_ms'] = 0.0
+            
+            # Store alignment quality metrics
+            metrics['alignment_peak_z'] = peak_z_score
+            metrics['alignment_reliable'] = is_reliable
             
             # Store trimmed lengths for diagnostics
             metrics['audio_real_trimmed_len'] = len(real_aligned)
@@ -891,15 +936,29 @@ def main():
             print(f"⚠️  WARNING: Large average delay ({delay_mean:.0f} ms) detected!")
             print("   This suggests systematic onset timing differences between real and synth.\n")
     
-    # Correlation strength (alignment reliability)
-    if 'alignment_corr_strength' in df.columns:
-        corr_mean = df['alignment_corr_strength'].mean()
-        corr_std = df['alignment_corr_strength'].std()
-        print(f"Alignment correlation strength: {corr_mean:.2f} ± {corr_std:.2f}")
-        if corr_mean < 2.0:
-            print(f"⚠️  WARNING: Low correlation strength ({corr_mean:.2f})!")
-            print("   The alignment may not be reliable. STOI/VUV metrics should be interpreted with caution.")
-            print("   Possible causes: high tempo variability, silence periods, or signal quality issues.\n")
+    # Alignment reliability (peak quality check)
+    if 'alignment_peak_z' in df.columns and 'alignment_reliable' in df.columns:
+        peak_z_mean = df['alignment_peak_z'].mean()
+        peak_z_std = df['alignment_peak_z'].std()
+        reliable_count = df['alignment_reliable'].sum()
+        total_count = len(df)
+        reliable_rate = 100.0 * reliable_count / total_count if total_count > 0 else 0
+        
+        print(f"Alignment peak quality (z-score): {peak_z_mean:.2f} ± {peak_z_std:.2f}")
+        print(f"Alignment reliability: {reliable_count}/{total_count} ({reliable_rate:.1f}%)")
+        
+        if reliable_rate < 50:
+            print(f"⚠️  WARNING: Low reliability rate ({reliable_rate:.1f}%)!")
+            print("   Most alignments are weak/ambiguous. STOI/VUV metrics are unreliable.")
+            print("   Possible causes:")
+            print("   - Content mismatch (real vs synth not the same utterance)")
+            print("   - High tempo variability (dysarthric speech characteristic)")
+            print("   - Silence/pause differences between real and synth")
+            print("   Consider checking utterance pairing correctness.\n")
+        elif reliable_rate < 80:
+            print(f"⚠️  Moderate reliability ({reliable_rate:.1f}%). Some alignments may be unreliable.\n")
+        else:
+            print(f"✓ Good reliability ({reliable_rate:.1f}%). Alignments are generally stable.\n")
     
     # F0 statistics
     if 'f0_real_mean' in df.columns:
