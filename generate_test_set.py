@@ -20,6 +20,7 @@ from pathlib import Path
 from tqdm import tqdm
 import torch
 import numpy as np
+import soundfile as sf
 
 # Import model components
 sys.path.append('Grad-TTS')
@@ -37,6 +38,7 @@ def load_model(checkpoint_path, n_spks=39):
     print(f'Loading checkpoint: {checkpoint_path}')
     
     # Model parameters (from params.py)
+    spk_emb_dim = 64
     n_enc_channels = 192
     filter_channels = 768
     filter_channels_dp = 256
@@ -56,6 +58,7 @@ def load_model(checkpoint_path, n_spks=39):
     model = GradTTS(
         len(symbols), 
         n_spks,
+        spk_emb_dim,
         n_enc_channels,
         filter_channels,
         filter_channels_dp, 
@@ -229,7 +232,6 @@ def main():
             )
             
             # Save
-            import soundfile as sf
             sf.write(output_path, wav, 16000)
             
             rtf_values.append(rtf)
