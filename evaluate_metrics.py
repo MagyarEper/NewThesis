@@ -975,7 +975,20 @@ def main():
         
         print(f"Alignment reliability: {reliable_count}/{total_count} ({reliable_rate:.1f}%)")
         
-        if reliable_rate < 50:
+        # Updated interpretation based on correlation strength
+        if 'alignment_corr_strength' in df.columns:
+            corr_mean = df['alignment_corr_strength'].mean()
+            if corr_mean < 0.3:
+                print(f"⚠️  CRITICAL: Correlation strength is very low ({corr_mean:.3f})!")
+                print("   Global alignment is unreliable. Frame-level metrics (STOI/F0/VUV) cannot be trusted.")
+                print("   Only DTW-based metrics (MCD) are reliable.\n")
+            elif corr_mean < 0.5:
+                print(f"⚠️  WARNING: Correlation strength is weak ({corr_mean:.3f}).")
+                print("   Global alignment quality is limited. Frame-level metrics have reduced reliability.")
+                print("   Use stratified analysis to identify samples with good alignment.\n")
+            else:
+                print(f"✓ Correlation strength is acceptable ({corr_mean:.3f}). Alignments are reasonable.\n")
+        elif reliable_rate < 50:
             print(f"⚠️  WARNING: Low reliability rate ({reliable_rate:.1f}%)!")
             print("   Most alignments are weak/ambiguous. STOI/VUV metrics are unreliable.")
             print("   Possible causes:")
@@ -987,6 +1000,54 @@ def main():
             print(f"⚠️  Moderate reliability ({reliable_rate:.1f}%). Some alignments may be unreliable.\n")
         else:
             print(f"✓ Good reliability ({reliable_rate:.1f}%). Alignments are generally stable.\n")
+    
+    # CRITICAL: Stratified analysis by correlation strength
+    if 'alignment_corr_strength' in df.columns and 'stoi' in df.columns:
+        print("="*80)
+        print("STRATIFIED ANALYSIS: STOI by Correlation Strength")
+        print("="*80)
+        print("Hypothesis: If alignment is the issue, STOI should improve with higher correlation.\n")
+        
+        corr_valid = df['alignment_corr_strength'].dropna()
+        if len(corr_valid) > 0:
+            # Define correlation quality bins
+            bins = [0, 0.3, 0.5, 0.7, 1.0]
+            labels = ['Poor (<0.3)', 'Weak (0.3-0.5)', 'Moderate (0.5-0.7)', 'Good (>0.7)']
+            
+            df_temp = df.copy()
+            df_temp['corr_bin'] = pd.cut(df_temp['alignment_corr_strength'], bins=bins, labels=labels, include_lowest=True)
+            
+            print(f"{'Correlation Quality':<20} {'Count':>8} {'STOI':>12} {'ESTOI':>12} {'F0 RMSE (Hz)':>15} {'VUV Error':>12}")
+            print("-"*80)
+            
+            for label in labels:
+                group = df_temp[df_temp['corr_bin'] == label]
+                if len(group) > 0:
+                    count = len(group)
+                    stoi_mean = group['stoi'].mean() if 'stoi' in group.columns else np.nan
+                    estoi_mean = group['estoi'].mean() if 'estoi' in group.columns else np.nan
+                    f0_mean = group['f0_rmse_hz'].mean() if 'f0_rmse_hz' in group.columns else np.nan
+                    vuv_mean = group['vuv_error'].mean() if 'vuv_error' in group.columns else np.nan
+                    
+                    print(f"{label:<20} {count:>8} {stoi_mean:>12.3f} {estoi_mean:>12.3f} {f0_mean:>15.1f} {vuv_mean:>12.1f}%")
+            
+            print()
+            
+            # Interpretation
+            poor_stoi = df_temp[df_temp['corr_bin'] == 'Poor (<0.3)']['stoi'].mean() if len(df_temp[df_temp['corr_bin'] == 'Poor (<0.3)']) > 0 else np.nan
+            good_stoi = df_temp[df_temp['corr_bin'] == 'Good (>0.7)']['stoi'].mean() if len(df_temp[df_temp['corr_bin'] == 'Good (>0.7)']) > 0 else np.nan
+            
+            if not np.isnan(poor_stoi) and not np.isnan(good_stoi):
+                stoi_gain = good_stoi - poor_stoi
+                print(f"STOI improvement (Good vs Poor alignment): {stoi_gain:+.3f}")
+                if stoi_gain > 0.1:
+                    print("✓ Alignment quality strongly affects STOI (as expected).")
+                elif stoi_gain > 0.05:
+                    print("⚠️  Alignment has moderate impact on STOI.")
+                else:
+                    print("⚠️  WARNING: STOI does not improve with better alignment!")
+                    print("   This suggests intrinsic synthesis quality issues, not just alignment.")
+            print()
     
     # F0 statistics
     if 'f0_real_mean' in df.columns:
@@ -1002,9 +1063,9 @@ def main():
         joint_ratio = df['voiced_frames_joint'].mean() / max(df['voiced_frames_real'].mean(), 1)
         if joint_ratio < 0.6:
             print(f"\n⚠️  WARNING: Joint voiced frames ({joint_ratio:.1%}) is low!")
-            print("   This suggests temporal misalignment between real and synthetic audio.")
-            print("   F0 RMSE and VUV error metrics may not be reliable.")
-            print("   Consider implementing onset alignment (cross-correlation) before F0 extraction.\n")
+            print("   This indicates poor frame-level alignment between real and synthetic audio.")
+            print("   F0 RMSE and VUV error metrics have reduced reliability.")
+            print("   Note: This is partially due to weak global alignment (see correlation strength above).\n")
     
     # Mel-spectrogram statistics (check if values are reasonable)
     if 'mel_real_mean' in df.columns:
