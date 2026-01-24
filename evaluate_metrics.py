@@ -69,17 +69,52 @@ def trim_silence(audio, sr, top_db=30, frame_length=2048, hop_length=512):
         audio: Audio signal
         sr: Sample rate
         top_db: Threshold in dB below reference to consider as silence
+        frame_length: Frame length for energy computation
+        hop_length: Hop length for energy computation
         
     Returns:
         trimmed_audio: Audio with silence removed
+        trim_indices: (start, end) indices of non-silent region
     """
-    trimmed, _ = librosa.effects.trim(
+    trimmed, trim_indices = librosa.effects.trim(
         audio, 
         top_db=top_db,
         frame_length=frame_length,
         hop_length=hop_length
     )
-    return trimmed
+    return trimmed, trim_indices
+
+
+def normalize_audio_rms(audio, target_rms_db=-25.0):
+    """
+    Normalize audio to target RMS level.
+    
+    Paper-standard preprocessing for STOI/ESTOI comparison.
+    
+    Args:
+        audio: Audio signal
+        target_rms_db: Target RMS level in dBFS (default: -25 dBFS)
+        
+    Returns:
+        normalized_audio: Audio normalized to target RMS
+    """
+    # Remove DC offset
+    audio = audio - np.mean(audio)
+    
+    # Compute current RMS
+    current_rms = np.sqrt(np.mean(audio ** 2))
+    
+    if current_rms < 1e-8:
+        return audio  # Avoid division by zero for silent audio
+    
+    # Compute target RMS in linear scale
+    target_rms_linear = 10 ** (target_rms_db / 20.0)
+    
+    # Scale audio
+    scaling_factor = target_rms_linear / current_rms
+    normalized_audio = audio * scaling_factor
+    
+    return normalized_audio
 
 
 def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
@@ -281,7 +316,7 @@ def extract_mel_cepstrum(audio, sr, n_mfcc=24, n_fft=1024, hop_length=256, win_l
     return mfcc
 
 
-def compute_mcd_dtw(real_mfcc, synth_mfcc, use_cmvn=True):
+def compute_mcd_dtw(real_mfcc, synth_mfcc, use_cmvn=False):
     """
     Compute Mel-Cepstral Distortion (MCD) with DTW alignment.
     
@@ -295,11 +330,13 @@ def compute_mcd_dtw(real_mfcc, synth_mfcc, use_cmvn=True):
         real_mfcc: Real audio MFCC [T1, n_mfcc]
         synth_mfcc: Synthetic audio MFCC [T2, n_mfcc]
         use_cmvn: Whether to apply Cepstral Mean-Variance Normalization before DTW
+                  (Default: False for paper-compatibility. Most papers don't use CMVN.)
         
     Returns:
         mcd: Mel-Cepstral Distortion (dB)
     """
     # Apply CMVN (per-utterance normalization) to reduce speaker/channel variance
+    # CRITICAL: Default is False for paper-compatibility. Enable only if paper explicitly uses it.
     if use_cmvn:
         # Zero-mean, unit-variance normalization
         real_mfcc = (real_mfcc - np.mean(real_mfcc, axis=0)) / (np.std(real_mfcc, axis=0) + 1e-8)
@@ -327,11 +364,14 @@ def extract_f0_vuv(audio, sr, f0_min=80, f0_max=600, hop_length=256):
     """
     Extract F0 (pitch) and VUV (voiced/unvoiced) flags using Praat.
     
+    CRITICAL: time_step must match the acoustic feature hop_length for frame alignment.
+    
     Args:
         audio: Audio signal
         sr: Sample rate
         f0_min: Minimum F0 (Hz)
         f0_max: Maximum F0 (Hz)
+        hop_length: Hop length in samples (for frame alignment with acoustic features)
         
     Returns:
         f0: F0 contour (Hz), 0 for unvoiced frames
@@ -343,8 +383,10 @@ def extract_f0_vuv(audio, sr, f0_min=80, f0_max=600, hop_length=256):
     # Extract pitch
     pitch = call(sound, "To Pitch", 0.0, f0_min, f0_max)
     
-    # Get F0 values at regular intervals
-    time_step = 0.01  # 10ms
+    # CRITICAL FIX: Use hop_length to match acoustic feature grid
+    # Paper-standard: F0 frame rate = mel-spectrogram frame rate
+    time_step = hop_length / sr  # e.g., 256/16000 = 0.016s (16ms)
+    
     f0_values = []
     vuv_values = []
     
@@ -420,15 +462,10 @@ def compute_stoi_metrics(real_audio, synth_audio, sr):
     """
     Compute P-STOI and ESTOI intelligibility metrics.
     
-    CRITICAL: Both signals must be:
-    - Same sample rate (10kHz or 16kHz)
-    - Mono
-    - Time-aligned (already VAD-trimmed and delay-corrected in evaluate_pair)
-    - Same length
-    - Normalized amplitude (float32, -1 to 1 range)
-    
-    NOTE: Global delay correction is now done in evaluate_pair() using
-    envelope-based cross-correlation before calling this function.
+    PAPER-STANDARD preprocessing:
+    1. DC removal (mean subtraction)
+    2. RMS normalization to same level
+    3. Length alignment (already done in evaluate_pair)
     
     Args:
         real_audio: Real audio signal (already trimmed and aligned)
@@ -457,11 +494,20 @@ def compute_stoi_metrics(real_audio, synth_audio, sr):
         return np.nan, np.nan
     
     try:
+        # PAPER-STANDARD preprocessing
+        # 1. Remove DC offset
+        real_audio_processed = real_audio - np.mean(real_audio)
+        synth_audio_processed = synth_audio - np.mean(synth_audio)
+        
+        # 2. RMS normalization (critical for STOI!)
+        real_audio_processed = normalize_audio_rms(real_audio_processed, target_rms_db=-25.0)
+        synth_audio_processed = normalize_audio_rms(synth_audio_processed, target_rms_db=-25.0)
+        
         # P-STOI (standard STOI)
-        stoi_score = stoi(real_audio, synth_audio, sr, extended=False)
+        stoi_score = stoi(real_audio_processed, synth_audio_processed, sr, extended=False)
         
         # ESTOI (extended STOI, better for noisy/degraded speech)
-        estoi_score = stoi(real_audio, synth_audio, sr, extended=True)
+        estoi_score = stoi(real_audio_processed, synth_audio_processed, sr, extended=True)
         
         return stoi_score, estoi_score
     except Exception as e:
@@ -560,10 +606,26 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
     # F0 and VUV
     try:
         if paper_mode:
-            # Paper-compatible: no alignment, simple truncate
-            real_f0, real_vuv = extract_f0_vuv(real_audio, sr)
-            synth_f0, synth_vuv = extract_f0_vuv(synth_audio, sr)
+            # Paper-compatible: use same alignment as STOI (real-based trim)
+            if use_vad:
+                real_trimmed, trim_indices = librosa.effects.trim(
+                    real_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
+                start_idx = trim_indices[0]
+                end_idx = trim_indices[1]
+                synth_trimmed = synth_audio[start_idx:end_idx]
+            else:
+                real_trimmed = real_audio
+                synth_trimmed = synth_audio
             
+            # Extract F0 with frame-aligned hop_length (CRITICAL FIX!)
+            real_f0, real_vuv = extract_f0_vuv(real_trimmed, sr, hop_length=256)
+            synth_f0, synth_vuv = extract_f0_vuv(synth_trimmed, sr, hop_length=256)
+            
+            # No alignment diagnostics in paper mode
             metrics['alignment_corr_strength'] = np.nan
             metrics['alignment_peak_z'] = np.nan
             metrics['alignment_peak_margin'] = np.nan
@@ -600,8 +662,9 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
                 metrics['alignment_peak_margin'] = np.nan
                 metrics['alignment_reliable'] = False
             
-            real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
-            synth_f0, synth_vuv = extract_f0_vuv(synth_aligned_f0, sr)
+            # Extract F0 with frame-aligned hop_length (CRITICAL FIX!)
+            real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr, hop_length=256)
+            synth_f0, synth_vuv = extract_f0_vuv(synth_aligned_f0, sr, hop_length=256)
         
         f0_rmse_hz, f0_rmse_log, vuv_error, vf_real, vf_synth, vf_joint = \
             compute_f0_metrics(real_f0, real_vuv, synth_f0, synth_vuv)
@@ -637,24 +700,90 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
     # STOI metrics
     try:
         if paper_mode:
-            # Paper-compatible: simple trim + truncate
+            # PAPER-STANDARD STOI alignment:
+            # 1. Trim ONLY the real audio (VAD)
+            # 2. Apply SAME trim indices to synth audio
+            # 3. Optional: small waveform-based global shift (±100ms, not ±500ms)
+            # 4. RMS normalization (done in compute_stoi_metrics)
+            
             if use_vad:
-                real_trimmed, _ = librosa.effects.trim(real_audio, top_db=30)
-                synth_trimmed, _ = librosa.effects.trim(synth_audio, top_db=30)
+                # Trim real audio with paper-standard parameters
+                real_trimmed, trim_indices = librosa.effects.trim(
+                    real_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
+                
+                start_idx = trim_indices[0]
+                end_idx = trim_indices[1]
+                
+                # CRITICAL: Apply SAME trim to synth (not separate trim!)
+                synth_trimmed = synth_audio[start_idx:end_idx]
+                
+                metrics['trim_start_idx'] = int(start_idx)
+                metrics['trim_end_idx'] = int(end_idx)
             else:
                 real_trimmed = real_audio
                 synth_trimmed = synth_audio
+                metrics['trim_start_idx'] = 0
+                metrics['trim_end_idx'] = len(real_audio)
             
-            T = min(len(real_trimmed), len(synth_trimmed))
-            stoi_score, estoi_score = compute_stoi_metrics(real_trimmed[:T], synth_trimmed[:T], sr)
+            # Optional: small waveform-based global shift (±100ms)
+            # This is more conservative than envelope-based ±500ms
+            max_shift_samples = int(0.1 * sr)  # ±100ms
             
-            metrics['alignment_delay_ms'] = 0.0
-            metrics['audio_real_trimmed_len'] = len(real_trimmed)
-            metrics['audio_synth_trimmed_len'] = len(synth_trimmed)
-            metrics['trim_start_idx'] = 0
-            metrics['trim_end_idx'] = T
+            # Simple waveform cross-correlation for global delay
+            if len(real_trimmed) > max_shift_samples * 2 and len(synth_trimmed) > max_shift_samples * 2:
+                # Use only first 1 second for speed
+                real_snippet = real_trimmed[:min(len(real_trimmed), sr)]
+                synth_snippet = synth_trimmed[:min(len(synth_trimmed), sr)]
+                
+                # Normalize snippets
+                real_snippet = real_snippet / (np.linalg.norm(real_snippet) + 1e-8)
+                synth_snippet = synth_snippet / (np.linalg.norm(synth_snippet) + 1e-8)
+                
+                # Cross-correlation
+                corr = np.correlate(real_snippet, synth_snippet, mode='full')
+                center = len(synth_snippet) - 1
+                
+                # Search within ±100ms
+                search_start = max(0, center - max_shift_samples)
+                search_end = min(len(corr), center + max_shift_samples + 1)
+                search_region = corr[search_start:search_end]
+                
+                peak_idx = np.argmax(search_region)
+                delay_samples = peak_idx - max_shift_samples
+                
+                # Apply delay correction
+                if delay_samples > 0:
+                    synth_trimmed = synth_trimmed[delay_samples:]
+                    real_trimmed = real_trimmed[:len(synth_trimmed)]
+                elif delay_samples < 0:
+                    real_trimmed = real_trimmed[-delay_samples:]
+                    synth_trimmed = synth_trimmed[:len(real_trimmed)]
+                
+                metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
+            else:
+                delay_samples = 0
+                metrics['alignment_delay_ms'] = 0.0
+            
+            # Truncate to minimum length
+            min_len = min(len(real_trimmed), len(synth_trimmed))
+            real_aligned = real_trimmed[:min_len]
+            synth_aligned = synth_trimmed[:min_len]
+            
+            metrics['audio_real_trimmed_len'] = len(real_aligned)
+            metrics['audio_synth_trimmed_len'] = len(synth_aligned)
+            
+            # No alignment diagnostics in paper mode
+            metrics['alignment_corr_strength'] = np.nan
+            metrics['alignment_peak_z'] = np.nan
+            metrics['alignment_peak_margin'] = np.nan
+            metrics['alignment_reliable'] = False
+            
         else:
-            # Strict mode: VAD + alignment correction
+            # Strict mode: VAD + envelope-based alignment + full diagnostics
             if use_vad:
                 real_trimmed, trim_indices = librosa.effects.trim(
                     real_audio,
@@ -700,8 +829,8 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
                 metrics['audio_synth_trimmed_len'] = len(synth_aligned)
                 metrics['trim_start_idx'] = 0
                 metrics['trim_end_idx'] = len(real_audio)
-            
-            stoi_score, estoi_score = compute_stoi_metrics(real_aligned, synth_aligned, sr)
+        
+        stoi_score, estoi_score = compute_stoi_metrics(real_aligned, synth_aligned, sr)
         
         metrics['stoi'] = stoi_score
         metrics['estoi'] = estoi_score
@@ -880,16 +1009,40 @@ def main():
     print(f'Output: {args.output}')
     
     if args.paper_mode:
-        print('\n📄 PAPER-COMPATIBLE MODE')
-        print('   MCD: MFCC + DTW')
-        print('   F0/VUV: naive truncate')
-        print('   STOI: trim + truncate')
+        print('\n📄 PAPER-COMPATIBLE MODE (Strict Replication)')
+        print('   Alignment:')
+        print('     - Trim based on real audio only (VAD)')
+        print('     - Apply same trim to synth')
+        print('     - Small waveform-based shift (±100ms max)')
+        print('   MCD:')
+        print('     - MFCC-based (24 coefs, C0 excluded)')
+        print('     - DTW alignment')
+        print('     - NO CMVN (paper-standard)')
+        print('   F0/VUV:')
+        print('     - Praat extraction')
+        print('     - Frame-aligned (hop=256 samples = 16ms @ 16kHz)')
+        print('     - Real-based trim applied to synth')
+        print('   STOI:')
+        print('     - Real-based trim + small shift')
+        print('     - DC removal + RMS normalization to -25 dBFS')
+        print('     - Truncate to min length')
     else:
         print('\n🔬 STRICT DIAGNOSTIC MODE')
+        print('   Alignment:')
         if args.no_alignment:
-            print('   Global alignment: DISABLED')
+            print('     - Global alignment: DISABLED')
         else:
-            print('   Global alignment: ENABLED')
+            print('     - RMS envelope cross-correlation (±500ms)')
+            print('     - Reliability check (z-score, margin)')
+        print('   MCD:')
+        print('     - MFCC-based (24 coefs, C0 excluded)')
+        print('     - DTW alignment')
+        print('     - NO CMVN (paper-standard)')
+        print('   F0/VUV:')
+        print('     - Frame-aligned (hop=256 samples = 16ms @ 16kHz)')
+        print('   STOI:')
+        print('     - DC removal + RMS normalization')
+        print('     - Correlation diagnostics enabled')
     
     print('='*80)
     
