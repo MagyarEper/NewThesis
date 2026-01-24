@@ -111,36 +111,20 @@ def load_vocoder():
     """Load HiFi-GAN vocoder."""
     print('Loading HiFi-GAN vocoder...')
     
-    # Try to use local pretrained model first
-    local_vocoder_path = "pretrained_models/tts-hifigan-libritts-16kHz"
-    
+    # Use the new SpeechBrain API with a clean save directory
     try:
-        if os.path.exists(local_vocoder_path):
-            print(f'Using local vocoder: {local_vocoder_path}')
-            from speechbrain.inference.vocoders import HIFIGAN
-            vocoder = HIFIGAN.from_hparams(
-                source=local_vocoder_path,
-                savedir=local_vocoder_path
-            )
-        else:
-            print('Downloading vocoder from HuggingFace...')
-            from speechbrain.inference.vocoders import HIFIGAN
-            vocoder = HIFIGAN.from_hparams(
-                source="speechbrain/tts-hifigan-libritts-16kHz",
-                savedir="pretrained_models/tts-hifigan-libritts-16kHz"
-            )
+        from speechbrain.inference.vocoders import HIFIGAN
+        vocoder = HIFIGAN.from_hparams(
+            source="speechbrain/tts-hifigan-libritts-16kHz",
+            savedir="tmpdir_vocoder"  # Use temporary directory to avoid symlink issues
+        )
     except Exception as e:
-        print(f'Failed with new API, trying old import: {e}')
-        # Fallback to old import
-        try:
-            from speechbrain.pretrained import HIFIGAN
-            vocoder = HIFIGAN.from_hparams(
-                source="speechbrain/tts-hifigan-libritts-16kHz",
-                savedir="pretrained_models/tts-hifigan-libritts-16kHz"
-            )
-        except Exception as e2:
-            print(f'Old API also failed: {e2}')
-            raise
+        print(f'Error loading vocoder: {e}')
+        print('Trying without savedir...')
+        from speechbrain.inference.vocoders import HIFIGAN
+        vocoder = HIFIGAN.from_hparams(
+            source="speechbrain/tts-hifigan-libritts-16kHz"
+        )
     
     print('✓ Vocoder loaded')
     return vocoder
