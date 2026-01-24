@@ -82,58 +82,80 @@ def trim_silence(audio, sr, top_db=30, frame_length=2048, hop_length=512):
     return trimmed
 
 
-def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=1.0):
+def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
     """
-    Estimate global time delay between real and synth audio using envelope cross-correlation.
+    Estimate global time delay using ROBUST amplitude envelope cross-correlation.
     
     CRITICAL: This is the paper-standard approach to handle TTS onset/offset misalignment.
-    Without this, STOI/ESTOI and F0/VUV metrics are unreliable due to temporal misalignment.
     
-    Method:
-    1. Compute amplitude envelope (RMS) for both signals
-    2. Normalize envelopes
-    3. Cross-correlate to find optimal delay
-    4. Return delay in samples
+    Robust method:
+    1. Compute amplitude envelope (absolute value with smoothing)
+    2. Downsample for efficiency
+    3. Normalize using median (robust to outliers)
+    4. Cross-correlate with restricted search range
+    5. Return delay in samples
     
     Args:
         real_audio: Real audio signal (already trimmed to speech)
         synth_audio: Synthetic audio signal (already trimmed to speech)
         sr: Sample rate
-        max_shift_sec: Maximum allowed shift in seconds (default 1.0s)
+        max_shift_sec: Maximum allowed shift in seconds (default 0.5s = ±500ms)
         
     Returns:
         delay_samples: Optimal delay in samples (positive = synth is delayed)
     """
-    # Compute RMS envelope (frame-based energy)
-    frame_length = 2048
-    hop_length = 512
+    # Compute amplitude envelope (absolute value)
+    real_env = np.abs(real_audio)
+    synth_env = np.abs(synth_audio)
     
-    # Real envelope
-    real_rms = librosa.feature.rms(y=real_audio, frame_length=frame_length, hop_length=hop_length)[0]
-    # Synth envelope
-    synth_rms = librosa.feature.rms(y=synth_audio, frame_length=frame_length, hop_length=hop_length)[0]
+    # Smooth envelope (moving average, ~20ms window)
+    window_size = int(0.02 * sr)  # 20ms
+    if window_size < 1:
+        window_size = 1
     
-    # Normalize envelopes (0-1 range)
-    real_rms = (real_rms - real_rms.min()) / (real_rms.max() - real_rms.min() + 1e-8)
-    synth_rms = (synth_rms - synth_rms.min()) / (synth_rms.max() - synth_rms.min() + 1e-8)
+    # Use scipy.ndimage for fast convolution
+    from scipy.ndimage import uniform_filter1d
+    real_env = uniform_filter1d(real_env, size=window_size, mode='nearest')
+    synth_env = uniform_filter1d(synth_env, size=window_size, mode='nearest')
     
-    # Cross-correlation
-    correlation = np.correlate(real_rms, synth_rms, mode='full')
+    # Downsample for efficiency (10ms resolution = 160 samples @ 16kHz)
+    downsample_factor = max(1, int(0.01 * sr))
+    real_env = real_env[::downsample_factor]
+    synth_env = synth_env[::downsample_factor]
     
-    # Find peak within allowed range
-    max_shift_frames = int(max_shift_sec * sr / hop_length)
-    center = len(correlation) // 2
-    search_start = max(0, center - max_shift_frames)
-    search_end = min(len(correlation), center + max_shift_frames)
+    # Robust normalization (median-based, resistant to outliers)
+    real_median = np.median(real_env)
+    synth_median = np.median(synth_env)
+    real_mad = np.median(np.abs(real_env - real_median))  # Median Absolute Deviation
+    synth_mad = np.median(np.abs(synth_env - synth_median))
+    
+    real_env = (real_env - real_median) / (real_mad + 1e-8)
+    synth_env = (synth_env - synth_median) / (synth_mad + 1e-8)
+    
+    # Cross-correlation with RESTRICTED search range
+    correlation = np.correlate(real_env, synth_env, mode='full')
+    
+    # Find peak within allowed range (±max_shift_sec)
+    max_shift_samples = int(max_shift_sec * sr / downsample_factor)
+    center = len(synth_env) - 1  # Zero-lag position
+    search_start = max(0, center - max_shift_samples)
+    search_end = min(len(correlation), center + max_shift_samples + 1)
     
     # Find best alignment within search range
-    best_idx = search_start + np.argmax(correlation[search_start:search_end])
-    delay_frames = best_idx - (len(synth_rms) - 1)
+    search_region = correlation[search_start:search_end]
+    best_idx = search_start + np.argmax(search_region)
+    delay_downsampled = best_idx - center
     
-    # Convert frame delay to sample delay
-    delay_samples = delay_frames * hop_length
+    # Compute correlation strength (normalized peak height)
+    peak_value = np.max(search_region)
+    mean_value = np.mean(search_region)
+    std_value = np.std(search_region)
+    correlation_strength = (peak_value - mean_value) / (std_value + 1e-8)
     
-    return delay_samples
+    # Convert back to original sample rate
+    delay_samples = delay_downsampled * downsample_factor
+    
+    return delay_samples, correlation_strength
 
 
 def apply_delay_correction(real_audio, synth_audio, delay_samples):
@@ -515,12 +537,16 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             end_idx = trim_indices[1]
             synth_trimmed = synth_audio[start_idx:end_idx]
             
-            # Apply global delay correction
-            delay_samples = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=1.0)
+            # Apply global delay correction with robustness check
+            delay_samples, corr_strength = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+            
+            # Store correlation strength for diagnostics
+            metrics['alignment_corr_strength'] = corr_strength
         else:
             real_aligned_f0 = real_audio
             synth_aligned_f0 = synth_audio
+            metrics['alignment_corr_strength'] = np.nan
         
         # Extract F0/VUV on aligned audio
         real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
@@ -578,11 +604,12 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             
             # PAPER-STANDARD: Global delay correction using envelope cross-correlation
             # This handles TTS onset/offset misalignment (critical for STOI/F0/VUV)
-            delay_samples = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=1.0)
+            delay_samples, corr_strength = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
             
             # Store delay diagnostic
             metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
+            metrics['alignment_corr_strength'] = corr_strength
             
             # Store trimmed lengths for diagnostics
             metrics['audio_real_trimmed_len'] = len(real_aligned)
@@ -863,6 +890,16 @@ def main():
         if abs(delay_mean) > 100:
             print(f"⚠️  WARNING: Large average delay ({delay_mean:.0f} ms) detected!")
             print("   This suggests systematic onset timing differences between real and synth.\n")
+    
+    # Correlation strength (alignment reliability)
+    if 'alignment_corr_strength' in df.columns:
+        corr_mean = df['alignment_corr_strength'].mean()
+        corr_std = df['alignment_corr_strength'].std()
+        print(f"Alignment correlation strength: {corr_mean:.2f} ± {corr_std:.2f}")
+        if corr_mean < 2.0:
+            print(f"⚠️  WARNING: Low correlation strength ({corr_mean:.2f})!")
+            print("   The alignment may not be reliable. STOI/VUV metrics should be interpreted with caution.")
+            print("   Possible causes: high tempo variability, silence periods, or signal quality issues.\n")
     
     # F0 statistics
     if 'f0_real_mean' in df.columns:
