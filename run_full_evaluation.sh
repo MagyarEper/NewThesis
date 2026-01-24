@@ -24,7 +24,7 @@ echo ""
 echo "Step 2/3: Generating test set predictions..."
 echo "----------------------------------------------"
 
-CHECKPOINT="logs/hungarian_dysarthria/grad_500.pt"
+CHECKPOINT="Grad-TTS/logs/hungarian_dysarthria/grad_500.pt"
 MANIFEST="test_manifest.txt"
 OUTPUT_DIR="generated_test_wavs"
 

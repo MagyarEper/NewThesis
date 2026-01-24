@@ -37,19 +37,19 @@ def load_model(checkpoint_path, n_spks=39):
     """Load trained GradTTS model."""
     print(f'Loading checkpoint: {checkpoint_path}')
     
-    # Model parameters (from params.py)
+    # Model parameters (MUST MATCH training params.py)
     spk_emb_dim = 64
-    n_enc_channels = 192
-    filter_channels = 768
-    filter_channels_dp = 256
-    n_enc_layers = 6
+    n_enc_channels = 128  # From params.py (optimized for 16GB VRAM)
+    filter_channels = 512  # From params.py
+    filter_channels_dp = 192  # From params.py
+    n_enc_layers = 5  # From params.py (was reduced from 6)
     enc_kernel = 3
     enc_dropout = 0.1
     n_heads = 2
     window_size = 4
     
     n_feats = 80
-    dec_dim = 64
+    dec_dim = 48  # From params.py (was reduced from 64)
     beta_min = 0.05
     beta_max = 20.0
     pe_scale = 1000
