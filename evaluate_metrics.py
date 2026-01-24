@@ -490,18 +490,20 @@ def compute_ppg_distance(real_audio, synth_audio, sr):
     return np.nan
 
 
-def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
+def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alignment=True, paper_mode=False):
     """
-    Evaluate one real-synthetic pair with all metrics.
+    Evaluate one real-synthetic pair.
     
     Args:
         real_path: Path to real audio
         synth_path: Path to synthetic audio
         sr: Sample rate
-        use_vad: Whether to trim silence before STOI computation
+        use_vad: Whether to trim silence
+        use_global_alignment: Apply global delay correction (strict mode only)
+        paper_mode: Use paper-compatible naive metrics (no alignment checks)
         
     Returns:
-        metrics: Dictionary of metric values with diagnostics
+        metrics: Dictionary of metric values
     """
     # Load audio
     real_audio, _ = librosa.load(real_path, sr=sr)
@@ -555,57 +557,58 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
         metrics['mel_frame_dist_mean'] = np.nan
         metrics['mel_frame_dist_std'] = np.nan
     
-    # F0 and VUV with detailed diagnostics
-    # CRITICAL: Use the SAME aligned audio as STOI (after delay correction)
+    # F0 and VUV
     try:
-        # Get aligned audio (VAD trimmed + delay corrected)
-        if use_vad:
-            # Use the aligned signals from STOI section
-            real_trimmed, trim_indices = librosa.effects.trim(
-                real_audio,
-                top_db=30,
-                frame_length=2048,
-                hop_length=512
-            )
-            start_idx = trim_indices[0]
-            end_idx = trim_indices[1]
-            synth_trimmed = synth_audio[start_idx:end_idx]
+        if paper_mode:
+            # Paper-compatible: no alignment, simple truncate
+            real_f0, real_vuv = extract_f0_vuv(real_audio, sr)
+            synth_f0, synth_vuv = extract_f0_vuv(synth_audio, sr)
             
-            # Apply global delay correction with peak quality check
-            delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
-            
-            # Only apply delay if alignment is reliable
-            if is_reliable:
-                real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
-            else:
-                # Unreliable alignment, don't shift (use delay=0)
-                real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, 0)
-            
-            # Store correlation strength and reliability for diagnostics
-            metrics['alignment_corr_strength'] = peak_value
-            metrics['alignment_peak_z'] = peak_z_score
-            metrics['alignment_peak_margin'] = peak_margin
-            metrics['alignment_reliable'] = is_reliable
-        else:
-            real_aligned_f0 = real_audio
-            synth_aligned_f0 = synth_audio
             metrics['alignment_corr_strength'] = np.nan
             metrics['alignment_peak_z'] = np.nan
             metrics['alignment_peak_margin'] = np.nan
             metrics['alignment_reliable'] = False
-        
-        # Extract F0/VUV on aligned audio
-        real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
-        synth_f0, synth_vuv = extract_f0_vuv(synth_aligned_f0, sr)
+        else:
+            # Strict mode: VAD trim + delay correction
+            if use_vad:
+                real_trimmed, trim_indices = librosa.effects.trim(
+                    real_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
+                start_idx = trim_indices[0]
+                end_idx = trim_indices[1]
+                synth_trimmed = synth_audio[start_idx:end_idx]
+                
+                delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
+                
+                if is_reliable:
+                    real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+                else:
+                    real_aligned_f0, synth_aligned_f0 = apply_delay_correction(real_trimmed, synth_trimmed, 0)
+                
+                metrics['alignment_corr_strength'] = peak_value
+                metrics['alignment_peak_z'] = peak_z_score
+                metrics['alignment_peak_margin'] = peak_margin
+                metrics['alignment_reliable'] = is_reliable
+            else:
+                real_aligned_f0 = real_audio
+                synth_aligned_f0 = synth_audio
+                metrics['alignment_corr_strength'] = np.nan
+                metrics['alignment_peak_z'] = np.nan
+                metrics['alignment_peak_margin'] = np.nan
+                metrics['alignment_reliable'] = False
+            
+            real_f0, real_vuv = extract_f0_vuv(real_aligned_f0, sr)
+            synth_f0, synth_vuv = extract_f0_vuv(synth_aligned_f0, sr)
         
         f0_rmse_hz, f0_rmse_log, vuv_error, vf_real, vf_synth, vf_joint = \
             compute_f0_metrics(real_f0, real_vuv, synth_f0, synth_vuv)
         
-        metrics['f0_rmse_hz'] = f0_rmse_hz  # Raw F0 RMSE in Hz
-        metrics['f0_rmse_log'] = f0_rmse_log  # Log F0 RMSE
+        metrics['f0_rmse_hz'] = f0_rmse_hz
+        metrics['f0_rmse_log'] = f0_rmse_log
         metrics['vuv_error'] = vuv_error
-        
-        # Diagnostics: F0 statistics
         real_f0_voiced = real_f0[real_f0 > 0]
         synth_f0_voiced = synth_f0[synth_f0 > 0]
         
@@ -644,45 +647,77 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             )
             
             # Apply same trim indices to synthetic audio
-            start_idx = trim_indices[0]
-            end_idx = trim_indices[1]
-            synth_trimmed = synth_audio[start_idx:end_idx]
-            
-            # PAPER-STANDARD: Global delay correction using RMS envelope + normalized cross-correlation
-            # This handles TTS onset/offset misalignment (critical for STOI/F0/VUV)
-            delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
-            
-            # Only apply delay if alignment is reliable (peak_z > 1.5 AND margin > 0.0, dysarthria-adapted)
-            if is_reliable:
-                real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
-                metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
+    # STOI metrics
+    try:
+        if paper_mode:
+            # Paper-compatible: simple trim + truncate
+            if use_vad:
+                real_trimmed, _ = librosa.effects.trim(real_audio, top_db=30)
+                synth_trimmed, _ = librosa.effects.trim(synth_audio, top_db=30)
             else:
-                # Unreliable alignment, don't shift (delay=0)
-                real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, 0)
-                metrics['alignment_delay_ms'] = 0.0
+                real_trimmed = real_audio
+                synth_trimmed = synth_audio
             
-            # Store alignment quality metrics
-            metrics['alignment_corr_strength'] = peak_value
-            metrics['alignment_peak_z'] = peak_z_score
-            metrics['alignment_peak_margin'] = peak_margin
-            metrics['alignment_reliable'] = is_reliable
+            T = min(len(real_trimmed), len(synth_trimmed))
+            stoi_score, estoi_score = compute_stoi_metrics(real_trimmed[:T], synth_trimmed[:T], sr)
             
-            # Store trimmed lengths for diagnostics
-            metrics['audio_real_trimmed_len'] = len(real_aligned)
-            metrics['audio_synth_trimmed_len'] = len(synth_aligned)
-            metrics['trim_start_idx'] = int(start_idx)
-            metrics['trim_end_idx'] = int(end_idx)
-        else:
-            real_aligned, synth_aligned = align_audio_length(real_audio, synth_audio)
-            metrics['audio_real_trimmed_len'] = len(real_aligned)
-            metrics['audio_synth_trimmed_len'] = len(synth_aligned)
+            metrics['alignment_delay_ms'] = 0.0
+            metrics['audio_real_trimmed_len'] = len(real_trimmed)
+            metrics['audio_synth_trimmed_len'] = len(synth_trimmed)
             metrics['trim_start_idx'] = 0
-            metrics['trim_end_idx'] = len(real_audio)
+            metrics['trim_end_idx'] = T
+        else:
+            # Strict mode: VAD + alignment correction
+            if use_vad:
+                real_trimmed, trim_indices = librosa.effects.trim(
+                    real_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
+                
+                start_idx = trim_indices[0]
+                end_idx = trim_indices[1]
+                synth_trimmed = synth_audio[start_idx:end_idx]
+                
+                if use_global_alignment:
+                    delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
+                    
+                    if is_reliable:
+                        real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
+                        metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
+                    else:
+                        real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, 0)
+                        metrics['alignment_delay_ms'] = 0.0
+                    
+                    metrics['alignment_corr_strength'] = peak_value
+                    metrics['alignment_peak_z'] = peak_z_score
+                    metrics['alignment_peak_margin'] = peak_margin
+                    metrics['alignment_reliable'] = is_reliable
+                else:
+                    real_aligned = real_trimmed
+                    synth_aligned = synth_trimmed
+                    metrics['alignment_delay_ms'] = 0.0
+                    metrics['alignment_corr_strength'] = np.nan
+                    metrics['alignment_peak_z'] = np.nan
+                    metrics['alignment_peak_margin'] = np.nan
+                    metrics['alignment_reliable'] = False
+                
+                metrics['audio_real_trimmed_len'] = len(real_aligned)
+                metrics['audio_synth_trimmed_len'] = len(synth_aligned)
+                metrics['trim_start_idx'] = int(start_idx)
+                metrics['trim_end_idx'] = int(end_idx)
+            else:
+                real_aligned, synth_aligned = align_audio_length(real_audio, synth_audio)
+                metrics['audio_real_trimmed_len'] = len(real_aligned)
+                metrics['audio_synth_trimmed_len'] = len(synth_aligned)
+                metrics['trim_start_idx'] = 0
+                metrics['trim_end_idx'] = len(real_audio)
+            
+            stoi_score, estoi_score = compute_stoi_metrics(real_aligned, synth_aligned, sr)
         
-        stoi_score, estoi_score = compute_stoi_metrics(real_aligned, synth_aligned, sr)
         metrics['stoi'] = stoi_score
         metrics['estoi'] = estoi_score
-        
     except Exception as e:
         print(f"STOI failed for {real_path}: {e}")
         metrics['stoi'] = np.nan
@@ -813,6 +848,10 @@ def main():
                         help='Output CSV file for results')
     parser.add_argument('--sr', type=int, default=16000,
                         help='Sample rate (default: 16000)')
+    parser.add_argument('--paper-mode', action='store_true',
+                        help='Paper-compatible mode: naive metrics (no alignment correction)')
+    parser.add_argument('--no-alignment', action='store_true',
+                        help='Disable global delay correction (only in strict mode)')
     parser.add_argument('--sanity-check', action='store_true',
                         help='Run sanity check: evaluate audio against itself')
     parser.add_argument('--sanity-mode', type=str, choices=['real', 'synth', 'both'], default='both',
@@ -852,6 +891,19 @@ def main():
     print(f'Synthetic audio directory: {args.synth_dir}')
     print(f'Manifest: {args.manifest}')
     print(f'Output: {args.output}')
+    
+    if args.paper_mode:
+        print('\n📄 PAPER-COMPATIBLE MODE')
+        print('   MCD: MFCC + DTW')
+        print('   F0/VUV: naive truncate')
+        print('   STOI: trim + truncate')
+    else:
+        print('\n🔬 STRICT DIAGNOSTIC MODE')
+        if args.no_alignment:
+            print('   Global alignment: DISABLED')
+        else:
+            print('   Global alignment: ENABLED')
+    
     print('='*80)
     
     # Load manifest
@@ -891,7 +943,10 @@ def main():
             continue
         
         # Evaluate
-        metrics = evaluate_pair(real_path, synth_path, sr=args.sr)
+        paper_mode = args.paper_mode
+        use_global_alignment = not args.no_alignment
+        metrics = evaluate_pair(real_path, synth_path, sr=args.sr, 
+                               paper_mode=paper_mode, use_global_alignment=use_global_alignment)
         metrics['utt_id'] = basename
         metrics['speaker_id'] = speaker_id
         metrics['text'] = text
