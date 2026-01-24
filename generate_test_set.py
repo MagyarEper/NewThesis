@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""
+Generate synthetic audio for entire test set.
+
+Usage:
+    python generate_test_set.py \
+        --checkpoint logs/hungarian_dysarthria/grad_500.pt \
+        --manifest test_manifest.txt \
+        --output-dir generated_test_wavs \
+        --length-scale 1.0 \
+        --temperature 1.2 \
+        --timesteps 20
+"""
+
+import argparse
+import os
+import sys
+import time
+from pathlib import Path
+from tqdm import tqdm
+import torch
+import numpy as np
+
+# Import model components
+sys.path.append('Grad-TTS')
+from model import GradTTS
+from text import text_to_sequence, cmudict
+from text.symbols import symbols
+from utils import intersperse
+
+# Import vocoder
+from speechbrain.pretrained import HIFIGAN
+
+
+def load_model(checkpoint_path, n_spks=39):
+    """Load trained GradTTS model."""
+    print(f'Loading checkpoint: {checkpoint_path}')
+    
+    # Model parameters (from params.py)
+    n_enc_channels = 192
+    filter_channels = 768
+    filter_channels_dp = 256
+    n_enc_layers = 6
+    enc_kernel = 3
+    enc_dropout = 0.1
+    n_heads = 2
+    window_size = 4
+    
+    n_feats = 80
+    dec_dim = 64
+    beta_min = 0.05
+    beta_max = 20.0
+    pe_scale = 1000
+    
+    # Initialize model
+    model = GradTTS(
+        len(symbols), 
+        n_spks,
+        n_enc_channels,
+        filter_channels,
+        filter_channels_dp, 
+        n_heads, 
+        n_enc_layers,
+        enc_kernel, 
+        enc_dropout, 
+        window_size, 
+        n_feats, 
+        dec_dim, 
+        beta_min, 
+        beta_max, 
+        pe_scale
+    )
+    
+    # Load checkpoint
+    checkpoint = torch.load(checkpoint_path, map_location='cpu')
+    model.load_state_dict(checkpoint['model'])
+    model.eval()
+    
+    print(f'✓ Model loaded from epoch {checkpoint.get("epoch", "unknown")}')
+    
+    if torch.cuda.is_available():
+        model = model.cuda()
+        print('✓ Model moved to GPU')
+    
+    return model
+
+
+def load_vocoder():
+    """Load HiFi-GAN vocoder."""
+    print('Loading HiFi-GAN vocoder...')
+    vocoder = HIFIGAN.from_hparams(
+        source="speechbrain/tts-hifigan-libritts-16kHz",
+        savedir="pretrained_models/tts-hifigan-libritts-16kHz"
+    )
+    print('✓ Vocoder loaded')
+    return vocoder
+
+
+def synthesize_utterance(model, vocoder, text, speaker_id, 
+                         length_scale=1.0, temperature=1.2, timesteps=20, stoc=False):
+    """
+    Synthesize one utterance.
+    
+    Args:
+        model: GradTTS model
+        vocoder: HiFi-GAN vocoder
+        text: Text to synthesize
+        speaker_id: Speaker ID (integer)
+        length_scale: Length scale (speed control)
+        temperature: Sampling temperature
+        timesteps: Number of diffusion steps
+        stoc: Use stochastic sampling
+        
+    Returns:
+        wav: Waveform (numpy array)
+        rtf: Real-time factor
+    """
+    # Prepare text
+    cmu = cmudict.CMUDict('./Grad-TTS/resources/cmu_dictionary')
+    x = torch.LongTensor(intersperse(text_to_sequence(text, dictionary=cmu), len(symbols))).unsqueeze(0)
+    x_lengths = torch.LongTensor([x.shape[-1]])
+    
+    # Speaker ID
+    spk = torch.LongTensor([speaker_id])
+    
+    if torch.cuda.is_available():
+        x = x.cuda()
+        x_lengths = x_lengths.cuda()
+        spk = spk.cuda()
+    
+    # Generate mel-spectrogram
+    start_time = time.time()
+    
+    with torch.no_grad():
+        y_enc, y_dec, attn = model.forward(
+            x, 
+            x_lengths,
+            n_timesteps=timesteps, 
+            temperature=temperature,
+            stoc=stoc, 
+            spk=spk,
+            length_scale=length_scale
+        )
+    
+    # y_dec shape: [batch, n_mels, time]
+    # This is the correct format for HiFi-GAN vocoder (NO TRANSPOSE NEEDED)
+    
+    # Generate waveform with vocoder
+    waveforms = vocoder.decode_batch(y_dec)
+    wav = waveforms.squeeze().cpu().numpy()
+    
+    # Compute RTF
+    generation_time = time.time() - start_time
+    audio_duration = len(wav) / 16000  # 16kHz sample rate
+    rtf = generation_time / audio_duration
+    
+    return wav, rtf
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Generate test set predictions')
+    parser.add_argument('--checkpoint', type=str, required=True,
+                        help='Path to model checkpoint')
+    parser.add_argument('--manifest', type=str, required=True,
+                        help='Test manifest file (pipe-separated: path|text|speaker)')
+    parser.add_argument('--output-dir', type=str, default='generated_test_wavs',
+                        help='Output directory for generated WAVs')
+    parser.add_argument('--length-scale', type=float, default=1.0,
+                        help='Length scale (speed control, default: 1.0)')
+    parser.add_argument('--temperature', type=float, default=1.2,
+                        help='Sampling temperature (default: 1.2)')
+    parser.add_argument('--timesteps', type=int, default=20,
+                        help='Number of diffusion steps (default: 20)')
+    parser.add_argument('--stoc', action='store_true',
+                        help='Use stochastic sampling')
+    parser.add_argument('--n-spks', type=int, default=39,
+                        help='Number of speakers in model (default: 39)')
+    args = parser.parse_args()
+    
+    print('='*80)
+    print('GENERATING TEST SET PREDICTIONS')
+    print('='*80)
+    print(f'Checkpoint: {args.checkpoint}')
+    print(f'Manifest: {args.manifest}')
+    print(f'Output directory: {args.output_dir}')
+    print(f'Parameters:')
+    print(f'  length_scale = {args.length_scale}')
+    print(f'  temperature  = {args.temperature}')
+    print(f'  timesteps    = {args.timesteps}')
+    print(f'  stochastic   = {args.stoc}')
+    print('='*80)
+    
+    # Create output directory
+    os.makedirs(args.output_dir, exist_ok=True)
+    
+    # Load model and vocoder
+    model = load_model(args.checkpoint, n_spks=args.n_spks)
+    vocoder = load_vocoder()
+    
+    # Load manifest
+    print(f'\nLoading manifest: {args.manifest}')
+    with open(args.manifest, 'r', encoding='utf-8') as f:
+        lines = [line.strip().split('|') for line in f.readlines()]
+    
+    print(f'Found {len(lines)} utterances')
+    
+    # Generate all utterances
+    print('\nGenerating...')
+    rtf_values = []
+    failed = []
+    
+    for wav_path, text, speaker_id in tqdm(lines):
+        try:
+            # Get output filename
+            basename = Path(wav_path).name
+            output_path = os.path.join(args.output_dir, basename)
+            
+            # Skip if already exists
+            if os.path.exists(output_path):
+                continue
+            
+            # Synthesize
+            wav, rtf = synthesize_utterance(
+                model, vocoder, text, int(speaker_id),
+                length_scale=args.length_scale,
+                temperature=args.temperature,
+                timesteps=args.timesteps,
+                stoc=args.stoc
+            )
+            
+            # Save
+            import soundfile as sf
+            sf.write(output_path, wav, 16000)
+            
+            rtf_values.append(rtf)
+            
+        except Exception as e:
+            print(f'\nFailed: {basename} - {e}')
+            failed.append((basename, str(e)))
+    
+    # Summary
+    print('\n' + '='*80)
+    print('GENERATION COMPLETE')
+    print('='*80)
+    print(f'Total utterances: {len(lines)}')
+    print(f'Successfully generated: {len(rtf_values)}')
+    print(f'Failed: {len(failed)}')
+    
+    if rtf_values:
+        print(f'\nAverage RTF: {np.mean(rtf_values):.3f}')
+        print(f'Total audio duration: {len(rtf_values) * np.mean([len(v) for v in rtf_values]) / 16000 / 60:.1f} minutes (estimated)')
+    
+    if failed:
+        print('\nFailed utterances:')
+        for basename, error in failed[:10]:  # Show first 10
+            print(f'  {basename}: {error}')
+        if len(failed) > 10:
+            print(f'  ... and {len(failed) - 10} more')
+    
+    print(f'\n✓ Output directory: {args.output_dir}')
+    print('='*80)
+
+
+if __name__ == '__main__':
+    main()
