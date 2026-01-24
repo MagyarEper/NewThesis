@@ -320,8 +320,17 @@ def main():
     
     # Load manifest
     print('\nLoading manifest...')
-    with open(args.manifest, 'r', encoding='utf-8') as f:
-        lines = [line.strip().split('|') for line in f.readlines()]
+    
+    if args.manifest.endswith('.csv'):
+        # CSV format with headers: utt_id,wav,speaker,text
+        import csv
+        with open(args.manifest, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            lines = [(row['wav'], row['text'], row['speaker']) for row in reader]
+    else:
+        # Pipe-separated format: path|text|speaker
+        with open(args.manifest, 'r', encoding='utf-8') as f:
+            lines = [line.strip().split('|') for line in f.readlines()]
     
     print(f'Found {len(lines)} utterances in manifest')
     
