@@ -187,7 +187,7 @@ def estimate_global_delay(real_audio, synth_audio, sr, max_shift_sec=0.5):
     delay_frames = peak_idx - max_shift_frames
     delay_samples = delay_frames * hop_length
     
-    return delay_samples, peak_z_score, is_reliable
+    return delay_samples, peak_z_score, peak_margin, is_reliable
 
 
 def apply_delay_correction(real_audio, synth_audio, delay_samples):
@@ -570,7 +570,7 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             synth_trimmed = synth_audio[start_idx:end_idx]
             
             # Apply global delay correction with peak quality check
-            delay_samples, peak_z_score, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
+            delay_samples, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             
             # Only apply delay if alignment is reliable
             if is_reliable:
@@ -581,11 +581,13 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             
             # Store correlation strength and reliability for diagnostics
             metrics['alignment_peak_z'] = peak_z_score
+            metrics['alignment_peak_margin'] = peak_margin
             metrics['alignment_reliable'] = is_reliable
         else:
             real_aligned_f0 = real_audio
             synth_aligned_f0 = synth_audio
             metrics['alignment_peak_z'] = np.nan
+            metrics['alignment_peak_margin'] = np.nan
             metrics['alignment_reliable'] = False
         
         # Extract F0/VUV on aligned audio
@@ -644,9 +646,9 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             
             # PAPER-STANDARD: Global delay correction using RMS envelope + normalized cross-correlation
             # This handles TTS onset/offset misalignment (critical for STOI/F0/VUV)
-            delay_samples, peak_z_score, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
+            delay_samples, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
             
-            # Only apply delay if alignment is reliable (peak_z > 3.0 AND margin > 1.0)
+            # Only apply delay if alignment is reliable (peak_z > 1.5 AND margin > 0.5, dysarthria-adapted)
             if is_reliable:
                 real_aligned, synth_aligned = apply_delay_correction(real_trimmed, synth_trimmed, delay_samples)
                 metrics['alignment_delay_ms'] = (delay_samples / sr) * 1000.0
@@ -657,6 +659,7 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True):
             
             # Store alignment quality metrics
             metrics['alignment_peak_z'] = peak_z_score
+            metrics['alignment_peak_margin'] = peak_margin
             metrics['alignment_reliable'] = is_reliable
             
             # Store trimmed lengths for diagnostics
@@ -948,6 +951,14 @@ def main():
         reliable_rate = 100.0 * reliable_count / total_count if total_count > 0 else 0
         
         print(f"Alignment peak quality (z-score): {peak_z_mean:.2f} ± {peak_z_std:.2f}")
+        
+        # Also show peak_margin if available
+        if 'alignment_peak_margin' in df.columns:
+            peak_margin_mean = df['alignment_peak_margin'].mean()
+            peak_margin_std = df['alignment_peak_margin'].std()
+            print(f"Alignment peak margin: {peak_margin_mean:.2f} ± {peak_margin_std:.2f}")
+            print(f"  (Thresholds: z-score > 1.5, margin > 0.5 for dysarthria)")
+        
         print(f"Alignment reliability: {reliable_count}/{total_count} ({reliable_rate:.1f}%)")
         
         if reliable_rate < 50:
