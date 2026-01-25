@@ -569,18 +569,23 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
             metrics['alignment_peak_margin'] = np.nan
             metrics['alignment_reliable'] = False
         else:
-            # Strict mode: VAD trim + delay correction
+            # Strict mode: SEPARATE trim + delay correction
             if use_vad:
-                real_trimmed, trim_indices = librosa.effects.trim(
+                # CRITICAL FIX: Trim real and synth SEPARATELY!
+                real_trimmed, _ = librosa.effects.trim(
                     real_audio,
                     top_db=30,
                     frame_length=2048,
                     hop_length=512
                 )
-                start_idx = trim_indices[0]
-                end_idx = trim_indices[1]
-                synth_trimmed = synth_audio[start_idx:end_idx]
+                synth_trimmed, _ = librosa.effects.trim(
+                    synth_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
                 
+                # Compute delay on SEPARATELY trimmed signals
                 delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
                 
                 if is_reliable:
@@ -654,20 +659,24 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
             metrics['trim_start_idx'] = 0
             metrics['trim_end_idx'] = T
         else:
-            # Strict mode: VAD + alignment correction
+            # Strict mode: SEPARATE trim + alignment correction
             if use_vad:
-                real_trimmed, trim_indices = librosa.effects.trim(
+                # CRITICAL FIX: Trim real and synth SEPARATELY!
+                real_trimmed, _ = librosa.effects.trim(
                     real_audio,
                     top_db=30,
                     frame_length=2048,
                     hop_length=512
                 )
-                
-                start_idx = trim_indices[0]
-                end_idx = trim_indices[1]
-                synth_trimmed = synth_audio[start_idx:end_idx]
+                synth_trimmed, _ = librosa.effects.trim(
+                    synth_audio,
+                    top_db=30,
+                    frame_length=2048,
+                    hop_length=512
+                )
                 
                 if use_global_alignment:
+                    # Compute delay on SEPARATELY trimmed signals
                     delay_samples, peak_value, peak_z_score, peak_margin, is_reliable = estimate_global_delay(real_trimmed, synth_trimmed, sr, max_shift_sec=0.5)
                     
                     if is_reliable:
@@ -692,8 +701,8 @@ def evaluate_pair(real_path, synth_path, sr=16000, use_vad=True, use_global_alig
                 
                 metrics['audio_real_trimmed_len'] = len(real_aligned)
                 metrics['audio_synth_trimmed_len'] = len(synth_aligned)
-                metrics['trim_start_idx'] = int(start_idx)
-                metrics['trim_end_idx'] = int(end_idx)
+                metrics['trim_start_idx'] = 0  # Now meaningless (separate trims)
+                metrics['trim_end_idx'] = len(real_aligned)  # Length after alignment
             else:
                 real_aligned, synth_aligned = align_audio_length(real_audio, synth_audio)
                 metrics['audio_real_trimmed_len'] = len(real_aligned)
