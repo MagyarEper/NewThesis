@@ -69,6 +69,12 @@ if __name__ == '__main__':
             t = (dt.datetime.now() - t).total_seconds()
             print(f'Grad-TTS RTF: {t * 16000 / (y_dec.shape[-1] * 256)}')
 
+            # CRITICAL FIX: Clamp mel to training range before vocoding
+            # Training mels are in range [-11.5129, ~-3.27] (compression=True + min_max_norm)
+            # Grad-TTS sometimes outputs values outside this range (up to +0.33)
+            # This causes vocoder distortion since it never saw such values during training
+            y_dec = torch.clamp(y_dec, min=-11.5129, max=-3.0)
+            
             # SpeechBrain HiFi-GAN vocoder használata
             # y_dec shape kell: [batch, n_mels, time] vagy [batch, time, n_mels]
             # SpeechBrain expects: [batch, time, n_mels]
