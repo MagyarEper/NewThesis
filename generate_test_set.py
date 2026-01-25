@@ -191,11 +191,9 @@ def synthesize_utterance(model, vocoder, text, speaker_id,
     # y_dec shape: [batch, n_mels, time]
     # This is the correct format for HiFi-GAN vocoder (NO TRANSPOSE NEEDED)
     
-    # CRITICAL FIX: Clamp mel to training range before vocoding
-    # Training mels are in range [-11.5129, ~-3.27] (compression=True + min_max_norm)
-    # Grad-TTS sometimes outputs values outside this range (up to +0.33)
-    # This causes vocoder distortion since it never saw such values during training
-    y_dec = torch.clamp(y_dec, min=-11.5129, max=-3.0)
+    # NOTE: Clamping tested and found unnecessary - vocoder handles full range fine
+    # Original concern about mel range [-11.5, +0.3] was false alarm
+    # Audio quality is good with timesteps=20
     
     # Generate waveform with vocoder
     waveforms = vocoder.decode_batch(y_dec)
