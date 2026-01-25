@@ -32,12 +32,18 @@ from scipy.spatial.distance import euclidean
 from scipy.stats import pearsonr
 
 # For mel-spectrogram (matching training pipeline)
+# NOTE: SpeechBrain import moved to function level to avoid CUDA dependency issues
+SPEECHBRAIN_AVAILABLE = False
 try:
-    from speechbrain.lobes.features import Fbank
-    from speechbrain.processing.features import STFT
+    import speechbrain
     SPEECHBRAIN_AVAILABLE = True
 except ImportError:
     print("Warning: SpeechBrain not available. Using librosa for mel-spectrogram.")
+    SPEECHBRAIN_AVAILABLE = False
+except OSError as e:
+    # Handle CUDA library loading errors
+    print(f"Warning: SpeechBrain import failed (CUDA issue): {e}")
+    print("Using librosa for mel-spectrogram instead.")
     SPEECHBRAIN_AVAILABLE = False
 
 # For F0 extraction
