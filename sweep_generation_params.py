@@ -81,8 +81,8 @@ def load_models():
     print("  ✓ HiFi-GAN loaded")
     
     # Whisper
-    whisper_model = whisper.load_model("large-v3")
-    print("  ✓ Whisper large-v3 loaded")
+    whisper_model = whisper.load_model("base")
+    print("  ✓ Whisper base loaded")
     
     return model, vocoder, whisper_model
 
@@ -236,8 +236,8 @@ def main():
     best = summary.iloc[0]
     print(f"\n🏆 BEST CONFIGURATION:")
     print(f"   timesteps={int(best['timesteps'])}, temperature={best['temperature']:.1f}")
-    print(f"   WER: {best['wer_mean']:.3f} ± {best['wer_std']:.3f}")
-    print(f"   CER: {best['cer_mean']:.3f} ± {best['cer_std']:.3f}")
+    print(f"   WER: {best['wer_mean']*100:.1f}% ± {best['wer_std']*100:.1f}%")
+    print(f"   CER: {best['cer_mean']*100:.1f}% ± {best['cer_std']*100:.1f}%")
     print(f"   Avg logprob: {best['avg_logprob']:.3f}")
     print(f"   No speech prob: {best['no_speech_prob']:.3f}")
     print("="*80)
