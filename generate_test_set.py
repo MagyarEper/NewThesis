@@ -111,23 +111,35 @@ def load_vocoder():
     """Load HiFi-GAN vocoder."""
     print('Loading HiFi-GAN vocoder...')
     
-    # Use the new SpeechBrain API with a clean save directory
+    # Lazy import to avoid CUDA errors on broken torchaudio installations
     try:
+        # Try new SpeechBrain API
         from speechbrain.inference.vocoders import HIFIGAN
+        print('Using speechbrain.inference.vocoders.HIFIGAN (new API)')
         vocoder = HIFIGAN.from_hparams(
             source="speechbrain/tts-hifigan-libritts-16kHz",
-            savedir="tmpdir_vocoder"  # Use temporary directory to avoid symlink issues
+            savedir="tmpdir_vocoder"
         )
-    except Exception as e:
-        print(f'Error loading vocoder: {e}')
-        print('Trying without savedir...')
-        from speechbrain.inference.vocoders import HIFIGAN
-        vocoder = HIFIGAN.from_hparams(
-            source="speechbrain/tts-hifigan-libritts-16kHz"
-        )
+        print('✓ Vocoder loaded')
+        return vocoder
+    except (ImportError, OSError) as e:
+        print(f'New API failed: {e}')
+        pass
     
-    print('✓ Vocoder loaded')
-    return vocoder
+    try:
+        # Try old SpeechBrain API
+        from speechbrain.pretrained import HIFIGAN
+        print('Using speechbrain.pretrained.HIFIGAN (old API)')
+        vocoder = HIFIGAN.from_hparams(
+            source="speechbrain/tts-hifigan-libritts-16kHz",
+            savedir="tmpdir_vocoder"
+        )
+        print('✓ Vocoder loaded')
+        return vocoder
+    except (ImportError, OSError) as e:
+        print(f'Old API also failed: {e}')
+        raise RuntimeError("Could not load HiFi-GAN vocoder. Please check your PyTorch/torchaudio installation.")
+    
 
 
 def synthesize_utterance(model, vocoder, text, speaker_id, 
