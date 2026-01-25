@@ -368,23 +368,22 @@ def evaluate_pair(real_path, synth_path, ppg_extractor=None):
 
 def load_manifest(manifest_path):
     """
-    Load test manifest (format: audio_path|text|speaker_id).
+    Load test manifest (CSV format: utt_id,wav,speaker,text).
     
     Returns list of (audio_filename, text, speaker_id).
     """
+    import csv
     pairs = []
+    
     with open(manifest_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            parts = line.split('|')
-            if len(parts) >= 1:
-                audio_path = parts[0]
-                filename = os.path.basename(audio_path)
-                text = parts[1] if len(parts) > 1 else ""
-                spk = parts[2] if len(parts) > 2 else "unknown"
-                pairs.append((filename, text, spk))
+        reader = csv.DictReader(f)
+        for row in reader:
+            wav_path = row['wav']
+            filename = os.path.basename(wav_path)
+            text = row.get('text', '')
+            speaker = row.get('speaker', 'unknown')
+            pairs.append((filename, text, speaker))
+    
     return pairs
 
 
