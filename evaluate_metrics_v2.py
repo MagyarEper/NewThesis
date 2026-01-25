@@ -28,6 +28,7 @@ warnings.filterwarnings('ignore')
 import librosa
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
+from scipy.signal import butter, lfilter
 
 # F0 extraction
 import parselmouth
@@ -221,11 +222,63 @@ def lf0_rmse_and_vuv(real_y, synth_y, sr=16000, f0_min=80, f0_max=600):
 # 3) P-STOI and ESTOI
 # ============================================================================
 
+
+def dc_remove(x):
+    """Remove DC offset."""
+    return x - np.mean(x)
+
+
+def peak_normalize_target(x, target=0.95, eps=1e-8):
+    """Peak normalize to target amplitude."""
+    m = np.max(np.abs(x)) + eps
+    return x * (target / m)
+
+
+def bandpass_300_3400(x, sr, low=300, high=3400, order=4):
+    """
+    Bandpass filter 300-3400 Hz (telephone band).
+    
+    Critical for STOI: removes DC, low-freq rumble, and high-freq artifacts.
+    """
+    nyq = 0.5 * sr
+    b, a = butter(order, [low/nyq, high/nyq], btype='band')
+    return lfilter(b, a, x)
+
+
+def lowpass_filter(x, sr, cutoff=7800, order=6):
+    """
+    Lowpass filter to remove high-frequency artifacts.
+    
+    De-esser style filter to reduce vocoder sibilance.
+    """
+    nyq = 0.5 * sr
+    b, a = butter(order, cutoff/nyq, btype='low')
+    return lfilter(b, a, x)
+
+
+def stoi_preprocess(x, sr):
+    """
+    STOI-specific preprocessing pipeline.
+    
+    1. DC removal
+    2. Peak normalization to 0.95
+    3. Bandpass 300-3400 Hz (telephone band)
+    """
+    x = dc_remove(x)
+    x = peak_normalize_target(x, target=0.95)
+    x = bandpass_300_3400(x, sr)
+    return x.astype(np.float32)
+
+
 def stoi_estoi(real_y, synth_y, sr=16000):
     """
-    Compute STOI and extended STOI.
+    Compute STOI and extended STOI with proper preprocessing.
     
-    Requires same-length signals.
+    Critical preprocessing steps:
+    - DC removal
+    - Peak normalization
+    - Bandpass filtering (300-3400 Hz)
+    - Separate trimming for real and synth
     """
     if not STOI_AVAILABLE:
         return float('nan'), float('nan')
@@ -233,14 +286,30 @@ def stoi_estoi(real_y, synth_y, sr=16000):
     if len(real_y) == 0 or len(synth_y) == 0:
         return float('nan'), float('nan')
     
-    # Ensure same length
-    T = min(len(real_y), len(synth_y))
-    real_y = real_y[:T]
-    synth_y = synth_y[:T]
+    # Apply lowpass to synth to reduce vocoder artifacts
+    synth_y = lowpass_filter(synth_y, sr, cutoff=7800, order=6)
+    
+    # Trim separately (critical: don't use same indices!)
+    real_trimmed, _ = librosa.effects.trim(real_y, top_db=30, 
+                                          frame_length=2048, hop_length=512)
+    synth_trimmed, _ = librosa.effects.trim(synth_y, top_db=30,
+                                           frame_length=2048, hop_length=512)
+    
+    # Truncate to same length
+    T = min(len(real_trimmed), len(synth_trimmed))
+    if T < 1600:  # < 0.1 sec
+        return float('nan'), float('nan')
+    
+    real_aligned = real_trimmed[:T]
+    synth_aligned = synth_trimmed[:T]
+    
+    # STOI preprocessing
+    real_proc = stoi_preprocess(real_aligned, sr)
+    synth_proc = stoi_preprocess(synth_aligned, sr)
     
     try:
-        s1 = stoi(real_y, synth_y, sr, extended=False)
-        s2 = stoi(real_y, synth_y, sr, extended=True)
+        s1 = stoi(real_proc, synth_proc, sr, extended=False)
+        s2 = stoi(real_proc, synth_proc, sr, extended=True)
         return float(s1), float(s2)
     except Exception as e:
         print(f"STOI computation failed: {e}")
