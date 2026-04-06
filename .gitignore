@@ -32,6 +32,7 @@ __pycache__/
 venv/
 env/
 ENV/
+whisper_env/
 
 # IDE
 .vscode/
@@ -101,4 +102,12 @@ SANITY_CHECK.md
 *_ANALYSIS.md
 *_GUIDE.md
 *_README.md
+
+# Reference papers (copyright)
+*.pdf
+paper_text.txt
+
+# Synthetic data outputs
+synthetic_train_wavs/
+synthetic_train_manifest.csv
 

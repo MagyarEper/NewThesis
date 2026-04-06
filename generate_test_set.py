@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 """
-Generate synthetic audio for entire test set.
+Generate synthetic audio from a Grad-TTS checkpoint for any manifest split.
 
-Usage:
+Works with both CSV manifests (utt_id,wav,speaker,text) and
+pipe-separated manifests (path|text|speaker_id).
+
+Use --output-manifest to also produce a CSV manifest for the generated files
+(needed for Whisper fine-tuning on synthetic data).
+
+Examples:
+    # Test set (original usage)
     python generate_test_set.py \
-        --checkpoint logs/hungarian_dysarthria/grad_500.pt \
-        --manifest test_manifest.txt \
-        --output-dir generated_test_wavs \
-        --length-scale 1.0 \
-        --temperature 1.2 \
-        --timesteps 20
+        --checkpoint Grad-TTS/logs/hungarian_dysarthria/grad_500.pt \
+        --manifest test_manifest.csv \
+        --output-dir generated_test_wavs
+
+    # Train set with output manifest for Whisper fine-tuning
+    python generate_test_set.py \
+        --checkpoint Grad-TTS/logs/hungarian_dysarthria/grad_500.pt \
+        --manifest train_manifest.csv \
+        --output-dir synthetic_train_wavs \
+        --output-manifest synthetic_train_manifest.csv \
+        --timesteps 10
 """
 
 import argparse
@@ -208,13 +220,15 @@ def synthesize_utterance(model, vocoder, text, speaker_id,
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate test set predictions')
+    parser = argparse.ArgumentParser(description='Generate synthetic audio from Grad-TTS')
     parser.add_argument('--checkpoint', type=str, required=True,
                         help='Path to model checkpoint')
     parser.add_argument('--manifest', type=str, required=True,
-                        help='Test manifest file (pipe-separated: path|text|speaker)')
+                        help='Manifest file (CSV or pipe-separated)')
     parser.add_argument('--output-dir', type=str, default='generated_test_wavs',
                         help='Output directory for generated WAVs')
+    parser.add_argument('--output-manifest', type=str, default=None,
+                        help='If set, write a CSV manifest for generated files (utt_id,wav,speaker,text)')
     parser.add_argument('--length-scale', type=float, default=1.0,
                         help='Length scale (speed control, default: 1.0)')
     parser.add_argument('--temperature', type=float, default=1.2,
@@ -228,11 +242,13 @@ def main():
     args = parser.parse_args()
     
     print('='*80)
-    print('GENERATING TEST SET PREDICTIONS')
+    print('GENERATING SYNTHETIC AUDIO')
     print('='*80)
     print(f'Checkpoint: {args.checkpoint}')
     print(f'Manifest: {args.manifest}')
     print(f'Output directory: {args.output_dir}')
+    if args.output_manifest:
+        print(f'Output manifest: {args.output_manifest}')
     print(f'Parameters:')
     print(f'  length_scale = {args.length_scale}')
     print(f'  temperature  = {args.temperature}')
@@ -248,6 +264,7 @@ def main():
     vocoder = load_vocoder()
     
     # Load manifest
+    # lines: list of (wav_path, text, speaker_id_int, speaker_name_str_or_None)
     print(f'\nLoading manifest: {args.manifest}')
     
     if args.manifest.endswith('.csv'):
@@ -255,20 +272,23 @@ def main():
         import csv
         with open(args.manifest, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
-            lines = [(row['wav'], row['text'], row['speaker']) for row in reader]
+            rows = list(reader)
         
         # Create speaker ID mapping (C_001 -> 0, C_002 -> 1, etc.)
-        unique_speakers = sorted(set(spk for _, _, spk in lines))
+        unique_speakers = sorted(set(row['speaker'] for row in rows))
         speaker_to_id = {spk: idx for idx, spk in enumerate(unique_speakers)}
         print(f'Found {len(unique_speakers)} unique speakers: {unique_speakers[:5]}...')
         
-        # Convert speaker names to IDs
-        lines = [(wav, text, speaker_to_id[spk]) for wav, text, spk in lines]
+        # Keep speaker names for output manifest
+        lines = [(row['wav'], row['text'], speaker_to_id[row['speaker']],
+                  row.get('utt_id', Path(row['wav']).stem), row['speaker'])
+                 for row in rows]
     else:
         # Pipe-separated format: path|text|speaker_id (already integers)
         with open(args.manifest, 'r', encoding='utf-8') as f:
-            lines = [line.strip().split('|') for line in f.readlines()]
-        lines = [(wav, text, int(spk)) for wav, text, spk in lines]
+            raw = [line.strip().split('|') for line in f.readlines()]
+        lines = [(wav, text, int(spk), Path(wav).stem, None)
+                 for wav, text, spk in raw]
     
     print(f'Found {len(lines)} utterances')
     
@@ -276,8 +296,9 @@ def main():
     print('\nGenerating...')
     rtf_values = []
     failed = []
+    output_rows = []  # for output manifest
     
-    for wav_path, text, speaker_id in tqdm(lines):
+    for wav_path, text, speaker_id, utt_id, speaker_name in tqdm(lines):
         try:
             # Get output filename
             basename = Path(wav_path).name
@@ -285,6 +306,13 @@ def main():
             
             # Skip if already exists
             if os.path.exists(output_path):
+                if speaker_name is not None:
+                    output_rows.append({
+                        'utt_id': utt_id,
+                        'wav': os.path.abspath(output_path),
+                        'speaker': speaker_name,
+                        'text': text,
+                    })
                 continue
             
             # Synthesize
@@ -298,12 +326,28 @@ def main():
             
             # Save
             sf.write(output_path, wav, 16000)
-            
             rtf_values.append(rtf)
             
+            if speaker_name is not None:
+                output_rows.append({
+                    'utt_id': utt_id,
+                    'wav': os.path.abspath(output_path),
+                    'speaker': speaker_name,
+                    'text': text,
+                })
+            
         except Exception as e:
-            print(f'\nFailed: {basename} - {e}')
-            failed.append((basename, str(e)))
+            print(f'\nFailed: {utt_id} - {e}')
+            failed.append((utt_id, str(e)))
+    
+    # Write output manifest if requested
+    if args.output_manifest and output_rows:
+        import csv
+        with open(args.output_manifest, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=['utt_id', 'wav', 'speaker', 'text'])
+            writer.writeheader()
+            writer.writerows(output_rows)
+        print(f'\n✓ Output manifest: {args.output_manifest} ({len(output_rows)} rows)')
     
     # Summary
     print('\n' + '='*80)
@@ -311,16 +355,16 @@ def main():
     print('='*80)
     print(f'Total utterances: {len(lines)}')
     print(f'Successfully generated: {len(rtf_values)}')
+    print(f'Skipped (already exist): {len(lines) - len(rtf_values) - len(failed)}')
     print(f'Failed: {len(failed)}')
     
     if rtf_values:
         print(f'\nAverage RTF: {np.mean(rtf_values):.3f}')
-        print(f'Total audio duration: {len(rtf_values) * np.mean([len(v) for v in rtf_values]) / 16000 / 60:.1f} minutes (estimated)')
     
     if failed:
         print('\nFailed utterances:')
-        for basename, error in failed[:10]:  # Show first 10
-            print(f'  {basename}: {error}')
+        for name, error in failed[:10]:
+            print(f'  {name}: {error}')
         if len(failed) > 10:
             print(f'  ... and {len(failed) - 10} more')
     
