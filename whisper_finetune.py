@@ -248,7 +248,7 @@ def main():
         generation_max_length=225,
         logging_steps=50,
         save_total_limit=3,
-        report_to="tensorboard",
+        report_to="none",
         dataloader_num_workers=4,
         remove_unused_columns=False,
         label_names=["labels"],
