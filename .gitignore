@@ -2,6 +2,22 @@
 wavs_16khz/
 reconstructed_wavs/
 dataset_mel_reconstructed_wavs/
+wavs_synthetic_80k*/
+
+# Külső adatbázisok (nagy fájlok)
+CommonVoiceHU/
+
+# Prezentáció és konferencia anyagok
+presentation/
+MSZNY2026.xlsx
+Dolgozat/
+
+# Temp és generált könyvtárak
+tmpdir_vocoder/
+.venv/
+
+# Teszt manifestek
+generation_manifest_test.csv
 
 # Spectrogram fájlok
 spectrograms/
