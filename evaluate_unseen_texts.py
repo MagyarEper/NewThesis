@@ -94,20 +94,21 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"\nEszköz: {device}")
 
+    BASE_MODEL = "openai/whisper-small"
     if args.model_path:
         model_dir = Path(args.model_path).resolve()
         is_lora = (model_dir / "adapter_config.json").exists()
+        # Processor is never changed during fine-tuning; always load from base model
+        processor = WhisperProcessor.from_pretrained(BASE_MODEL)
         if is_lora:
             print(f"LoRA adapter betöltése: {model_dir}")
-            processor = WhisperProcessor.from_pretrained(str(model_dir), local_files_only=True)
             base = WhisperForConditionalGeneration.from_pretrained(
-                "openai/whisper-small", torch_dtype=torch.float16
+                BASE_MODEL, torch_dtype=torch.float16
             ).to(device)
             model = PeftModel.from_pretrained(base, str(model_dir))
             model = model.merge_and_unload()
         else:
             print(f"Teljes modell betöltése: {model_dir}")
-            processor = WhisperProcessor.from_pretrained(str(model_dir), local_files_only=True)
             model = WhisperForConditionalGeneration.from_pretrained(
                 str(model_dir), torch_dtype=torch.float16, local_files_only=True
             ).to(device)
