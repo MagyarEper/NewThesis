@@ -28,7 +28,7 @@ from pathlib import Path
 from tqdm import tqdm
 
 from datasets import Dataset, Audio
-from transformers import WhisperProcessor, WhisperForConditionalGeneration
+from transformers import WhisperProcessor, WhisperForConditionalGeneration, WhisperConfig
 from peft import PeftModel
 
 
@@ -95,11 +95,12 @@ def main():
     print(f"\nEszköz: {device}")
 
     BASE_MODEL = "openai/whisper-small"
+    # Processor is never modified during fine-tuning; always load from base model
+    processor = WhisperProcessor.from_pretrained(BASE_MODEL)
+
     if args.model_path:
         model_dir = Path(args.model_path).resolve()
         is_lora = (model_dir / "adapter_config.json").exists()
-        # Processor is never changed during fine-tuning; always load from base model
-        processor = WhisperProcessor.from_pretrained(BASE_MODEL)
         if is_lora:
             print(f"LoRA adapter betöltése: {model_dir}")
             base = WhisperForConditionalGeneration.from_pretrained(
@@ -109,12 +110,20 @@ def main():
             model = model.merge_and_unload()
         else:
             print(f"Teljes modell betöltése: {model_dir}")
-            model = WhisperForConditionalGeneration.from_pretrained(
-                str(model_dir), torch_dtype=torch.float16, local_files_only=True
-            ).to(device)
+            # Bypass from_pretrained entirely to avoid HF hub validation on local paths
+            config = WhisperConfig.from_json_file(str(model_dir / "config.json"))
+            model = WhisperForConditionalGeneration(config)
+            st_path = model_dir / "model.safetensors"
+            pt_path = model_dir / "pytorch_model.bin"
+            if st_path.exists():
+                from safetensors.torch import load_file
+                sd = load_file(str(st_path), device="cpu")
+            else:
+                sd = torch.load(str(pt_path), map_location="cpu")
+            model.load_state_dict(sd)
+            model = model.to(dtype=torch.float16, device=device)
     else:
         print(f"Alap modell betöltése: {args.model_name}")
-        processor = WhisperProcessor.from_pretrained(args.model_name)
         model = WhisperForConditionalGeneration.from_pretrained(
             args.model_name, torch_dtype=torch.float16
         ).to(device)
