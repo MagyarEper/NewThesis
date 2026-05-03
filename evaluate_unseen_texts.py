@@ -99,17 +99,17 @@ def main():
         is_lora = (model_dir / "adapter_config.json").exists()
         if is_lora:
             print(f"LoRA adapter betöltése: {model_dir}")
-            processor = WhisperProcessor.from_pretrained(model_dir)
+            processor = WhisperProcessor.from_pretrained(str(model_dir), local_files_only=True)
             base = WhisperForConditionalGeneration.from_pretrained(
                 "openai/whisper-small", torch_dtype=torch.float16
             ).to(device)
-            model = PeftModel.from_pretrained(base, model_dir)
+            model = PeftModel.from_pretrained(base, str(model_dir))
             model = model.merge_and_unload()
         else:
             print(f"Teljes modell betöltése: {model_dir}")
-            processor = WhisperProcessor.from_pretrained(model_dir)
+            processor = WhisperProcessor.from_pretrained(str(model_dir), local_files_only=True)
             model = WhisperForConditionalGeneration.from_pretrained(
-                model_dir, torch_dtype=torch.float16
+                str(model_dir), torch_dtype=torch.float16, local_files_only=True
             ).to(device)
     else:
         print(f"Alap modell betöltése: {args.model_name}")
