@@ -95,7 +95,7 @@ def main():
     print(f"\nEszköz: {device}")
 
     if args.model_path:
-        model_dir = Path(args.model_path)
+        model_dir = Path(args.model_path).resolve()
         is_lora = (model_dir / "adapter_config.json").exists()
         if is_lora:
             print(f"LoRA adapter betöltése: {model_dir}")
