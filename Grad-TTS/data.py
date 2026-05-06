@@ -11,6 +11,7 @@ import numpy as np
 
 import torch
 import torchaudio as ta
+ta.set_audio_backend("soundfile")
 
 from text import text_to_sequence, cmudict
 from text.symbols import symbols
