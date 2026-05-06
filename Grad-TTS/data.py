@@ -46,7 +46,7 @@ class TextMelDataset(torch.utils.data.Dataset):
         return (text, mel)
 
     def get_mel(self, filepath):
-        audio, sr = ta.load(filepath)
+        audio, sr = ta.load(filepath, backend="soundfile")
         assert sr == self.sample_rate
         # SpeechBrain mel_spectogram kompatibilis HiFi-GAN vocoderrel
         audio = audio[0] if audio.dim() > 1 else audio  # mono channel
@@ -142,7 +142,7 @@ class TextMelSpeakerDataset(torch.utils.data.Dataset):
         return (text, mel, speaker)
 
     def get_mel(self, filepath):
-        audio, sr = ta.load(filepath)
+        audio, sr = ta.load(filepath, backend="soundfile")
         assert sr == self.sample_rate
         # SpeechBrain mel_spectogram kompatibilis HiFi-GAN vocoderrel
         audio = audio[0] if audio.dim() > 1 else audio  # mono channel
