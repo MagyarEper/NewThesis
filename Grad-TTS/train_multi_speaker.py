@@ -76,6 +76,9 @@ if __name__ == "__main__":
     test_dataset = TextMelSpeakerDataset(valid_filelist_path, cmudict_path, add_blank,
                                          n_fft, n_feats, sample_rate, hop_length,
                                          win_length, f_min, f_max)
+    val_loader = DataLoader(dataset=test_dataset, batch_size=batch_size,
+                            collate_fn=batch_collate, drop_last=False,
+                            num_workers=4, shuffle=False)
 
     print('Initializing model...')
     model = GradTTS(nsymbols, n_spks, spk_emb_dim, n_enc_channels,
@@ -169,7 +172,34 @@ if __name__ == "__main__":
 
         msg = 'Epoch %d: duration loss = %.3f ' % (epoch, np.mean(dur_losses))
         msg += '| prior loss = %.3f ' % np.mean(prior_losses)
-        msg += '| diffusion loss = %.3f\n' % np.mean(diff_losses)
+        msg += '| diffusion loss = %.3f' % np.mean(diff_losses)
+
+        # Validation loop
+        model.eval()
+        val_dur_losses, val_prior_losses, val_diff_losses = [], [], []
+        with torch.no_grad():
+            for batch in val_loader:
+                x, x_lengths = batch['x'].cuda(), batch['x_lengths'].cuda()
+                y, y_lengths = batch['y'].cuda(), batch['y_lengths'].cuda()
+                spk = batch['spk'].cuda()
+                dur_loss, prior_loss, diff_loss = model.compute_loss(x, x_lengths,
+                                                                     y, y_lengths,
+                                                                     spk=spk, out_size=out_size)
+                val_dur_losses.append(dur_loss.item())
+                val_prior_losses.append(prior_loss.item())
+                val_diff_losses.append(diff_loss.item())
+        model.train()
+
+        msg += ' | val_dur = %.3f | val_prior = %.3f | val_diff = %.3f\n' % (
+            np.mean(val_dur_losses), np.mean(val_prior_losses), np.mean(val_diff_losses))
+
+        logger.add_scalar('validation/duration_loss', np.mean(val_dur_losses), global_step=epoch)
+        logger.add_scalar('validation/prior_loss', np.mean(val_prior_losses), global_step=epoch)
+        logger.add_scalar('validation/diffusion_loss', np.mean(val_diff_losses), global_step=epoch)
+        logger.add_scalar('training/duration_loss_epoch', np.mean(dur_losses), global_step=epoch)
+        logger.add_scalar('training/prior_loss_epoch', np.mean(prior_losses), global_step=epoch)
+        logger.add_scalar('training/diffusion_loss_epoch', np.mean(diff_losses), global_step=epoch)
+
         with open(f'{log_dir}/train.log', 'a') as f:
             f.write(msg)
 
