@@ -37,7 +37,7 @@ import soundfile as sf
 # Import model components
 sys.path.append('Grad-TTS')
 from model import GradTTS
-from text import text_to_sequence, cmudict
+from text import text_to_sequence
 from text.symbols import symbols
 from utils import intersperse
 
@@ -174,8 +174,7 @@ def synthesize_utterance(model, vocoder, text, speaker_id,
         rtf: Real-time factor
     """
     # Prepare text
-    cmu = cmudict.CMUDict('./Grad-TTS/resources/cmu_dictionary')
-    x = torch.LongTensor(intersperse(text_to_sequence(text, dictionary=cmu), len(symbols))).unsqueeze(0)
+    x = torch.LongTensor(intersperse(text_to_sequence(text, cleaner_names=['basic_cleaners'], dictionary=None), len(symbols))).unsqueeze(0)
     x_lengths = torch.LongTensor([x.shape[-1]])
     
     # Speaker ID
@@ -200,13 +199,8 @@ def synthesize_utterance(model, vocoder, text, speaker_id,
             length_scale=length_scale
         )
     
-    # y_dec shape: [batch, n_mels, time]
-    # This is the correct format for HiFi-GAN vocoder (NO TRANSPOSE NEEDED)
-    
-    # NOTE: Clamping tested and found unnecessary - vocoder handles full range fine
-    # Original concern about mel range [-11.5, +0.3] was false alarm
-    # Audio quality is good with timesteps=20
-    
+    # y_dec shape: [batch, n_mels, time] — correct format for decode_batch
+
     # Generate waveform with vocoder
     waveforms = vocoder.decode_batch(y_dec)
     wav = waveforms.squeeze().cpu().numpy()

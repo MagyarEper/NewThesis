@@ -13,7 +13,6 @@ from model.utils import fix_len_compatibility
 train_filelist_path = 'resources/filelists/train_textplit.txt'
 valid_filelist_path = 'resources/filelists/valid_textsplit.txt'
 test_filelist_path = 'resources/filelists/libri-tts/test.txt'
-cmudict_path = 'resources/cmu_dictionary'
 add_blank = True
 n_feats = 80
 n_spks = 39  # Hungarian Dysarthria Database: 39 speakers
@@ -43,11 +42,11 @@ beta_max = 20.0
 pe_scale = 1000  # 1 for `grad-tts-old.pt` checkpoint
 
 # training parameters (optimized for 16GB VRAM)
-log_dir = 'logs/hungarian_dysarthria_v2'
-test_size = 4  # back to 4 test samples
-n_epochs = 200  # converges ~150-200 epochs
-batch_size = 12  # 8 -> 12 (good balance for 16GB)
+log_dir = 'logs/hungarian_dysarthria_v3'
+test_size = 4
+n_epochs = 120
+batch_size = 32
 learning_rate = 1e-4
 seed = 37
-save_every = 10  # save checkpoints every 10 epochs for better analysis
+save_every = 20
 out_size = fix_len_compatibility(2*16000//256)  # adjusted for 16kHz

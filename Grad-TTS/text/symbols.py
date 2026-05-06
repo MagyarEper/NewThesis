@@ -1,14 +1,11 @@
-""" from https://github.com/keithito/tacotron """
-
-from text import cmudict
+""" from https://github.com/keithito/tacotron — modified for Hungarian (v3) """
 
 _pad        = '_'
 _punctuation = '!\'(),.:;? '
 _special = '-'
 _letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+_hungarian = 'áéíóöőúüűÁÉÍÓÖŐÚÜŰ'
 
-# Prepend "@" to ARPAbet symbols to ensure uniqueness:
-_arpabet = ['@' + s for s in cmudict.valid_symbols]
-
-# Export all symbols:
-symbols = [_pad] + list(_special) + list(_punctuation) + list(_letters) + _arpabet
+# Hungarian grapheme vocabulary — no ARPAbet, no CMU dictionary needed
+# vocab size: 82 (was 148 with ARPAbet)
+symbols = [_pad] + list(_special) + list(_punctuation) + list(_letters) + list(_hungarian)
