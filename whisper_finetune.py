@@ -125,6 +125,7 @@ class DataCollatorSpeechSeq2SeqWithPadding:
 
 def make_compute_metrics(processor):
     wer_metric = evaluate.load("wer")
+    cer_metric = evaluate.load("cer")
 
     def compute_metrics(pred):
         pred_ids = pred.predictions
@@ -137,7 +138,8 @@ def make_compute_metrics(processor):
         label_str = processor.tokenizer.batch_decode(label_ids, skip_special_tokens=True)
 
         wer = wer_metric.compute(predictions=pred_str, references=label_str)
-        return {"wer": wer}
+        cer = cer_metric.compute(predictions=pred_str, references=label_str)
+        return {"wer": wer, "cer": cer}
 
     return compute_metrics
 

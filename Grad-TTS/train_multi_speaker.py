@@ -6,6 +6,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # MIT License for more details.
 
+import sys
 import numpy as np
 from tqdm import tqdm
 
@@ -71,13 +72,13 @@ if __name__ == "__main__":
     batch_collate = TextMelSpeakerBatchCollate()
     loader = DataLoader(dataset=train_dataset, batch_size=batch_size,
                         collate_fn=batch_collate, drop_last=True,
-                        num_workers=8, shuffle=True)
+                        num_workers=4, shuffle=True)
     test_dataset = TextMelSpeakerDataset(valid_filelist_path, add_blank,
                                          n_fft, n_feats, sample_rate, hop_length,
                                          win_length, f_min, f_max)
     val_loader = DataLoader(dataset=test_dataset, batch_size=batch_size,
                             collate_fn=batch_collate, drop_last=False,
-                            num_workers=4, shuffle=False)
+                            num_workers=2, shuffle=False)
 
     print('Initializing model...')
     model = GradTTS(nsymbols, n_spks, spk_emb_dim, n_enc_channels,
@@ -89,6 +90,9 @@ if __name__ == "__main__":
 
     print('Initializing optimizer...')
     optimizer = torch.optim.Adam(params=model.parameters(), lr=learning_rate)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=10, min_lr=1e-6, verbose=True
+    )
 
     print('Logging test batch...')
     test_batch = test_dataset.sample_test_batch(size=params.test_size)
@@ -192,6 +196,9 @@ if __name__ == "__main__":
         msg += ' | val_dur = %.3f | val_prior = %.3f | val_diff = %.3f\n' % (
             np.mean(val_dur_losses), np.mean(val_prior_losses), np.mean(val_diff_losses))
 
+        val_total = np.mean(val_dur_losses) + np.mean(val_prior_losses) + np.mean(val_diff_losses)
+        scheduler.step(val_total)
+        logger.add_scalar('training/learning_rate', optimizer.param_groups[0]['lr'], global_step=epoch)
         logger.add_scalar('validation/duration_loss', np.mean(val_dur_losses), global_step=epoch)
         logger.add_scalar('validation/prior_loss', np.mean(val_prior_losses), global_step=epoch)
         logger.add_scalar('validation/diffusion_loss', np.mean(val_diff_losses), global_step=epoch)
@@ -201,6 +208,7 @@ if __name__ == "__main__":
 
         with open(f'{log_dir}/train.log', 'a') as f:
             f.write(msg)
+        print(msg, flush=True)
 
         if epoch % params.save_every > 0:
             continue

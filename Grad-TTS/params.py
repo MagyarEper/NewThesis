@@ -42,10 +42,10 @@ beta_max = 20.0
 pe_scale = 1000  # 1 for `grad-tts-old.pt` checkpoint
 
 # training parameters (optimized for 16GB VRAM)
-log_dir = 'logs/hungarian_dysarthria_v3'
+log_dir = 'logs/hungarian_dysarthria_v4'
 test_size = 4
-n_epochs = 120
-batch_size = 32
+n_epochs = 200
+batch_size = 16
 learning_rate = 1e-4
 seed = 37
 save_every = 20

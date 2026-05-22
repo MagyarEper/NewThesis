@@ -3,6 +3,11 @@ wavs_16khz/
 reconstructed_wavs/
 dataset_mel_reconstructed_wavs/
 wavs_synthetic_80k*/
+wavs_synthetic_v2_*/
+wavs_synthetic_v3*/
+wavs_probe_v4/
+wavs_v1_*/
+wavs_ext_clean/
 
 # Külső adatbázisok (nagy fájlok)
 CommonVoiceHU/
@@ -11,13 +16,40 @@ CommonVoiceHU/
 presentation/
 MSZNY2026.xlsx
 Dolgozat/
+SPECOM_2025_paper_24.pdf
 
 # Temp és generált könyvtárak
 tmpdir_vocoder/
 .venv/
+Grad-TTS/out_v2/
 
-# Teszt manifestek
-generation_manifest_test.csv
+# Modellek (előtanított és finomhangolt)
+whisper_finetuned/
+pretrained_models/
+Grad-TTS/pretrained_models/
+Hifi-gan_16khz/pretrained_models/
+
+# Eredmények és végső dolgozat (nem implementáció)
+results/
+thesis/
+
+# Extra szkriptek (csak teszt/ábra/ellenőrzés)
+_EXCLUDE_FROM_SUBMISSION/extra_scripts/
+
+# Grad-TTS kizárandó tartalom
+Grad-TTS/pretrained_models/
+Grad-TTS/logs/
+Grad-TTS/out/
+Grad-TTS/sanity_check_output*/
+Grad-TTS/__pycache__/
+Grad-TTS/model/__pycache__/
+Grad-TTS/text/__pycache__/
+Grad-TTS/hifi-gan/__pycache__/
+Grad-TTS/inference.ipynb
+
+# Generlási manifest (9.3MB, generate_test_set.py által generálható)
+generation_manifest.csv
+new_texts.csv
 
 # Spectrogram fájlok
 spectrograms/
@@ -129,3 +161,6 @@ synthetic_train_manifest.csv
 
 # Thesis LaTeX (WIP, nem kész)
 thesis/
+
+# Whisper fine-tuned modellek (nagy fájlok)
+whisper_finetuned/

@@ -294,8 +294,8 @@ def main():
     
     for wav_path, text, speaker_id, utt_id, speaker_name in tqdm(lines):
         try:
-            # Get output filename
-            basename = Path(wav_path).name
+            # Get output filename — use utt_id if wav_path is empty
+            basename = Path(wav_path).name if wav_path else f'{utt_id}.wav'
             output_path = os.path.join(args.output_dir, basename)
             
             # Skip if already exists

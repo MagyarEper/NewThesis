@@ -30,6 +30,7 @@ from transformers import (
     WhisperProcessor,
     WhisperForConditionalGeneration,
 )
+from peft import PeftModel
 
 
 def load_manifest(manifest_path: str):
@@ -66,7 +67,14 @@ def main():
     # Load model
     if args.model_path:
         print(f"Loading fine-tuned model from {args.model_path}")
-        model = WhisperForConditionalGeneration.from_pretrained(args.model_path)
+        adapter_config = Path(args.model_path) / "adapter_config.json"
+        if adapter_config.exists():
+            print("  Detected LoRA adapter — loading base model + adapter")
+            model = WhisperForConditionalGeneration.from_pretrained(args.model_name)
+            model = PeftModel.from_pretrained(model, args.model_path)
+            model = model.merge_and_unload()
+        else:
+            model = WhisperForConditionalGeneration.from_pretrained(args.model_path)
     else:
         print(f"Loading base model: {args.model_name}")
         model = WhisperForConditionalGeneration.from_pretrained(args.model_name)
@@ -83,6 +91,7 @@ def main():
     ds = ds.cast_column("audio", Audio(sampling_rate=16000))
 
     wer_metric = evaluate.load("wer")
+    cer_metric = evaluate.load("cer")
 
     # Run inference
     all_results = []
@@ -108,8 +117,9 @@ def main():
             predicted_ids, skip_special_tokens=True
         )[0].strip()
 
-        # Per-utterance WER
+        # Per-utterance WER + CER
         utt_wer = wer_metric.compute(predictions=[pred_text], references=[ref_text])
+        utt_cer = cer_metric.compute(predictions=[pred_text], references=[ref_text])
 
         all_results.append({
             "utt_id": utt_id,
@@ -117,14 +127,16 @@ def main():
             "reference": ref_text,
             "prediction": pred_text,
             "wer": utt_wer,
+            "cer": utt_cer,
         })
         all_preds.append(pred_text)
         all_refs.append(ref_text)
 
-    # Overall WER
+    # Overall WER + CER
     overall_wer = wer_metric.compute(predictions=all_preds, references=all_refs)
+    overall_cer = cer_metric.compute(predictions=all_preds, references=all_refs)
 
-    # Per-speaker WER
+    # Per-speaker WER + CER
     speaker_preds = {}
     speaker_refs = {}
     for r in all_results:
@@ -136,28 +148,36 @@ def main():
         speaker_refs[spk].append(r["reference"])
 
     speaker_wers = {}
+    speaker_cers = {}
     for spk in sorted(speaker_preds.keys()):
         speaker_wers[spk] = wer_metric.compute(
             predictions=speaker_preds[spk], references=speaker_refs[spk]
         )
+        speaker_cers[spk] = cer_metric.compute(
+            predictions=speaker_preds[spk], references=speaker_refs[spk]
+        )
 
     avg_speaker_wer = np.mean(list(speaker_wers.values()))
+    avg_speaker_cer = np.mean(list(speaker_cers.values()))
 
     # Print results
     print(f"\n{'='*60}")
     print(f"RESULTS")
     print(f"{'='*60}")
     print(f"Overall WER:         {overall_wer:.4f} ({overall_wer*100:.2f}%)")
+    print(f"Overall CER:         {overall_cer:.4f} ({overall_cer*100:.2f}%)")
     print(f"Avg speaker WER:     {avg_speaker_wer:.4f} ({avg_speaker_wer*100:.2f}%)")
-    print(f"\nPer-speaker WER:")
+    print(f"Avg speaker CER:     {avg_speaker_cer:.4f} ({avg_speaker_cer*100:.2f}%)")
+    print(f"\nPer-speaker WER / CER:")
     for spk, w in speaker_wers.items():
         n = len(speaker_preds[spk])
-        print(f"  {spk}: {w:.4f} ({w*100:.1f}%)  [{n} utt]")
+        c = speaker_cers[spk]
+        print(f"  {spk}: WER={w:.4f} ({w*100:.1f}%)  CER={c:.4f} ({c*100:.1f}%)  [{n} utt]")
 
     # Save results
     os.makedirs(os.path.dirname(args.output_csv) or ".", exist_ok=True)
     with open(args.output_csv, "w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["utt_id", "speaker", "reference", "prediction", "wer"])
+        writer = csv.DictWriter(f, fieldnames=["utt_id", "speaker", "reference", "prediction", "wer", "cer"])
         writer.writeheader()
         writer.writerows(all_results)
 
@@ -168,10 +188,13 @@ def main():
         f.write(f"Test set: {args.test_manifest}\n")
         f.write(f"Utterances: {len(all_results)}\n")
         f.write(f"Overall WER: {overall_wer:.4f} ({overall_wer*100:.2f}%)\n")
-        f.write(f"Avg speaker WER: {avg_speaker_wer:.4f} ({avg_speaker_wer*100:.2f}%)\n\n")
-        f.write("Per-speaker WER:\n")
+        f.write(f"Overall CER: {overall_cer:.4f} ({overall_cer*100:.2f}%)\n")
+        f.write(f"Avg speaker WER: {avg_speaker_wer:.4f} ({avg_speaker_wer*100:.2f}%)\n")
+        f.write(f"Avg speaker CER: {avg_speaker_cer:.4f} ({avg_speaker_cer*100:.2f}%)\n\n")
+        f.write("Per-speaker WER / CER:\n")
         for spk, w in speaker_wers.items():
-            f.write(f"  {spk}: {w:.4f} ({w*100:.1f}%)\n")
+            c = speaker_cers[spk]
+            f.write(f"  {spk}: WER={w:.4f} ({w*100:.1f}%)  CER={c:.4f} ({c*100:.1f}%)\n")
 
     print(f"\nResults saved to {args.output_csv}")
     print(f"Summary saved to {summary_path}")

@@ -135,11 +135,13 @@ class TextMelSpeakerDataset(torch.utils.data.Dataset):
     def get_triplet(self, line):
         filepath, text, speaker = line[0], line[1], line[2]
         text = self.get_text(text, add_blank=self.add_blank)
-        mel = self.get_mel(filepath)
+        # Speed perturbation: random factor in [0.9, 1.1] with 50% probability
+        speed = random.choice([random.uniform(0.9, 1.1), 1.0])
+        mel = self.get_mel(filepath, speed_factor=speed)
         speaker = self.get_speaker(speaker)
         return (text, mel, speaker)
 
-    def get_mel(self, filepath):
+    def get_mel(self, filepath, speed_factor=1.0):
         audio, sr = ta.load(filepath, backend="soundfile")
         assert sr == self.sample_rate
         # SpeechBrain mel_spectogram kompatibilis HiFi-GAN vocoderrel
@@ -160,8 +162,18 @@ class TextMelSpeakerDataset(torch.utils.data.Dataset):
             mel_scale="slaney",
             compression=True
         )
-        # mel shape: [1, T, 80] -> squeeze to [T, 80]
-        return mel.squeeze(0)
+        # mel shape: [80, T] after squeeze
+        mel = mel.squeeze(0)
+        # Speed perturbation in mel domain (much faster than audio resampling)
+        if speed_factor != 1.0:
+            new_len = int(mel.shape[-1] / speed_factor)
+            mel = torch.nn.functional.interpolate(
+                mel.unsqueeze(0).unsqueeze(0),
+                size=(self.n_mels, new_len),
+                mode='bilinear',
+                align_corners=False
+            ).squeeze(0).squeeze(0)
+        return mel
 
     def get_text(self, text, add_blank=True):
         text_norm = text_to_sequence(text, cleaner_names=['basic_cleaners'], dictionary=None)

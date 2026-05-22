@@ -1,25 +1,34 @@
-# Speech-Backbones
 
-This is the main repository of open-sourced speech technology by Huawei Noah's Ark Lab.
-
-## Grad-TTS
-
-Official implementation of the Grad-TTS model based on Diffusion Probabilistic Modelling. For all details check out our paper accepted to ICML 2021 via [this](https://arxiv.org/abs/2105.06337) link.
-
- **Authors**: Vadim Popov\*, Ivan Vovk\*, Vladimir Gogoryan, Tasnima Sadekova, Mikhail Kudinov.
-
- <sup>\*Equal contribution.</sup>
- 
-## SPIRAL
- 
-Official implementation of SPIRAL: Self-supervised Perturbation-Invariant Representation Learning for Speech Pre-Training. For all details check out our paper accepted to ICLR 2022 via [this](https://arxiv.org/abs/2201.10207) link.
-
-**Authors**: Wenyong Huang, Zhenhe Zhang, Yu Ting Yeung, Xin Jiang, Qun Liu.
- 
-## DiffVC
-
-Official implementation of the paper "Diffusion-Based Voice Conversion with Fast Maximum Likelihood Sampling Scheme" (ICLR 2022, Oral). [Link](https://arxiv.org/abs/2109.13821).
-
-**Authors**: Vadim Popov, Ivan Vovk, Vladimir Gogoryan, Tasnima Sadekova, Mikhail Kudinov, Jiansheng Wei.
 # NewThesis
-# NewThesis
+
+Ez a projekt magyar diszartriás beszédszintézis és automatikus beszédfelismerés (ASR) kísérletek implementációját tartalmazza.
+A fő cél: Grad-TTS alapú szintetikus beszéd generálása, majd Whisper modellek finomhangolása és kiértékelése magyar nyelven.
+
+## Fő tartalom
+
+- **Python szkriptek**:  
+	Adat-előkészítés, manifest generálás, szintetikus beszéd generálás, ASR finomhangolás és kiértékelés.
+- **Grad-TTS/**:  
+	A Grad-TTS modell forráskódja (csak a futtatáshoz szükséges részek).
+- **Shell scriptek**:  
+	Függőségek telepítése, pipeline futtatása.
+- **README.md, requirements.txt, evaluation_requirements.txt**:  
+	Dokumentáció és szükséges csomagok listája.
+
+## Fő pipeline lépések
+
+1. **Függőségek telepítése**  
+	 `bash install_evaluation_deps.sh`
+
+2. **Szintetikus beszéd generálása**  
+	 `python generate_test_set.py --checkpoint <ckpt> --manifest <manifest.csv> --output-dir <output_wavs>`
+
+3. **Whisper ASR finomhangolás**  
+	 `python whisper_finetune.py --train-manifest <train.csv> --val-manifest <val.csv> --experiment <type> --output-dir <output_dir>`
+
+4. **ASR kiértékelés**  
+	 `python whisper_evaluate.py --test-manifest <test.csv> --model-path <model_dir> --output-csv <results.csv>`
+
+## Mi NINCS benne?
+
+- Nagy adathalmazok, modellek, logok, segéd/teszt szkriptek, prezentációk, eredmények: ezek az `_EXCLUDE_FROM_SUBMISSION` mappába kerültek, nem részei a beadásnak.

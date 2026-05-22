@@ -1,0 +1,998 @@
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_001_0010_dishwasher_kitchen_AOL.wav|Bekapcsoltad a mosogatót a konyhába|0
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_001_0010_phone_NULL_AO.wav|Hívd fel a lá Hívd fel a lányomat a telefonon|0
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_001_1000_TV_livingroom_AOL.wav|Adjál hangerőt a tévére a ki nagyszobába|0
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_001_0100_electricity_smallroom_AOL.wav|Oltsd le a villanyt kisszobába|0
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_curtain_livingroom_LAO.wav|Nagyszobába húzzuk el a függönyöket|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_1000_electricity_livingroom_LAO_2.wav|Nagyszobába kapcsoljuk fel a villanyt|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_computer_smallroom_LAO.wav|Kisszobába kapcsoljuk ki a számítógépet|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_1000_TV_livingroom_LAO.wav|Nagyszobába kapcsoljuk vagy hangosítsuk fel a tévét|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_door_kitchen_LXAO.wav|Konyhába meleg van nyissuk ki az ajtót|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0010_kettle_NULL_OA.wav|Vízforralót kapcsoljuk be|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_window_corridor_AOL.wav|Nyissuk ki az ablakot a folyosón|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_fan_kitchen_ALO.wav|Kapcsoljuk ki a konyhába a ventilátorokat|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0010_heating_kitchen_LAO.wav|Konyhába kapcsoljuk be a fűtést|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0001_window_bathroom_AOL.wav|Nyissuk ki az ablakot a fürdőszobában|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_002_0010_vacuum_livingroom_LAO.wav|Nagyszobába kapcsoljuk be a porszívót|1
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_1111_radio_corridor_LAO.wav|Folyosón váltsál csatornát a rádión|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_1000_heating_corridor_OAXL.wav|Fűtést tedd följebb légy szíves a folyosón|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0100_shutter_kitchen_LAO.wav|Konyhába húzd le a redőnyt|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_1000_heating_kitchen_LAOX.wav|Konyhába tedd följebb a fűtést légy szíves|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0001_vacuum_livingroom_LAXO.wav|Nagyszobába kapcsold ki légy szíves a porszívót|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0100_TV_NULL_AO.wav|Halkítsd le a televíziót|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_1111_radio_livingroom_OAL.wav|A rádión váltsál csatornát lé a nagyszobába|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0010_computer_smallroom_AOL.wav|Kapcsold be a számítógépet a kisszobába|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0010_curtain_corridor_LAO.wav|Folyosón húzd be a függönyt|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0001_vacuum_livingroom_AXOL.wav|Kapcsold ki légy szíves a porszívót a nagyszobába|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0001_phone_NULL_AO.wav|Hívd föl a fiam|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0001_heating_bathroom_AXOL.wav|Kapcsold ki légy szíves a termosztátot a fürdőszobába|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0100_shutter_smallroom_LAO.wav|Kisszobába húzd le a redőnyt|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_003_0001_radio_smallroom_OAL.wav|A rádiót kapcsold ki a sz kisszobába|2
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0010_window_bathroom_LAO.wav|Fürdőszoban bezárni a ablakokat|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_curtain_livingroom_LAO_II.wav|Nappalin széthú függöny|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0100_TV_livingroom_LAO.wav|Nagyszoban halkítsd ki tévét|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0010_vacuum_smallroom_LOA.wav|Kisszobában porszívó bekapcsolni|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_radio_room_AOL.wav|Ki rádió szobámban|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0010_fan_kitchen_LAO.wav|Konyhában fel venderátor|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_heating_smallroom_LOA.wav|Kisszoba fűtés ki|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0100_heating_room_OAL.wav|Fütés le szobában|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_fan_kitchen_LAO.wav|Konyha kikapcsolni vendilátor|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_1000_electricity_livingroom_LAO.wav|Nagyszoban felakoldzsi lámpam|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_fan_smallroom_LAO.wav|Kisszoban kikapcsolom od ventilátor|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_004_0001_radio_kitchen_LAO.wav|Konyhában kikapcsol a rádi|3
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_window_corridor_AOL.wav|Kinyitjuk kinyicuk a ablakot a folyosón|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_fan_kitchen_LAO.wav|A konyhában kapcsold ki a ventillátort|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_toaster_kitchen_OAL.wav|Kenyérpisístóst kapcsold ki a konyhában|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0010_curtain_room_LAO.wav|A szobában öh húzd be a függönyt|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0010_radio_kitchen_LAO.wav|A konyhában kapcsold be a rádiót|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_radio_kitchen_AOL.wav|Kapcsold ki a rádiót a konyhában|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0010_curtain_kitchen_AOL.wav|Húzd be a függönyt a konybhában|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_washingmaschine_kitchen_AOL.wav|Indítsd be a mósógépet öh harminc fokon a konyhában|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_1000_electricity_livingroom_ALO.wav|Kapcsold fel a szobában a nagyszobában a villanyt|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0001_window_room_AOL.wav|Kinyitjuk a a ablakot a szobában|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_NULL_electricity_smallroom_OL.wav|A kisszobában a villany|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_005_0010_door_bathroom_LAO.wav|A szob a fürdőszobában zárd be az ajtót|4
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_door_livingroom_LAO.wav|A nagyszobában zárd be az ajtót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_fan_corridor_AOL.wav|Kapcsold be a ventillátort a folyosón|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_1000_heating_livingroom_LAO.wav|A hnagyszobában húzd fel a radiátort|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_heating_smallroom_AOL.wav|Kapcsold be a raditárot a kisszobában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_electricity_kitchen_LAO.wav|A konyhában kapcsold le a villanyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_curtain_corridor_LAO.wav|A folyosón húzd szét a függönyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_electricity_room_AOL.wav|Kapcsold le a villanyt a szobában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_1000_electricity_smallroom_LAO.wav|A kisszobában kapcsold fel a villanyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_radio_room_LAO.wav|A szobában kapcsd be ki a rádiót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_electricity_smallroom_LAO.wav|A kisszobában kapcsold le a villanyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_fan_room_LAO.wav|A szobában kapcsold ki a ventillátort|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_window_room_LAO.wav|A szobában zárd be az ablakot|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_dishwasher_kitchen_AOL.wav|Kapcsold be a mosogatógépet a konyhában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_shutter_room_AOL.wav|Húzd le a redőnyt a szobában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_1000_shutter_corridor_AOL.wav|Húzd fel a redőnyt a folyosón|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_toaster_kitchen_LAO.wav|A konyhában kapcsold ki a kenyérpirítót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_TV_livingroom_ALO.wav|Vedd lejjebb a nagyszobában a televíziót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_curtain_corridor_LAO.wav|A folyosón húzd be a függönyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_radio_kitchen_LAO.wav|A konyhában kapcsold ki a rá be a rádiót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_door_corridor_LAO.wav|A folyosón nyisd ki az ajtót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_toaster_kitchen_AOL.wav|Kapcsold ki a kenyérpirítót a konyhában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_TV_smallroom_ALO.wav|Vedd lejjebb a kisszobában a televíziót|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_window_livingroom_AOL.wav|Zárd be az ablakot a nagyszobában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_shutter_kitchen_LAO.wav|A konyhában húzd le a redőnyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0001_fan_bathroom_AOL.wav|Kapcsold ki a ventillátort a fürdőszobában|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0100_shutter_smallroom_LAO.wav|A kisszobában húzd le a redőnyt|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_006_0010_window_bathroom_LAO.wav|A fürdőszobában zárd be az ablakot|5
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0100_heating_corridor_LAO.wav|A folyosón húzd le a radiátort|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_radio_smallroom_LAO.wav|A kisszobába kapcsold ki a rádió|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_vacuum_livingroom_LAO.wav|A nagyszobában kapcsold ki a porszívót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_vacuum_bathroom_LAO.wav|A fürdőszobába kapcsold be a pordszívót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0100_shutter_bathroom_AOL.wav|Húzd le a redőnyt a főrdúszobában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_door_kitchen_LAO.wav|A konyhába zárd be az atót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_window_kitchen_AOL.wav|Zárd be a ablakot a tonyhában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_vacuum_room_LAO.wav|A cobában kapcsold be a forszívót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_toaster_kitchen_AOL.wav|Kapcsold ki a pirítót a konyhában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_vacuum_livingroom_AOL.wav|Kapcsold ki a forszívót a nagyszobában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_curtain_bathroom_AOL.wav|Húzd be a függönt a fürdőszobában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_window_bathroom_LAO.wav|A fürdőszobában nyisd ki az ablakot|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_fan_smallroom_OAL.wav|A ventillátort kapcsold ki a kisszobában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_window_corridor_LAO.wav|A folyosón nyisd ki az ablakot|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_radio_kitchen_AOL.wav|Kapcsold ki a rádiót a konyhában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_phone_NULL_AO.wav|Hívd fel a fiamat a telefonon|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_curtain_livingroom_LAO.wav|A nagycobában húzds szét a függönyt|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_1111_radio_kitchen_LAO.wav|Han konyhában váltcs csatornát a rádión|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_curtain_smallroom_LAO.wav|A kisszobába húzd be a függöny|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_vacuum_smallroom_LAO.wav|A kisszobába kapcsold be a forszívót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_stove_kitchen_LAO.wav|A konyhába kapcsold be a sütőt|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_kettle_kitchen_LAO.wav|A konyhában kapcsuld be a vízfurralót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_heating_kitchen_LAO.wav|A konyhában kapcsold be a radiátort|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_door_bathroom_LAO.wav|A fürdőszobában zárd be ajtót|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0001_curtain_corridor_AOL.wav|Húzd szét a függönyt a folyosón|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_0010_vacuum_room_AOL.wav|Kapcsold be a forszívót a szobában|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_007_1000_shutter_room_LAO.wav|Az szobába húzd fel a a ledőnyt|6
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_curtain_smallroom_LAO.wav|A kisszobában húzd szé a függönyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_1000_shutter_kitchen_LAO.wav|A konyhában húzd fel a redőnyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_1000_electricity_corridor_LAO.wav|A folytyosón kapcsold fel a villanyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_window_room_AOL.wav|Zárd be az ablakot a szobában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0100_electricity_kitchen_LAO.wav|A konyhában kapcsold le a villanyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_window_corridor_LAO.wav|A folyosón zárd be az ablakot|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0100_electricity_livingroom_LAO.wav|A nagyszobában kapcsold le a villanyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_window_kitchen_LAO.wav|A konyhában zárd be az ablrakot|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_vacuum_kitchen_AOL.wav|Apcsold ki a porszívót a konyhában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_door_kitchen_AOL.wav|Dísd ki az ajtót a konyhában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0100_heating_smallroom_LAO.wav|A kisszobában húzd lejjebb a dadirátort|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_computer_livingroom_LAO.wav|A nagyszobában kikapcsolom a szeámítógépet|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0100_heating_livingroom_LAO.wav|A nagyszobába húzd lejjebb a radiátor|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_1111_TV_room_LAO.wav|A szobában váltes csatornát a tévéd|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_fan_corridor_AOL.wav|Kacsvold be a ventillátort a folyosón|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_door_bathroom_LAO.wav|A fördőszobámban nyísd ki az ajtót|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_radio_room_AOL.wav|Csapcsold ki a rádiót a szobában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_curtain_corridor_LAO.wav|A folyosón húzd két a függöny|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_door_livingroom_AOL.wav|Zárd be az ajtód a nagyszobában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_door_kitchen_AOL.wav|Zárd be az ajtóty a tyonyhában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_vacuum_room_AOL.wav|Kapcsold be a porszívót a szobában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_window_corridor_LAO.wav|A folyosón kisd ki az abrakot|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_1000_electricity_kitchen_LAO.wav|A konyhában katvold fel a villanyt|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0010_dishwasher_kitchen_AOL.wav|Kapcsold be a mosogatógépet a konyhában|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0100_heating_bathroom_LAO.wav|A fürdőszobában úzd lejjebb a radirátort|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_0001_heating_kitchen_ALO.wav|Kapcsold ki a konyhában a nadidátort|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_008_1000_TV_room_LAO.wav|A szobában angosítsd fe la tévét|7
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0100_shutter_kitchen_AOL.wav|Huzd le a redönyt a konyában|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdőszobaban|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_1111_radio_room_AOL.wav|Válts csatortont a radin a csababan|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0100_electricity_livingroom_LAO.wav|A nagyszobaba kapcsold le villanyt|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0010_fan_smallroom_AOL.wav|Kapcsold be a ventillátort a kisszobaban|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0001_computer_smallroom_AOL.wav|Kapcsold ki a számítógépt kisszobába|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_1111_radio_kitchen_AOL.wav|Válts csatornát a rádión a konyhában|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0100_shutter_corridor_LAO.wav|A folyosón húzd le a redőny|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0100_shutter_room_LAO.wav|A szobaban huzd le a redönyt|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0010_computer_livingroom_AOL.wav|Kapcsold be a számítógépet a nagyszobaban|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0001_toaster_kitchen_AOL.wav|Kapcsold ki a pirítót a konyhába|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0100_electricity_bathroom_AOL.wav|Kapcsold le a villant a fürdőszobaban|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0001_window_corridor_LAO.wav|A folyosón nyisd ki az ablakot|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_009_0001_window_bathroom_AOL.wav|Nyisd ki az ablakot a fürdőszobaban|8
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_curtain_livingroom_LAO.wav|A naccobába húzd be a függönyt|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_radio_corridor_LAO.wav|A folyosón kapcsold ki a rádiót|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0100_electricity_kitchen_AOL.wav|Kapcsold le a villanyt a konyhában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_door_corridor_AOL.wav|Zárd be az ajtót a folyosón|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_computer_livingroom_AOL.wav|Kapcsold ki a számítógépet a nagycobában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_curtain_corridor_AOL.wav|Húzd szét a függönyt a folyosón|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_washingmachine_kitchen_LA.wav|A konyhában kapcsold be a mosógépet harminc fokon|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_fan_kitchen_AOL.wav|Kapcsold ki a ventilátort a konyhában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_fan_bathroom_LAO.wav|A füldőszobában kapcsold be a ventilátort|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_window_livingroom_AOL.wav|Zárd be az ablakot a nagyszobában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_window_livingroom_AOL.wav|Nyisd ki az ablakot a naccobába|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_1000_radiator_kitchen_AOL.wav|Húzd fel a radiátort a konyhába|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_vacuum_livingroom_LAO.wav|A nagycobába kapcsold ki a porszívót|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_door_bathroom_AOL.wav|Zárd be az ajtót a fühldőszobába|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_washingmachine_kitchen_OAL.wav|A mosógépet kapcsold be a konyhába hatvan fokon|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0100_radiator_corridor_LAO.wav|A folyosón húzd le a radiátort|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_radiator_bathroom_LAO.wav|A fühldőszobába kapcsold be a radiátort|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0100_shutter_kitchen_LAO.wav|A konyhában húzd le a redőnyket|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_window_smallroom_LAO.wav|A kisszobában zárd be az ablakot|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_door_corridor_LAO.wav|A folyosón nyisd ki az ajtót|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0010_kettle_kitchen_AOL.wav|Kapcsold be a vízforralót a konyhába|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_vacuum_smallroom_LAO.wav|A kisszobába kapcsold ki a porszívót|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_vacuum_room_AOL.wav|Kapcsold ki a porszívót a szobába|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_1111_radio_kitchen_AOL.wav|Válts cstrnát a rádión a konyhában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0100_radiator_livingroom_LAO.wav|A nagycobába húzd le a radiátort|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_0001_door_bathroom_LAO.wav|A fühldőszobában nyisd ki az ajtót|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_1000_shutter_bathroom_AOL.wav|Húzd fel a ledőnyt a füldőszobában|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_010_1000_shutter_bathroom_LAO.wav|A füldőszobában húzd fel a ledőnyöket|9
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_1000_shutter_room_LAO.wav|A szobába húzd fel a redőnyt|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_fan_corridor_AOL.wav|Kapcsold be a ventilátort a folyosón|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_curtain_corridor_AOL.wav|Húzd be a függönyt a folyosón|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0100_shutter_livingroom_LAO.wav|A nagyszoba nagyszobába engedd le a redőnyt|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_1000_TV_bathroom_AOL.wav|Hangosítsd fel a tévébe a fürdőszobába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_window_smallroom_AOL.wav|Zárjuk be az ablakot a kisszobába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0001_door_livingroom_LAO.wav|A nagyszobába nyisd ki az ajtót|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0100_shutter_smallroom_LAO.wav|A kisszobába engedd le a redőnyt|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_1000_shutter_smallroom_LAO.wav|A kisszobába húzd fela  redőnyt|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_kettle_kitchen_AOL.wav|Kapcsold be a vízforrót a konyhába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0100_electricity_bathroom_LAO.wav|A fürdőszobában kapcsold le a villanyt|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_fan_kitchen_AOL.wav|Kapcsold be a hi ventilátort a konyhába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0010_window_smallroom_LAO.wav|A kisszobában zárjuk be az ablakot|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_1111_TV_livingroom_LAO.wav|A nagyszobában csatornát válts a tévén|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdőszobába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0001_door_kitchen_LAO.wav|A konyhára nyisd ki az ajtót|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_011_0001_fan_kitchen_AOL.wav|Kapcsold ki a ventilátort a konyhába|10
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_corridor_curtain_LAO.wav|Folyosóban húzd be a függönyt|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0100_corridor_radiator_LAO.wav|Folyosóba vedd lejjebb a radiátort|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0100_livingroom_TV_AOL.wav|Halkítsd le a tévét a nagyszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_smallroom_door_AOL.wav|Zárd be a az ajtót a kisszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_kitchen_toaster_LAO.wav|Konyhában kapcsold be a pirítost|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_bathroom_washingmachine_AOL.wav|Kapcsold be a mosógépet harminc fokon a fürdőszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_room_fan_AOL.wav|Kapcsold be a ventilátort a szobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0100_livingroom_electricity_AOL.wav|Kapcsold le a villanyt a nagyszobába|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_room_window_LAO.wav|A szobában zárjuk be az ablakot|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_1000_livingroom_TV_AOL.wav|Hangosítsd föl a tévét a nagyszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_bathroom_fan_LAO.wav|Fürdőszobában kapcsold be a ventilátort|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_kitchen_oven_LAO.wav|Konyhában kapcsold be a sütőt|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_bathroom_vacuum_AOL.wav|Kapcsold be a porszívót a fürdőszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_kitchen_door_AOL.wav|Zárd be a az ajtót a konyhában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_corridor_radiator_AOL.wav|Kapcsold ki a radiátort a folyosóban|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_1111_room_radio_LAO.wav|A szobában válts csatornát a rádión|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_1111_kitchen_radio_LAO.wav|Konyhában válts csatornát a rádión|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0100_room_shutter_LAO.wav|Szobában húzd le a redőnyt|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_corridor_fan_LAO.wav|A folyosóban kapcsold ki a ventilátort|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_smallroom_door_AOL.wav|Nyisd ki az ajtót a kisszobába|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_room_fan_LAO.wav|Szobában kapcsold be a ventilátort|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0100_kitchen_radiator_AOL.wav|Vedd lejjebb a radi a radiátort a konyhában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_corridor_window_LAO.wav|A folyosó a nyissa ki az ablak|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_room_radio_LAO.wav|Szobában kapcsold ki a rádiót|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0010_bathroom_radiator_LAO.wav|Fürdőszobában kapcsold be a radiátort|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_0001_kitchen_door_AOL.wav|Nyisd ki az ajtót konyhába|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_1000_bathroom_shutter_AOL.wav|Húzd fel a redőnyt a a fürdőszobában|12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_013_1000_smallroom_shutter_AOL.wav|Húzd fel a redőnyt a kisszobában |12
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0100_electricity_bathroom_AOL.wav|Kapcsold le a villanyt a fürdőszobába|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_heating_corridor_LOA.wav|Folyosó hőmérsékletét kapcsoljuk be|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_radio_room_LAO.wav|Szobába kapcsold be a rádiót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_courtain_smallroom_LAO.wav|A kisszobába húzd be a függönyt|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_door_livingroom_ALO.wav|Zárd be a nagyszobába az ajtót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_door_corridor_ALO.wav|Zárd be a folyosón az ajtót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0001_window_smallroom_AOL.wav|Nyisd ki az ablakot a kisszobába|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0001_fan_room_LAO.wav|Szobába kapcsold ki a ventilátort|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_1111_TV_livingroom_ALO.wav|Válts csatornát a nagyszobában a tévékészüléken|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_fan_corridor_LAO.wav|A folyosón kapcsold be a ventilátorokat|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_1111_TV_room_LAO.wav|A szobába válts televízió csatornát|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_window_corridor_LAO.wav|A folyosón zárd be az ablakot|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_door_bathroom_LAO.wav|Fürdőszobába zárd be az ajtót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_kettle_kitchen_OAL.wav|A vízforralót kapcsold be a konyhába|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0001_door_kitchen_LAO.wav|Konyhába nyisd ki az ajtót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_vacuum_bathroom_LAO.wav|A fürdőszobába kapcsold be a für porszívót|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0001_heating_kitchen_AOL.wav|Kapcsold ki a hőmérsékletet a konyhába|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_window_room_LAO.wav|A szobába zárd be az ablakot|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_0010_washingmachine_bathroom_LAOX.wav|A fürdőszobába kapcsold be a mosógépet hatvan fokos hőmérséklet esetén|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_1111_TV_livingroom_LAO.wav|A nagyszobába váltsál televíziós csatornát|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_1000_shutter_smallroom_OAL.wav|A redőnyt húzd fel a kisszobába|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_014_1000_shutter_corridor_OAL.wav|A redőnyt húzd fel a folyosón|13
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1000_TV_smallroom_LA.wav|A kisszobában vedd föl a tévé hangját|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_curtain_livingroom_LOAX.wav|Nagyszoba függönyét húzd be légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_vacuumcleaner_room_LA.wav|A szobában fejezd be a porszívózást|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0100_electricity_room_LAO.wav|Szobába kapcsold le a villanyt|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_computer_livingroom_ALO.wav|Bekapcsoldnád a nagyszobába a számítógépet|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_door_smallroom_ALO.wav|Nyisd ki a kisszoba ajtaját|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_vacuumcleaner_bathroom_LAO.wav|A fürdőszobában kapcsold be a porszívót|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_radio_kitchen_AOL.wav|Kapcsold be a rádiót a konyhában|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_vacuumcleaner_smallroom_AL.wav|Fejezd be a kisszobában a porszívózást|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_vacuumcleaner_corridor_LAO.wav|A folyosón kapcsold ki a porszívót|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0100_shutter_livingroom_LOAX.wav|A nagyszoba redőnyét húzd le légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1000_heating_smallroom_LAXO.wav|A kisszobába vegyük vedd föl légy szíves a fűtést|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1000_electricity_livingroom_LAO.wav|Nagyszobába kapcsold fel a villanyt|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1000_TV_kitchen_AOL.wav|Hangosítsd fel a tévét a konyhában|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0100_heating_kitchen_ALO_II.wav|Vedd le a konyhai fűtést|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_door_kitchen_LOAX.wav|A konyha ajtót nyisd ki légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_vacuumcleaner_smallroom_ALO.wav|Kapcsold be a kisszobai porszívót|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_window_room_LOAX.wav|Szoba ablakát nyisd ki légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_fan_room_LAO.wav|A szobába indítsd el a ventilátort|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_door_bathroom_LOA.wav|A fürdőszoba ajtót kinyitnád|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0100_shutter_corridor_ALO.wav|Húzd le a folyosón a redőnyt|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_vacuumcleaner_corridor_LAOX.wav|A folyosón kapcsold be a porszívót légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_window_kitchen_LAO.wav|Konyhába nyisd ki az ablakot|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1000_heating_corridor_LAOX.wav|Folyosón vedd föl a fűtést légy szíves|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_1111_TV_bathroom_LAO.wav|A fürdőszobába kapcsold át másik csatornára a tévét|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_door_room_ALO.wav|Nyisd ki a szoba ajtót|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_door_corridor_ALO.wav|Becsuknád a folyosó ajtót|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_radiator_room_LAO.wav|A szobába zárd el a fűtést|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0001_fan_corridor_LAO.wav|A folyosón kikapcsolnád a ventilátort|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0010_window_smallroom_LOA.wav|Kiszsoba ablakát csukd be|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_015_0100_radiator_livingroom_LOAX.wav|A nagyszobai radiátort vedd le légy szíves teljesen|14
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_vacuum_room_LAO.wav|Szobába kapcsold be a porszívót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_curtain_livingroom_LAO.wav|Nagyszobába húzd szét a függönyt|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_heating_bathroom_LAO.wav|Fürdőszobába kapcsold ki a fűtést|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_vacuum_livingroom_LAO.wav|Nagyszobába kapcsold ki a porszívót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_1000_heating_bathroom_AOL.wav|Kapcsold fel a fűtést a nagyszo fürdőszobába|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_door_bathroom_LAO.wav|Fürdőszobába nyisd ki az ajtót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_radio_kitchen_AOL.wav|Kapcsold be a rádiót a konyhában|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0100_shutter_livingroom_LAO.wav|Nagyszobában húzd le a redőnyt|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_computer_livingroom_AOL.wav|Kapcsold be a számítógépet a nagyszobába|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_1000_electricity_livingroom_LAO.wav|Nagyszobába kapcsold fel a villanyt|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_window_room_AOL.wav|Zárd be az ablakot a szobába|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_heating_smallroom_AOL.wav|Kapcsold ki a fűtést a kisszobában|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_toaster_kitchen_LAO.wav|Konyhában kapcsold ki a pirítót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0100_heating_livingroom_LAO.wav|Nagyszobába vedd lejjebb a fűtést|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_window_livingroom_AOL.wav|Zárd be az ablakot a nagyszobába|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_curtain_livingroom_AOL.wav|Húzd be a függönyt a nagyszobába|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0100_electricity_smallroom_LAO.wav|Kisszobába kapcsold le a villanyt|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_toaster_kitchen_LAO.wav|A konyhában kapcsold ki be a pirítót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_1111_NULL_smallroom_LA.wav|Kisszobába válts csatornát|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_heating_room_AOL.wav|Kapcsold ki a fűtést a szobában|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_fan_bathroom_ALO.wav|Kapcsold ki a fürdőszobába a ventilátort|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_vacuum_smallroom_LAO.wav|Kisszobába kapcsold ki a porszívót|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_1000_electricity_room_AOL.wav|Kapcsold fel a villanyt a szobában|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_fan_kitchen_LAO.wav|Konyhába kapcsold be a ventilátort|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0010_fan_room_LAO.wav|Szobába kapcsold be a ventilátort|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_1111_NULL_room_LA.wav|Szobában kap válts csatornát|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0001_door_corridor_AOL.wav|Nyisd ki a függ a ö az ajtót a folyosón|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_016_0100_heating_corridor_LAO.wav|Folyosón vedd lejjebb a fűtést|15
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_shutter_room_AOL.wav|Húzd le a redőnyt a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_curtain_kitchen_AOL.wav|Húzd szét a függönyt a konyhába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_toaster_kitchen_AOL.wav|Kapcsold be a pirítót a konyhába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_radiator_smallroom_AOL.wav|Vedd lejjebb a radiátort a kisszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_vacuum_smallroom_LAO.wav|Kisszobába kapcsold ki a porszívót|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_radiator_room_AOL.wav|Vedd lejjebb a radiátort a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_TV_corridor_AOL.wav|Halkítsd le a tévét a folyosón|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_door_room_LAO.wav|A szobába nyisd ki az ajtót|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_washingmachine_kitchen_AOL.wav|Kapcsold be a mosógépet és állítsd hatvan fokra a konyhába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_1000_TV_livingroom_LAO.wav|Nagyszobába hangosítsd fel a tévét|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_door_kitchen_LAO.wav|Konyhába nyisd ki az ajtót|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_window_smallroom_AOL.wav|Zárd be az ablakot a kisszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_1000_radiator_room_AOL.wav|Vedd feljebb a radiátort a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_fan_corridor_LAO.wav|Folyosón kapcsold be a ventilátorokat|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_radiator_smallroom_AOL.wav|Kapcsold be a radiátort a kisszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_door_room_AOL.wav|Nyisd ki az ajtót a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_shutter_kitchen_AOL.wav|Húzd le a redőnyt a konyhába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_radiator_livingroom_LAO.wav|A nagyszobába kapcsold ki a radiátort|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_radiator_kitchen_AOL.wav|Kapcsold ki a radiátort a konyhába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_window_room_AOL.wav|Nyisd ki az ablakot a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_1111_NULL_livingroom_LA.wav|A nagyszobába válts csatornát|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_1000_shutter_kitchen_LAO.wav|Konyhába húzd fel a redőnyt|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_curtain_livingroom_LAO.wav|A nagyszobába húzd szét a függönyt|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_radiator_bathroom_AOL.wav|Vedd lejjebb a radiátort a fürdőszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0100_electricity_corridor_AOL.wav|Kapcsold le a villanyt a folyosón|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_radiator_bathroom_LAO.wav|Fürdőszobába kapcsold ki a radiátort|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_window_smallroom_AOL.wav|Nyisd ki az ablakot a kisszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_computer_room_LAO.wav|A szobába kapcsold ki a számítógépet|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_door_bathroom_LAO.wav|A fürdőszobába nyisd ki az ajtót|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0010_computer_room_AOL.wav|Kapcsold be a számítógépet a szobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_017_0001_vacuum_livingroom_AOL.wav|Kapcsold ki a porszívót a nagyszobába|16
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_door_kitchen_AOL.wav|Nyisd ki az ajtót a konyhába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_dishwasher_kitchen_LAO.wav|Konyhába kapcsold be a mosogatógépet|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_curtain_room_LAO.wav|Szobába húzd be a függönyt|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018__fan_smallroom_OLA.wav|A ventilátort a kisszobába kapcsold|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_vacuum_livingroom_OAL.wav|A porszívót kapcsold ki a nagyszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_1111_NULL_smallroom_LA.wav|Kisszobába válts csatornát|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0100_shutter_smallroom_LAO.wav|Kisszobába húzd le a redőnyt  |17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0100_radiator_bathroom_OAL.wav|A radiátort vedd lejjebb a fürdőszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_curtain_bathroom_AOL.wav|Húzd szét a függönyt a fürdőszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_1111_TV_smallroom_AOL.wav|Csatornát váltunk a televízión a kisszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_vacuum_room_LAO.wav|A szobába kapcsold ki a porszívó|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_vacuum_kitchen_LAO.wav|Konyhába kapcsold ki a porszívót|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_curtain_corridor_AOL.wav|Húzd szét a függönyt a folyosón|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_radiator_corridor_LAO.wav|A folyosón kapcsold be a radiátort|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_door_smallroom_AOL.wav|Zárd be az ajtót kisszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_1000_radiator_bathroom_LAO.wav|A fürdőszobába vedd fel a radiátort|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_curtain_kitchen_AOL.wav|Húzd be a függönyt a konyhába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0100_TV_livingroom_AOL.wav|Vedd lejjebb a tévét a nagyszobában|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_1000_radiator_room_AOL.wav|Vedd feljebb a radiátort a szobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_radiator_smallroom_LAO.wav|Kisszobába kapcsold ki a radiátort|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_vacuum_smallroom_OAL.wav|A porszívót kapcsold ki a kisszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_radio_kitchen_LAO.wav|A konyhába kapcsold be a rádiót|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_washingmachine_kitchen_AOL.wav|Kapcsold be a mosógépet állítsd hatvan fokra a konyhába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_curtain_bathroom_LAO.wav|A fürdőszobába húzd be a függönyt|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0010_window_smallroom_AOL.wav|Zárd be az ablakot a kisszobába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_vacuum_kitchen_OAL.wav|A porszívót kapcsold ki a konyhába|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_computer_room_LAO.wav|A szobába kapcsold ki a számítógépet|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_018_0001_radio_kitchen_LAO.wav|A konyhában kapcsold ki a rádiót|17
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_TV_kitchen_AOL.wav|Kapcsold be a tévét a konyhában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_TV_kitchen_AOL.wav|Kapcsold ki a tévét a konyhában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_kettle_livingroom_ALO.wav|S kapcsold be a nagyszobában a mi is volt itt a vízmelegítőt|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_stove_kitchen_AOL.wav|Kapcsold be a tűzhelyet a konyhában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_computer_smallroom_LAO.wav|A kisszobában kapcsold be a számítógépet|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_vacuum_smallroom_AOL.wav|Kapcsold ki a porszívót a kisszobában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_vacuum_kitchen_LAO.wav|A konyhába kapcsold be a porszívót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_radio_bathroom_LAO.wav|A fürdőszobában kapcsold ki a rádiót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_window_livingroom_LAO.wav|Nagyszobában zárd be az ablakot|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_1111_radio_smallroom_LAO.wav|A kisszobában válts csatornát a rádión|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdpszobában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_radio_corridor_AOL.wav|Kapcsold be a rádiót a folyosón|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0100_electricity_smallroom_AOL.wav|Kapcsold le a villanyt a kisszobában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_door_livingroom_LAO.wav|A nagyszobában zárd be ajtót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_1000_electricity_corridor_AOL.wav|Kapcsold föl a villanyt a folyosón|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_stove_kitchen_AOL.wav|Kapcsold ki a tűzhelyet a konyhában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_1111_radio_corridor_AOL.wav|Válts csatornát a rádión a folyosón|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0100_heating_bathroom_LAO.wav|Fürdőszobában húzd le a fűtést|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_vacuum_corridor_AOL.wav|Kapcsold be a porszívót a folyosón|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_radio_corridor_ALO.wav|Kapcsold be a folyosón a rádiót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_door_kitchen_ALO.wav|És nyisd ki a konyhában a ajtót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_radio_smallroom_LAO.wav|A kisszobába kapcsold be a rádiót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_1111_radio_kitchen_AOL.wav|Válts csatornát a rádión a konyhában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_computer_smallroom_OAL.wav|A számítógépet kapcsold ki a kisszobában|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_computer_smallroom_ALO.wav|Kapcsold ki a kisszobában a számítógépet|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_vacuum_bathroom_LAO.wav|A fürdőszobába kapcsold be a porszívót|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0001_vacuum_room_LAO.wav|A szobában kapcsold ki a porszívot|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_020_0010_fan_corridor_ALO.wav|Kapcsold be a folyosón a ventilátort|18
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_TV_bathroom_LAO.wav|A fürdőszobában csendesítsd a tévét|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_TV_bathroom_AOL.wav|Csendesítsd a tévét a fürdőszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1000_shutter_smallroom_AOL.wav|Húzd fel a redőnyt a kisszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_window_room_AOL.wav|Nyisd ki az ablakot a szobába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_heating_kitchen_AOL.wav|Húzd le a fűtést a konyhában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_vacuum_livingroom_LAO.wav|A nagyszobában kapcsold be a porszívót|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_door_smallroom_AOL.wav|Nyisd ki az ajzót a kisszobaba|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1000_TV_livingroom_AOL.wav|Hangosítsd a tévét a nagyszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_curtain_corridor_AOL.wav|Húzd be a függönyt a fo folyosón|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_vacuum_corridor_LAO.wav|A folyosón kapcsold ki a porszívót|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1111_radio_smallroom_AOL.wav|Válts csatornát a rádión a kisszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_heating_bathroom_AOL.wav|Kapcsold ki a fűtést a fürdőszobába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1111_radio_room_AOL.wav|Válts csatornát ráiót a szobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1000_TV_bathroom_AOL.wav|Hangosítsd a tévét a fürdőszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_curtain_livingroom_LAO.wav|A nagyszobába húzd be a függönyt|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_vacuum_bathroom_AOL.wav|Kapcsold be a porszívót a fürdőszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_door_corridor_LAO.wav|A folyosón nyisd ki az ajtot|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_washingmaschine_kitchen_LAO.wav|A konyhában kapcsold be a mosógépet|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_shutter_corridor_AOL.wav|Húzd le a redőnyt a folyoson|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1111_TV_bathroom_LAO.wav|A fürdőszobában válts csatornát a tévén|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_TV_livingroom_AOL.wav|Kapcsold ki a tévét a nagyszobába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_vacuum_kitchen_AOL.wav|Kapcsold ki a porszívót a konyhába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_heating_livingroom_AOL.wav|Kapcsold ki a fűtést a nagyszobában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_heating_bathroom_AOL.wav|Húzd le a fűtést a fürdőszobába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_shutter_bathroom_AOL.wav|Húzd le a redőnyt a fürdőben|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0100_electricity_corridor_LAO.wav|A folyosón kapcsold le a villanyt|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1111_radio_kitchen_LAO.wav|A konyhába váltcsöptö csatornát a rádión|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_vacuum_room_LAO.wav|A szobában kapcsold be a vo porszívót|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_curtain_room_LAO.wav|A szobába húzd szét a függöny|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_door_kitchen_AOL.wav|Nyisd ki az ajtót a konyhába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0001_vacuum_corridor_AOL.wav|Kapcsold ki a porszívót a folyosón|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1000_heating_kitchen_LAO.wav|A konyhába húzd föl a fűtést|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_0010_heating_kitchen_AOL.wav|Kapcsold be a fűtést a konyhában|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_021_1000_electricity_livingroom_AOL.wav|Kapcsold föl a villanyt a nagyszobába|19
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1111_radio_smallroom_AOL.wav|Válts satornát a rádión a kisszobában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_TV_smallroom_LAO.wav|Kisszobában kapcsold ki a tévét|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_TV_bathroom_AOL.wav|Hangosítsd a tévét a fürdőszobában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_heating_smallroom_LAO.wav|Kisszobában húzd fel a fűtést|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_radio_corridor_AOL.wav|Kapcsold ki a rádiót a folyosón|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0100_TV_room_LAO.wav|A szobában csendesítsd a tévé|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_stove_kitchen_AOL.wav|Kapcsold a tűzhelyet a konyhába|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1111_radio_corridor_AOL.wav|Válts csatornát a rádión a folyoson|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_kettle_kitchen_LAO.wav|Konyhában kapcsold be a vízforralót|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_TV_corridor_AOL.wav|Kapcsold a tévét a folyoson|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_vacuum_kitchen_LAO.wav|A konyhában is kapcsold be a porzívót|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_fan_bathroom_AOL.wav|Kapcsold ki a ventilátort a fürdőszobában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_heating_bathroom_LAO.wav|Fürdőszobába kapcsold be a fűtést|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_toaster_kitchen_AOL.wav|Kapcsold ki a kenyérpirítót a konyhában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_door_smallroom_LAO.wav|Kisszobában zárd be az ajtót|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1111_TV_corridor_LAO.wav|A folyoson válts csatornát a tévé|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_computer_livingroom_LAO.wav|A nagyszobába kapcsold be a számítógépet|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_window_kitchen_LAO.wav|A konyhába zárd be az ablakot|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_heating_kitchen_AOL.wav|Húzd fel a fűtést a konyhában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_washingmaschine_kitchen_AOL.wav|Kapcsold be hatvan fokon a mosógépet a konyhában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_heating_kitchen_LAO.wav|Konyhában húzd fel a fűtés|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1111_TV_livingroom_LAO.wav|Nagyszobában válts csalódá fény|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0100_TV_livingroom_LAO.wav|A nagyzobába csendesítsd a végét|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_vacuum_kitchen_AOL.wav|Kapcsold ki a borszívót a konyhába|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1111_TV_room_AOL.wav|Válts csatornát a tévén a szobában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0010_computer_livingroom_AOL.wav|Kapcsold be a számítógépet a nagyszobába|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_shutter_livingroom_LAO.wav|Nagyszobában húzd fel ledőnyt|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0100_electricity_room_LAO.wav|A szobában kapcsold le a villanyt|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_window_smallroom_LAO.wav|Kisszobába nyisd ki az ablakot|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0100_shutter_room_LAO.wav|A szobába húzd le a redőnyt|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0100_electricity_livingroom_LAO.wav|Nagyszobába kapcsold le a villanyt|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_1000_TV_room_AOL.wav|Hangosítsd a tévét a szobában|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_022_0001_curtain_bathroom_LAO.wav|A hürdőszobába húzd szét a függönyt|20
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_fan_livingroom_LAO.wav|Nagyszobában kapcsold ki a ventilátort|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0100_electricity_corridor_AOL.wav|Kapcsold le a villanyt a folyosón|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_window_kitchen_AOL.wav|Zárd be az ablakot a konyhában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0100_electricity_corridor_LAO.wav|Folyosón kapcsold le a villanyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_radio_smallroom_AOL.wav|Kapcsold be a rádiót a konyhá a kiszzobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_door_livingroom_AOL.wav|Zárd be az ajtót a nagycobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0100_electricity_room_LAO.wav|Szobában kapcsold le a villanyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_fan_smallroom_LAO.wav|Kisszobában kapcsold ki a ventillátort|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0100_shutter_corridor_LAO.wav|Folyosón engedd le a redőnyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_vacuum_livingroom_AOL.wav|Apcsold be a porszívót a nagyszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_1111_TV_livingroom_AOL.wav|Váltsál csatornát televízióban a nagyszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_1000_shutter_smallroom_LAO.wav|Kisszobában húzd föl a re redőnyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_fan_bathroom_AOL.wav|Kapcsold ki a ventillátort a fürdőszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_heating_bathroom_AOL.wav|Kapcsold ki a fűtést a fürdőszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_door_livingroom_LAO.wav|Nagycobában nyisd ki az ajtót|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_window_corridor_AOL.wav|Zárd be az ablakot a folyosón|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_radio_livingroom_AOL.wav|Nagyszobában kapcsold ki a rádiot|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_vacuum_room_LAO.wav|Szobában kapcsold ki a porszívót|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_curtain_livingroom_AOL.wav|Húz szék a függönyt a nagyszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_heating_smallroom_AOL.wav|Kapcsold be a fűtést kisszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_computer_room_LAO.wav|Szobában kapcsold ki a számítógépet|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_curtain_bathroom_LAO.wav|Fürdőszobában húzd be a függönyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0001_vacuum_smallroom_AOL.wav|Kapcsold ki a porszívót a kisszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_vacuum_corridor_AOL.wav|Kapcsold be a porszívót a folyosón|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0010_vacuum_kitchen_AOL.wav|Kapcsold be a porszivot a konyhába|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_1000_heating_livingroom_LAO.wav|A nagyszobá a nagyszobában kapcsold feljebb a fűtés|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_0100_shutter_livingroom_AOL.wav|Engedd le a redőnyt a nagyszobában|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_1000_shutter_corridor_LAO.wav|A folyosón húzd föl a redőnyt|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_023_1000_heating_corridor_LAO.wav|Folyosón kapcsold feljebb a fűtést|21
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_door_corridor_LAO.wav|A folyoson nyisd ki az ajtott|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_washingmaschine_kitchen_LOA.wav|A konyhába kapcsold be a mosógépet harminc fokon|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_door_bathroom_LAO.wav|A fürdőszobába zárd be az ajtót|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1000_heating_livingroom_LAO.wav|A nagyszobába kapcsold fel a fűtést|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1000_shutter_livingroom_AOL.wav|Húzd fel a redé redőnyt a nagyszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_door_livingroom_AOL.wav|Nyisd ki az ajtót a nagyszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_curtain_bathroom_LAO.wav|A fürdőszobába húzd be a függöny|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_vacuum_corridor_LAO.wav|A folyoson kapcsold be a porszívót|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1111_radio_room_AOL.wav|Válts csatornát a rádión igen a szobában|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1000_shutter_corridor_AOL.wav|Húzd fel a redőnyt a folyoson|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_heating_bathroom_LAO.wav|A fürdőszobába húzd le a fűtés|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1111_radio_livingroom_AOL.wav|Válts csatornát a rádión a nagyszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_shutter_room_LAO.wav|A szobába húzd le a redőny|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_TV_corridor_LAO.wav|A folyosón halkítsd a tévét|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_computer_livingroom_LAO.wav|A nagyszobába kapcsold be a számítógépet|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_shutter_room_AOL.wav|Húzd le a redőny a szobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_curtain_livingroom_AOL.wav|Húzd be a függönyt a nagyszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_heating_room_AOL.wav|Húzd le a fűtést a szobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_electricity_kitchen_ALO.wav|Kapcsoljuk le a konyhában a villanyt|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_1000_shutter_room_LAO.wav|A szobába húzd fel a redőny|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_computer_room_LAO.wav|Szobába kapcsold ki a számítógépet|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_heating_smallroom_AOL.wav|A radiátort kapcsold be a kisszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_radio_kitchen_LAO.wav|A konyhába kapcsold ki a rádi|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_radio_smallroom_LAO.wav|Kisszobába kapcsold ki a rádio|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_toaster_kitchen_LAO.wav|Konyhában kapcsold be a kenyérpir pirító|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0100_heating_corridor_AOL.wav|Húzd le fűtést a folyosón|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_door_livingroom_LAO.wav|A nagyszobába nyisd ki az ajtot|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_radio_smallroom_AOL.wav|Kapcsold ki a rádiot a visszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0010_computer_livingroom_AOL.wav|Kapcold be a számítóépe a nagyszobába|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_024_0001_window_bathroom_LAO.wav|A fürdőszobába nyisd ki az ablakot|22
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_window_room_LAO.wav|A szobába zárd be az ablakot|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_electricity_corridor_LAO.wav|Folyoson kapcsold fel a villany|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_heating_livingroom_AOL.wav|Kapcsold ki a fűtést a nagyszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_TV_bathroom_AOL.wav|Hangosítsd fel a tévét a fürdőszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_electricity_room_AOL.wav|Kapcsol le a villanyt a szobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_electricity_smallroom_AOL.wav|Kapcsold fel a villanyt a kisszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_door_smallroom_LAO.wav|Kisszobába nyisd ki az ajtót|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_electricity_smallroom_AOL.wav|Kapcsold le a villanyt a kisszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_electricity_room_LAO.wav|A szobába kapcsold fel a villany|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdőszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_curtain_livingroom_AOL.wav|Húzd szét a függönyt a nagyszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_curtain_livingroom_LAO.wav|Nagyszobába húzd szét a függöny|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_TV_smallroom_AOL.wav|Halkítsd le a tévét a kisszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_shutter_corridor_LAO.wav|A folyoson huzd fel a redönyt|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_radio_smallroom_LAO.wav|Kisszobába kapcsold ki a rádiót|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_door_bathroom_AOL.wav|Zárd be az ajtót a fürdőszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_fan_room_LAO.wav|A szobába kapcsold ki a ventillátor|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_waschingmaschine_bathroom_LOA.wav|Fürdőszobába kapcsold be a mosógépet harminc fokon|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_heating_corridor_LAO.wav|Folyoson kapcsold be a fűtés|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_vacuum_room_LAO.wav|Szobába kapcsold ki a porszívót|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0001_computer_room_OAL.wav|Számítógépet kapcsold ki a szobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1000_shutter_room_LAO.wav|A szobába húzd fel a redőnyt |23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_TV_room_AOL.wav|Halkítsd le a tévét a szobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_window_corridor_AOL.wav|Zárd be az ablakto a folyoson|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_shutter_corridor_LAO.wav|A folyoson húzd le a redönyt|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0100_shutter_corridor_AOL.wav|Húzd le a redőnyt a folyoson|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_heating_bathroom_AOL.wav|Kapcsold be a fűtést a fürdőszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_1111_TV_livingroom_AOL.wav|Válts csatornát a tévén a nagyszobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_toaster_kitchen_OAL.wav|A kernyérpirítót kapcsold be a konyhába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_curtain_livingroom_LAO.wav|Nagyszobában húzd be a függöny|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_fan_room_AOL.wav|Kapcsold fel a ventillátort a szobába|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_025_0010_fan_room_LAO.wav|Szobába kapcsold fel a ventillátort|23
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_door_smallroom_OAL.wav|Az ajtón zárjuk be a kisszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0001_computer_room_LAO.wav|A szobában kapcsold ki a számítógépet|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_vacuum_room_AOL.wav|Kapcsold be a porszívót a szobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_heating_bathroom_AOL.wav|Kapcsold be a fűtést a fürdőszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_heating_livingroom_AOL.wav|Kapcsold be a fűtés a nagycobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_radio_corridor_AOL.wav|Kapcsold be a rádiót a folyosón|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1111_radio_bathroom_AOL.wav|Válts csatornát a rádión a fürdőszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1111_radio_room_LAO.wav|A szobában válts csatornát a rádión|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_curtain_smallroom_AOL.wav|Húzzuk be a függönyt a kisszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_vacuum_kitchen_LAO.wav|A konyhában kapcsold be a porszívót|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_vacuum_room_LOA.wav|A szobában a porszívót kapcsold be|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_heating_room_LAO.wav|A szobában kapcsold be a fűtést|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1111_TV_livingroom_AOL.wav|Válts csatornát a tévén a nagycobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_curtain_livingroom_AOL.wav|Húzzuk be a függöny a nagyszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_window_corridor_LAO.wav|A folyosón csukd e az ablakot|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1111_TV_livingroom_LAO.wav|A nagycobában válts a tévén csatornát|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_radio_smallroom_AOL.wav|Kapcsold be a rádiót a kisszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1000_electricity_kitchen_LOA.wav|A konyhábn a villant kapcsold fel|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0100_heating_kitchen_LAO.wav|A konyhában lekapcsoldjuk a fűtés|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0001_curtain_corridor_LAO.wav|A folyosón huzzunk szén a függön|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_1000_heating_smallroom_LAO.wav|A kisszobában felkapcsoljuk a fűtés|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0100_heating_livingroom_LOA.wav|A nagyszobában a fűtést lekapcsoldjuk|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0100_electricity_corridor_LOA.wav|A folyosón a villanyt kapcsold le|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_window_livingroom_AOL.wav|Csukd be az ablakon a nagyszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_kettle_kitchen_LOA.wav|A konyhában a vízmelegítőt kapcsold be|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_computer_livingroom_LAO.wav|A nagycobában kapcsold be a számítógépet|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0100_electricity_smallroom_LOA.wav|A kisszobában a villanyt kapcsold le|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_heating_smallroom_AOL.wav|Kapcsold be a fűtést a kisszobában|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0001_stove_kitchen_LAO.wav|A konyhában kapcsold ki a gáztűzhelyet|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_026_0010_heating_corridor_AOL.wav|Kapcsold be a fűtést a folyosón|24
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_heating_room_LAO.wav|A szobába vedd le a fűtést|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_TV_livingroom_OLA.wav|A tévét a nagyszobába halkítsd le|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_1111_TV_smallroom_LOA.wav|A kisszobába lévő tévén váltsál csatornát |25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_door_kitchen_ALO.wav|Nyisd ki a konyhai ajtót|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_door_smallroom_LOA.wav|Kisszobaajtót nyisd ki|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_window_livingroom_LAO.wav|A nagyszobába zárd be az ablakot|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_vacuum_smallroom_LAO.wav|A kisszobába kapcsold be a porszívót|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_heating_livingroom_LAO.wav|A nagyszobába kapcsold ki a fűtést|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_vacuum_kitchen_OAL.wav|A porszívót kapcsold be a konyhába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_radio_corridor_LAO.wav|A folyosón kapcsold ki a rádiót|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_dishwasher_kitchen_LAO.wav|A konyhába kapcsold be a mosogatót|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_heating_room_OAL.wav|A fűtést kapcsold be a szobába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_electricity_room_AOL.wav|Kapcsold le a villanyt a szobába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_1000_electricity_corridor_AOL.wav|Kapcsold fel a villanyt a folyosón|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_shutter_bathroom_LOA.wav|A fürdőszobai redőnyt engedd le|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_1000_shutter_bathroom_LOA.wav|A fűrdőszobai redőnyt húzd fel|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_radio_corridor_OLA.wav|A rádiót a folyosón kapcsold be|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_curtain_livingroom_LOA.wav|A nagyszobai függönyt húzd szét|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_electricity_bathroom_LAO.wav|A fürdőszobába kapcsold le a villanyt|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_1111_radio_kitchen_AOL.wav|Váltsál csatornát a rádió a konyhába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_radio_smallroom_OLA.wav|A rádiót a kisszobába kapcsold be|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_radio_room_AOL.wav|Kapcsold be a rádiót a szobába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_curtain_livingroom_ALO.wav|Húzd szét a nagyszobai függönyt|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_fan_corridor_OAL.wav|A ventillátorokat kapcsold be a folyosón|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_electricity_livingroom_AOL.wav|Kapcsold le a villanyt a nagyszobába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_shutter_corridor_ALO.wav|Engedd le a folyosói redőnyt|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_1111_radio_kitchen_ALO.wav|Keress valami mást a konyhába a rádión|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0001_radio_kitchen_OLA.wav|A rádiót a konyhába kapcsold ki|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_door_bathroom_LAO.wav|Fürdőszobába zárd be az ajtót|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0100_TV_corridor_OAL.wav|A tévét halkítsd le a folyosón|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_027_0010_heating_livingroom_AOL.wav|Kapcsold be a fűtést a nagyszobába|25
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0100_heating_livingroom_LAO.wav|A náccobában húzd le a fűzést.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_curtain_room_AOL.wav|Húzd be a függönyt a szobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_vacuum_bathroom_AOL.wav|Kapcsold ki a porszívót a fürdőszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0100_TV_room_LAO.wav|A szobában csendesít a tévét.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_fan_room_LAO.wav|A szobában kapcsold ki a ventillátort.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_computer_smallroom_AOL.wav|Kapcsold be a szándógépet a kisszobába.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0100_heating_corridor_AOL.wav|Húzd le a fűtést a folyosón.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_window_room_AOL.wav|Nyisd ki az ablakot a szobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_TV_smallroom_LAO.wav|A kisszobában hangosít a tévét.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_radio_livingroom_LAO.wav|A nagycobában kapcsold ki a rádiót.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_washing machine_bathroom_AOL.wav|Kapcsold be hatvan fokon a mosógépet a fürdőszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1111_radio_bathroom_LAO.wav|A fürdőszobában válcs csatornát a rádión.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_radio_corridor_AOL.wav|Kapcsold be ládiót a fölyosón.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_window_smallroom_AOL.wav|Zárd be az ablakot a kiszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_radio_bathroom_LAO.wav|A fürdőszobában kapcsold be a rádió.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_heating_livingroom_LAO.wav|A naccobában húzd fel a fűtés.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1111_radio_smallroom_LAO.wav|Kisszobában válcs tatornát a rádión.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0100_heating_bathroom_AOL.wav|Húzd le a fűtést a fürdőszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_computer_livingroom_AOL.wav|Kapcsold ki a számítógépet a dottobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_TV_room_AOL.wav|Vedd hangosabbra a tévét a szobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_computer_livingroom_LAO.wav|A nagyszobában kapcsold be a számgogépet.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1000_shutter_smallroom_AOL.wav|Húzd fel a redőnt a kiszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_vacuum_livingroom_AOL.wav|Kapcsold ki a porszívót a nagycobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1111_TV_livingroom_AOL.wav|Válcsatotornát a tévén a nagycobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_1111_TV_smallroom_AOL.wav|Válcsatotornát a tévén a kisszobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_window_livingroom_LAO.wav|A nagyszobában zárd be az ablakot.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0100_shutter_kitchen_AOL.wav|Engedd le a ledőnyt a konyhában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0001_window_bathroom_LAO.wav|A fürdőszobában nyisd ki az ablakon.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_028_0010_door_room_AOL.wav|Zárd be az ajtót a szobában.|26
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_curtain_livingroom_LAO.wav|A nagyszobában húzd be a függönt.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_shutter_livingroom_LAO.wav|A nagyszobában húzd fel a redőnt.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0001_phone_NULL_AO.wav|Hívd fel a fiam a telefonon.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_radio_kitchen_AOL.wav|Kapcsold be a rádiót a kohában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_radio_livingroom_LAO.wav|A nagyszobabában kapcsold be a rádiót.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_heating_bathroom_AOL.wav|Húzd fel a fűtést a fürdőszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1111_TV_smallroom_AOL.wav|Vált csatornát a tévén a kisszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1111_radio_room_AOL.wav|Válcs csatornát a rádión a szobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1111_TV_kitchen_AOL.wav|Válcs csatornát a tévén konyhában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_vacuum_bathroom_AOL.wav|Kapcsold be a porszívót a fürdőszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_fan_livingroom_LAO.wav|A nagyszobában kapcsold be a ventillátort.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_electricity_smallroom_LAO.wav|A kisz szobában kapcsold le a villant.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_heating_room_AOL.wav|Húzd le a fűtést a szobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_shutter_room_AOL.wav|Húzd le a redőnt a szobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0001_curtain_kitchen_LAO.wav|A konyhában húzd szét a függönt.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_door_room_LAO.wav|A szobában zárd be az ajtót.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_TV_smallroom_AOL.wav|Hangosícs fel a tévét a kisszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0001_computer_livingroom_AOL.wav|Kapcsold ki a számtígépet a nagyszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_heating_corridor_LAO.wav|A folyosón húzd fel a fűtés.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_window_corridor_AOL.wav|Zárd be az ablakot a folyosón.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_TV_room_LAO.wav|A szobában csendesícsd le a tévét.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_TV_room_AOL.wav|Halkísd le a tévét a szobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0001_computer_room_LAXO.wav|A szobában kapcsold ki a számítgép számítógépet.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_electricity_room_LAO.wav|A szobában kapcsold fel a villany.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_heating_bathroom_AOL.wav|Húzd le a fűtést a fürdőszobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0001_curtain_room_AOL.wav|Húzd szét a függönt a szobában.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_window_livingroom_LAO.wav|A nagyszobában zárd be az ablakot.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_vacuum_room_AOL.wav|Kapcsold be a porszívót a szobába.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0010_fan_smallroom_LAO.wav|A kisszobában kapcsold be a ventillátort.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_1000_shutter_bathroom_LAO.wav|A fürdőszobában húzd fel a redőnt.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_029_0100_electricity_corridor_AOL.wav|Kapcsold le a villant a folyosón.|27
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_curtain_smallroom_LAO.wav|A kisszobában húzd be a függönyt.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_shutter_smallroom_LAO.wav|Kisszobában húzd fel a redőnyt.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_phone_NULL_AO.wav|Hívd föl a lányom telefonon.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_radio_room_LAO.wav|A szobában kapcsold be a rádiót.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_radio_kitchen_AOL.wav|Kapcsold ki a rádiót a konyhában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_heating_room_AOL.wav|Húzd föl a fűtést a szobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_kettle_kitchen_AOL.wav|Kapcsold be a vízforralót a konyhában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1111_radio_corridor_AOL.wav|Válcs csatornát a rádión a folyosón.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1111_TV_room_AOL.wav|Válcs csatornát a tévén a szobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_vacuum_room_AOL.wav|Kapcsold be a porszívót a szobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_fan_kitchen_LAO.wav|A konyhában kapcsold ki a ventillátort.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_TV_kitchen_AOL.wav|Emeld meg a hangerőt a tévén a konyhában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0100_heating_livingroom_AOL.wav|Húzd le a fűtést a nagyszobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0100_shutter_livingroom_AOL.wav|Engedd le a redőnt a nagyszobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_curtain_room_LAO.wav|A szobában húzd szét a függönyt.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_door_room_LAO.wav|A szobában zárd az ajtót.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_TV_kitchen_LAO.wav|A konyhában hangosícsd a tévét.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_computer_livingroom_LAO.wav|A nagyszobában kapcsold ki a számítógépet.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_heating_smallroom_LAO.wav|A kisszobában húzd fel a fűtés.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_window_livingroom_LAO.wav|A nagyszobában zárd be az ablakot.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0100_TV_kitchen_AOL.wav|Csendesícsd a tévét a konyhában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_TV_smallroom_LAO.wav|A kisszobában hangosícsd a tévét.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_computer_livingroom_AOL.wav|Kapcsold ki a számítógépet a nagyszobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_electricity_corridor_LAO.wav|A folyosón kapcsold be a világítás.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0100_heating_room_AOL.wav|Húzd le a fűtést a szobába.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_curtain_livingroom_AOL.wav|Húzd szét a függönyt a nagyszobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_window_livingroom_AOL.wav|Zárd be az ablakot a nagyszobában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0010_vacuum_livingroom_AOL.wav|Kapcsold be a porszívót a nagyszobába.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_0001_fan_room_LAO.wav|A szobában kapcsold ki a ventillátor.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_shutter_livingroom_LAO.wav|A nagyszobában húzd fel a redőnt.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_030_1000_NULL_kitchen_AL.wav|Emeld meg a hangerőt a konyhában.|28
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_NULL_kitchen_AL.wav|Kapcsold be a konyhában hatvan fokon.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_vacuum_kitchen_AOL.wav|Kapcsold ki a porszivót a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1111_NULL_kitchen_AL.wav|Válcs csatornát a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_door_kitchen_AOL.wav|Zárd be az ajtót a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_shutter_corridor_AOL.wav|Húzd fel a redőnyt a fojjosón.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_fan_corridor_AOL.wav|Kapcsold be a ventillátor a fojjosón.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_heating_bathroom_LAO.wav|A fürdőszobába húzd fel a fűtés.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_curtain_bathroom_AOL.wav|Húzd be a függönyt a fürdőszobában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_heating_smallroom_AOL.wav|Húzd fel a fűtést a kisszobába.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_toaster_kitchen_AOL.wav|Kapcsold ki a pirivasalót a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_vacuum_kitchen_AOL.wav|Kapcsold be a porszivót a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_electricity_kitchen_AOL.wav|Kapcsold be a villanyt a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_window_bathroom_AOL.wav|Nyisd ki az ablakot a fürdőszobában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_computer_room_LAO.wav|A szobában kapcsold ki a számítógépet.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_electricity_bathroom_AOL.wav|Kapcsold fel a villanyt a fürdőszobában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_heating_kitchen_LAO.wav|A konyhában kapcsold ki a fűté.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0100_heating_smallroom_AOL.wav|Húzd le a fűtést a kisszobában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_door_kitchen_AOL.wav|Nyisd ki az ajtót a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_radio_smallroom_LAO.wav|Kisszobában kapcsold be a rádijó.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_toaster_kitchen_LAO.wav|Konyhában kapcsold ki a kennyérpirítót.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_vacuum_livingroom_LAO.wav|A nagyszobába kapcsold ki a porszivó.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_heating_bathroom_AOL.wav|Húzd fel a fűtést a fürdőszobában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_door_corridor_LAO.wav|A fojjosón zárd be az ajtót.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_1000_electricity_corridor_AOL.wav|Kapcsold fell a villanyt a fojjosón.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_dishwasher_kitchen_LAO.wav|A konyhában kapcsold be a mosogatógépet.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0010_fan_corridor_LAO.wav|A fojjosón kapcsold be a ventillátor.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_fan_smallroom_LAO.wav|Kisszobában kapcsold ki a ventillátor.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0100_TV_kitchen_AOL.wav|Csendesícs a tévét a konyhában.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0001_radio_kitchen_LAO.wav|Konyhában kapcsold ki a rádijót.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_NULL_shutter_kitchen_LO.wav|Konyhában a redőnyt húzd.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_031_0100_TV_room_LAO.wav|A szobában csendesícsd a tévét.|29
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_electricity_livingroom_AOL.wav|Kapcsold le a lámpát a nagyszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_stove_kitchen_LAO.wav|Konyhába kapcsold be a sütőt.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_heating_bathroom_AOL.wav|Húzd le a fűtést a fürdőszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_electricity_smallroom_LAO.wav|Kisszobába kapcsold le a lámpát.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_radio_room_LAO.wav|A szobába kapcsold ki a rádiót.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_1000_shutter_bathroom_AOL.wav|Húzd fel a redőnyt a fürdőszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_window_kitchen_AOL.wav|Nyisd ki az ajt ablakot a konyhába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_radio_room_LAO.wav|Szobába kapcsold be a rádiót.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_door_smallroom_LAO.wav|Kisszobát zárd be az ajtót.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_1000_heating_smallroom_LAO.wav|Kisszobába húzd fel a fűtést.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_curtain_bathroom_LAO.wav|Fürdőszobába húzd be a függönyt.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_heating_corridor_LAO.wav|Folyosón kapcsold ki a fűtést.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_phone_NULL_AO.wav|Hívd fel a fiamat telefonon.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_door_bathroom_LAO.wav|Fürdőszobában nyisd ki az ajtót.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_fan_corridor_LAO.wav|Folyosón kapcsold be a ventilátor.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_fan_bathroom_AOL.wav|Kapcsold ki a ventilátort a fürdőszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_1000_heating_kitchen_LAO.wav|Konyhába húzd fel a fűtést.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_shutter_bathroom_LAO.wav|Fürdőszobába engedd le a redőnyt.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_shutter_bathroom_AOL.wav|Engedd le a redőnyt a fürdőszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_radio_livingroom_AOL.wav|Kapcsold be a rádiót a nagyszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_window_bathroom_LAO.wav|Fürdőszobáb zárd be az ablakot.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_curtain_kitchen_LAO.wav|Konyhába húzd szét a függönyt.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_curtain_smallroom_AOL.wav|Húzd szét a függönyt a kisszobába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_TV_smallroom_LAO.wav|Kisszobába csendesícsd a tévét.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_1111_TV_room_LAO.wav|A szobába válcsatornát a tévén.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_1000_TV_kitchen_AOL.wav|Hangosícsd fel a tévét a konyhába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0010_toaster_kitchen_AOL.wav|Kapcsold be a kenyérpirítót a konyhába.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_fan_corridor_AOL.wav|Kapcsold ki a ventilátort a folyosón.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0001_fan_bathroom_LAO.wav|Fürdőszobábana kapcsold ki a ventilátort.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_032_0100_TV_kitchen_LAO.wav|A konyhába csendesícsd a tévét.|30
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_fan_livingroom_LAO.wav|A nagyszobában kapcsold ki a ventillátor.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_stove_kitchen_AOL.wav|Kapcsold be a tűzhelyet a konyhában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_door_corridor_LAO.wav|A folyosón nyisd ki az ajtó.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_electricity_room_LAO.wav|Szobában kapcsold le a villanyt.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_electricity_smallroom_AOL.wav|Kapcsold fel a villanyt a kís szobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_electricity_corridor_LAO.wav|A folyosón kapcsold le a villanyt.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_heating_corridor_LAO.wav|A fojjosón kapcsold ki a fűtés.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_radio_smallroom_AOL.wav|Kapcsold ki a rádjó a kiszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_vacuum_livingroom_AOL.wav|Kapcsold ki a porszivót a nagyszobába.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_heating_kitchen_AOL.wav|Húzd fel a fűtés a konyhában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_radio_bathroom_LAO.wav|A műhehi nyomában kapcsold be a rádjót.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_heating_livingroom_AOL.wav|Húzd le a füttés a nagyszobába.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_heating_livingroom_LAO.wav|A nagyszobában húzd le a füttés.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_window_room_LAO.wav|A szobában nyisd ki az ablakot.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_electricity_bathroom_AOL.wav|Kapcsold fhel a villanyt a fürdőszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_fan_bathroom_LAO.wav|A fürdőszobában kapcsold ki a ventillátor.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1111_TV_room_LAO.wav|A szobában válcs csatornát a tévén.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_TV_livingroom_AOL.wav|Hangosícsd a tévét a nagyszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_heating_corridor_AOL.wav|Kapcsold ki a fűtés a fojjosón.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_vacuum_corridor_AOL.wav|Kapcsold be a porszivót a folyoson.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_heating_kitchen_AOL.wav|Kapcsold ki a fűtés a konyhában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_fan_room_AOL.wav|Khapcsold ki a ventillátort a szobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_door_livingroom_LAO.wav|A nagyszobában zárd be az ajtót.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_window_bathroom_AOL.wav|Zárd be az ablakot a fürdőszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_window_smallroom_AOL.wav|Zárd be az ablakot a kiszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_curtain_corridor_LAO.wav|A fojjosón húzd be a függönyt.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_shutter_smallroom_LAO.wav|A kisszobában húzd fel a red.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_heating_corridor_AOL.wav|Kapcsold be a fűtés a fojjosón.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_shutter_livingroom_AOL.wav|Húzd le a redőnyt a nagyszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1111_TV_kitchen_LAO.wav|A konyhában válcs csatornát a tévén.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_1000_shutter_room_LAO.wav|Szobában húzd fel a redőnyt.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0010_computer_livingroom_LAO.wav|A nagyszobában kapcsold be a számítógépen.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0100_electricity_bathroom_AOL.wav|Kapcsold le a villanyt a fürdőszobában.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_computer_smallroom_AOL.wav|Kapcsold ki a számítógépet a kisszobába.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_033_0001_washing machine_bathroom_LAO.wav|A fürdőszobában kapcsold be harminc fokon a mosógépet.|31
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0100_electricity_room_AOL.wav|Kapcsold le a villanyt a szobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_door_livingroom_LAO.wav|A nagyszobában zárd be az ajtót.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_heating_kitchen_LAO.wav|A konyhában kapcsold ki a fűtés.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_curtain_room_LAO.wav|A szobában húzd szét a függöny.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_washing machine_kitchen_AOL.wav|Kapcsold be a mosógépet hatvan fokon a konyhában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1000_shutter_livingroom_AOL.wav|Húzd fel a redőnyt a nagyszobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_toaster_kitchen_AOL.wav|Kapcsold be a kenyérpirítót a konyhában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_door_room_LAO.wav|A szobában nyisd ki az ajtót.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1000_shutter_room_LAO.wav|A szobában húzd fel a redőnyt.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1111_radio_room_AOL.wav|Válcs csatornát a rádión a szobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_fan_livingroom_LAO.wav|A nagyszobában kapcsold be a ventillátor.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_stove_kitchen_LAO.wav|A konyhában kapcsold be a gáztűzhelyet.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_fan_kitchen_AOL.wav|Kapcsold be a ventillátort a konyhában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1000_electricity_livingroom_AOL.wav|Kapcsold fel a villanyt a nagyszobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0100_TV_corridor_LAO.wav|A fojjosón csendesícsd a tévé.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0100_electricity_smallroom_LAO.wav|A kisszobában kapcsold le a villany.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1000_heating_room_LAO.wav|A szobában húzd fel a fűtés.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_heating_corridor_AOL.wav|Kapcsold ki a fűtést a fojjosón.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1111_TV_livingroom_AOL.wav|Válcs csatornát a tévén a nagyszobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_radio_corridor_AOL.wav|Kapcsold be a rádiót a fojjosón.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_window_smallroom_LAO.wav|A kisszobában nyisd ki az ablakot.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_curtain_corridor_AOL.wav|Húzd szét a függönyt a fojjosón.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0100_shutter_smallroom_AOL.wav|Húzd le a redőnyt a kisszobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_heating_room_AOL.wav|Kapcsold ki a fűtést a szobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_heating_kitchen_LAO.wav|A konyhában kapcsold be a fűtés.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_stove_kitchen_AOL.wav|Kapcsold be a gáztűzhelyet a konyhában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_fan_livingroom_AOL.wav|Kapcsold be a ventillátort a nagyszobában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_1000_shutter_corridor_AOL.wav|Húzd fel a redőnyt a fojjosón.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_window_bathroom_LAO.wav|A fürdőszobában nyisd ki az ablakot.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_vacuum_kitchen_AOL.wav|Kapcsold be a porszívót a konyhában.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_vacuum_corridor_AOL.wav|Kapcsold ki a porszívót a fojjosón.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0001_radio_bathroom_LAO.wav|A fürdőszobában kapcsold ki a rádió.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_036_0010_curtain_livingroom_LAO.wav|A nagyszobában húzd be a függöny.|33
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_door_kitchen_AOL.wav|Nyisd ki az ajtót a konyhában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0100_heating_smallroom_LAO.wav|A kisszobában húzd le a fűtés.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_door_room_AOL.wav|Zárd be az ajtót a szobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_fan_corridor_LAO.wav|A folyosón kapcsold be a ventilátort.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_1000_shutter_bathroom_LAO.wav|A fürdőszobában húzd fel a redőnyt.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0100_heating_bathroom_AOL.wav|Húzd le a fűtést a fürdőszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_radio_corridor_AOL.wav|Kapcsold ki a rádiót a folyosón.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_washing machine_bathroom_LAO.wav|A fürdőszobában kapcsold be a mosógépet harminc fokon.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_fan_corridor_LAO.wav|A folyosón kapcsold ki a ventillátort.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_heating_room_LAO.wav|A szobában kapcsold ki a fűtés.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_computer_kitchen_LAO.wav|A konyhában kapcsold be a számítógépet.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_1111_radio_corridor_LAO.wav|A folyosón vál csatornát a rádión.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_computer_corridor_ALO.wav|Kapcsold ki a folyosón a számítógépet.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_dishwasher_kitchen_AOL.wav|Kapcsold be a mosogatógépet a konyhában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_1000_electricity_bathroom_LAO.wav|A fürdőszobában kapcsold fel a villanyt.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_door_corridor_AOL.wav|Zárd be az ajtót a folyosón.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_radio_bathroom_LAO.wav|A fürdőszobában kapcsold ki a rádiót.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_door_kitchen_AOL.wav|Zárd be az ajtót a konyhában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_washing machine_kitchen_LAO.wav|A konyhában kapcsold be a mosógépet harminc fokon.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_computer_bathroom_AOL.wav|Kapcsold be a számítógépet a fürdőszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0100_heating_corridor_AOL.wav|Kapcsold le a fűtést a folyosón.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_computer_bathroom_LAO.wav|A fürdőszobában kapcsold be a számítógépet.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_vacuum_smallroom_LAO.wav|A kisszobába kapcsold be a porszívót.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_stove_kitchen_LAO.wav|Konyhában kapcsold be a tűzhelye.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_window_livingroom_AOL.wav|Zárd be az ablakot a nagyszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_curtain_bathroom_AOL.wav|Húzd szét a függönyt a fürdőszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_curtain_kitchen_AOL.wav|Húzd szét a függönyt a konyhában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0100_heating_smallroom_AOL.wav|Húzd le a fűtést a kisszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_radio_livingroom_LAO.wav|A nagyszobában kapcsold be a rádiót.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_radio_smallroom_AOL.wav|Kapcsold ki a rádiót a kisszobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_heating_room_AOL.wav|Kapcsold ki a fűtést a szobában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0010_curtain_corridor_AOL.wav|Húzd be a függönyt a folyosón.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0100_TV_kitchen_AOL.wav|Csendesítsd a tévét a konyhában.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_037_0001_curtain_room_LAO.wav|A szobában húzd szét a függönyt.|34
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1111_radio_room_AOL.wav|Válcsd csatornát a rádión a szobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_heating_livingroom_AOL.wav|Kapcsold ki a fűtést a nagyszobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_electricity_room_AOL.wav|Kapcsold le a villanyt a szobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_shutter_bathroom_LAO.wav|Fürdőszobában húzd le a redőnyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_heating_corridor_LAO.wav|A folyosón húzd fel a fűtést.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1111_radio_smallroom_LAO.wav|Kisszobában válcs csatornát a rádión.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_curtain_corridor_LAO.wav|A folyosón húzd szét a függönyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_electricity_smallroom_LAO.wav|Kisszobában kapcsold le a villanyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_computer_bathroom_LAO.wav|A fürdőszobában kapcsold be a számítógépet.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_electricity_bathroom_LAO.wav|A fürdőszobában kapcsold le a villanyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_computer_livingroom_LAO.wav|A nagyszobában kapcsold ki a számítógépet.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_heating_smallroom_LAO.wav|A kisszobában húzd le a fűtést.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_shutter_bathroom_LAO.wav|A fürdőszobában húzd föl a redőnyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_shutter_corridor_LAO.wav|A folyosón húzd föl a redőnyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_heating_smallroom_LAO.wav|Kisszobában kapcsold ki a fűtést.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_window_kitchen_AOL.wav|Nyisd kí az ablakot a konyhában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_door_room_LAO.wav|A szobában zárd be az ajtót.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_radio_corridor_LAO.wav|Folyosón kapcsold be a rádiót.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_TV_corridor_AOL.wav|Csendesíd a tévét a folyosón.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_door_room_AOL.wav|Zárd be az ajtót a szobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_heating_room_LAO.wav|A szobában kapcsold be a fűtés.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_vacuum_room_LAO.wav|A szobában kapcsold be a porszívót.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_heating_livingroom_LAO.wav|A nagyszobában húzd le a fűtést.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1111_radio_kitchen_AOL.wav|Válcs csatornát a ládión a konyhában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0100_TV_room_LAO.wav|A szobában csendeítsíd a tévét.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_TV_corridor_LAO.wav|A folyosón hangosíd a tévét.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_door_corridor_AOL.wav|Nyisd ki az ajtót a folyosón.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_heating_smallroom_AOL.wav|Kapcsold ki a fűtést a kisszobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_vacuum_room_LAO.wav|A szobában kapcsold ki a porsziszívót.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_heating_livingroom_AOL.wav|Húzd föl a fűtést a nagyszobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0010_stove_kitchen_LAO.wav|Konyhában kapcsold be a gáztűzhelyt.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_0001_fan_kitchen_AOL.wav|Kapcsold ki a ventillátor a konyhában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_038_1000_shutter_bathroom_AOL.wav|Húzd föl a redőnyt a fürdőszobában.|35
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0100_TV_bathroom_AOL.wav|Csendesítsd a televíziót a fürdőszobában.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_radio_corridor_AOL.wav|Kapcsold be a rádiót a folyosón.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_door_corridor_AOL.wav|Zárd be az ajtót a folyosón.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_fan_smallroom_AOL.wav|Kapcsold be a ventilátort a kisszobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_fan_livingroom_LAO.wav|A nagyszobába kapcsold be a ventilátort.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0100_heating_livingroom_LAO.wav|A nagyszobába húzd le a fűtést.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_curtain_room_LAO.wav|A szobába húzd szét a függönyt.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_curtain_bathroom_LAO.wav|A fürdőszobába húzd szét a függönyt.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_vacuum_bathroom_LAO.wav|A fürdőszobába kapcsold be a porszívót.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_fan_room_AOL.wav|Kapcsold be a ventilátort a szobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1111_TV_bathroom_ALO.wav|Válcs csatornát a fürdőszobába a televízión.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1000_heating_livingroom_LAO.wav|A nagyszobába húzd fel a fűtést.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_door_livingroom_AOL.wav|Nyisd ki az ajtót a nagyszobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_window_smallroom_LAO.wav|A kisszobába zárd be az ablakot.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_computer_bathroom_LAO.wav|A fürdőszobába kapcsold be a számítógépet.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0100_shutter_bathroom_LAO.wav|A fürdőszobába húzd le a redőnyt.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1000_electricity_room_LAO.wav|A szobába kapcsold fel a villanyt.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1000_TV_smallroom_AOL.wav|Hangosítsd a televíziót a giszobában.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_computer_kitchen_AOL.wav|Kapcsold ki a számítógépet a konyhába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_computer_room_ALO.wav|Kapcsold ki a szobába a számítógépet.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0100_heating_room_AOL.wav|Húzd le a fűtést a szobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_fan_room_LAO.wav|A szobába kapcsold ki a ventilátort.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_door_bathroom_LAO.wav|A fürdőszobába zárd be az ajtót.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_computer_room_LAO.wav|A szobába kapcsold ki a számítógépet.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1111_radio_smallroom_LAO.wav|A kisszobába vál csatornát a rádión.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_computer_room_LAO.wav|A szobába kapcsold be a számítógépet.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1111_TV_room_AOL.wav|Válcs csatornát a televízión a szobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1000_heating_smallroom_LAO.wav|A kisszobába húzd fel a fűtést.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_curtain_room_AOL.wav|Húzd szét a függönyt a szobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_window_smallroom_AOL.wav|Nyisd ki az ablakot a kisszobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1000_TV_livingroom_AOL.wav|Hangosítsd a televíziót a nagyszobában.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0010_fan_room_LAO.wav|A szobába kapcsold be a ventilátort.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_1111_TV_livingroom_AOL.wav|Válcs csatornát a televízión a nagyszobába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_040_0001_fan_kitchen_AOL.wav|Kapcsold ki a ventilátort a konyhába.|36
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_vacuum_livingroom_LAO.wav|Nagyszobában kaptold be a porszívót.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_heating_kitchen_AOL.wav|Kapcsold be a fűtést a konyhában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_NULL_NULL_A.wav|Hívd fel a fiamat.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1111_radio_corridor_LAO.wav|A folyosón vál csatornát a rádión.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_curtain_smallroom_LAO.wav|A kisszobában húzd szét a függönt.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_window_kitchen_AOL.wav|Zárd be az ablakot a konyhában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_radio_livingroom_LAO.wav|A nagyszobában kapcsold be rádiót.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_computer_smallroom_AOL.wav|Kapcsold be a számítógépet a kisszobaba.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_vacuum_kitchen_LAO.wav|A konyhában kapcsold be a porszívót.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_vacuum_kitchen_AOL.wav|Kapcsold ki a porszívót a konyhában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_vacuum_room_AOL.wav|Kapcsold be a porszívótvan a szobában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_door_room_LAO.wav|A szobában zárd be az ajtót.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_fan_corridor_LAO.wav|Folyosón kapcsold be a ventillátort.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_electricity_room_LAO.wav|A szobában kapcsold le a villanyt.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_heating_livingroom_AOL.wav|Kapcsold ki a fűtést a nagyszobában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1111_radio_kitchen_AOL.wav|Vál csatornát a rádión a konyhában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_shutter_smallroom_LAO.wav|A kisszobában húzd le a redőnyt.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_TV_corridor_AOL.wav|Csendesíts tévét a folyosón.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_dishwasher_kitchen_LAO.wav|Konyhában kapcsold ki a mosogatógépet.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1111_radio_bathroom_ALO.wav|Vál csatornát a fürdőszobán a rádión.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_radio_livingroom_LAO.wav|Nagyszobában kapcsold ki a rádiót.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_computer_bathroom_LAO.wav|A fürdőszobában kapcsold ki a számítógépet.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_heating_bathroom_LAO.wav|A fürdőszobában húdd le a fűtést.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_fan_room_LAO.wav|A szobában kapcold ki a ventillátort.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1111_TV_bathroom_LAO.wav|A fürdőszobán vál csatornát tévén.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_curtain_livingroom_LAO.wav|A nagyszobában húzd szét a függönyt.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1111_TV_bathroom_AOL.wav|Vál csatornát a tévén a fürdőszobaban.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1000_heating_bathroom_AOL.wav|Húzd fel a fűtést a fürdőszobában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_window_kitchen_LAO.wav|A konyhában zárd be az ablakot.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_heating_corridor_LAO.wav|Folyosón kapcsold be a fűtést.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_electricity_bathroom_LAO.wav|A fürdőszobában kapcsold le a villanyt.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0010_vacuum_bathroom_AOL.wav|Kapcsold be a porszívót a fürdőszobában.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_1000_electricity_kitchen_LAO.wav|Konyhában kapcsold fel a villant.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0001_fan_corridor_AOL.wav|Kapcsold ki a ventillátort a folyosón.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_041_0100_heating_smallroom_LAO.wav|A kisszobában húzd le a fűtést.|37
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_curtain_kitchen_LAO.wav|Konyhába húzd be a függönyt.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_heating_bathroom_LAO.wav|A fürdőchobában kapcsold ki a fűtést.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_vacuum_bathroom_AOL.wav|Kapcsold be a porszivót a konyhában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1111_radio_livingroom_AOL.wav|Válcs csatornát a rádión a nagyszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_fan_kitchen_LAO.wav|A konyhában kapcsold be a ventillátorokat.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_kettle_kitchen_LAO.wav|A konyhában kapcsold be a vízforralót.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_computer_smallroom_AOL.wav|Kapcsold ki a számítógépet a kisszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_radio_bathroom_AOL.wav|Kapcsold be a rádiót a fürdőszobába.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_curtain_kitchen_LAO.wav|A konyhábá húhuz szét a függönyt.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1111_TV_room_AOL.wav|Válcs csatornát a tévén a cobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_vacuum_corridor_LAO.wav|A fojjosón kapcsold be a porcivót.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1000_shutter_kitchen_LAO.wav|A konyhábán hús vell a redőnyt.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1111_TV_bathroom_AOL.wav|Válcsötornát a tévén a fürdőszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_window_corridor_LAO.wav|A fojjosón zárd be áz áblakot.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1000_heating_livingroom_AOL.wav|Húzd fell a fütést a nagyszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0100_TV_livingroom_AOL.wav|Csendesítsd a tévét a nagyszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1000_heating_corridor_AOL.wav|Húzd fell a fütést a fojjosón.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_fan_NULL_AXO.wav|Kapcsold be a bankrettőbe ed ventillátort.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_fan_bathroom_LAO.wav|A fürdőszobában kápcsold ki á ventillátort.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0100_TV_room_AOL.wav|Csendesítsd a tévét a szobába.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_vacuum_kitchen_AOL.wav|Kapcsold ki a porcivót a konyhában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_heating_smallroom_AOL.wav|Kapcsold ki a fűtést a kisszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0100_heating_kitchen_LAO.wav|A konyhában húzd le a fűtést.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1111_radio_room_AOL.wav|Válcs csatornát a rádión a szobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1111_radio_smallroom_LAO.wav|A kisszobában váccsatornát a rádión.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_radio_room_AOL.wav|Kapcsold be a rádiót a szobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_computer_bathroom_LAO.wav|A fürdőszobában kápcsold ki a számítógépet.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_window_corridor_LAO.wav|A fojjosón  nyisd ki az ablakot.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_fan_kitchen_LAO.wav|A konyhában kápcsold ki á ventillátort.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_door_kitchen_AOL.wav|Nyiss ki az ajtót a konyhábá.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1000_electricity_smallroom_LAO.wav|A kisszobában kapcsol fel a villant.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0010_washing machine_bathroom_AOL.wav|Kapcsold be a mosógépet hatvan fokon a fürdőszobában.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_1000_electricity_livingroom_LAO.wav|Á nágyszobábán kápcsold fel á villanyt.|38
+/home/arcdeus/Documents/NewThesis/wavs_16khz/C_042_0001_heating_livingroom_AOL.wav|Kapcsold ki a fűtés a nyoszobában.|38
